@@ -55,8 +55,14 @@ export default function Instances() {
   async function connect(id) {
     try {
       const r = await api.post(`/instances/${id}/connect`)
-      const code = r.data?.base64 || r.data?.qrcode?.base64 || r.data?.code
-      if (code) setQr({ instanceId: id, code: code.startsWith('data:') ? code : `data:image/png;base64,${code}` })
+      // _qr é o campo normalizado retornado pelo backend
+      const code = r.data?._qr || r.data?.base64 || r.data?.qrcode?.base64 || r.data?.code
+      if (code) {
+        setQr({ instanceId: id, code: code.startsWith('data:') ? code : `data:image/png;base64,${code}` })
+      } else {
+        // QR ainda não disponível — instância pode estar inicializando
+        alert('QR Code ainda não disponível. Aguarde alguns segundos e tente novamente.')
+      }
     } catch (err) {
       alert(err.response?.data?.error || 'Erro ao conectar. Verifique se a Evolution API está acessível.')
     }

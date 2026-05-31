@@ -61,17 +61,26 @@ export default async function instanceRoutes(app) {
 
     try {
       const { data } = await obterQrCode(nome)
+      console.log(`[connect QR] resposta Evolution API para ${nome}:`, JSON.stringify(data))
+
+      // Extrai base64 em todos os formatos retornados pela Evolution API v2
+      const qrBase64 = data?.base64
+        || data?.qrcode?.base64
+        || data?.code
+        || (typeof data === 'string' ? data : null)
+
       await prisma.waInstance.update({
         where: { id: instance.id },
         data: { status: 'aguardando_qr' },
       })
       broadcast(req.user.tenantId, {
         event: 'status_instancia',
-        data: { instanceId: instance.id, status: 'aguardando_qr', qr_code: data?.base64 || data?.qrcode?.base64 || null },
+        data: { instanceId: instance.id, status: 'aguardando_qr', qr_code: qrBase64 },
       })
-      return data
+      return { ...data, _qr: qrBase64 }
     } catch (err) {
-      return reply.status(502).send({ error: 'Não foi possível obter o QR Code. Evolution API inacessível.', detalhe: err.message })
+      console.error(`[connect QR] erro para ${nome}:`, err.response?.data || err.message)
+      return reply.status(502).send({ error: 'Não foi possível obter o QR Code. Evolution API inacessível.', detalhe: err.response?.data?.message || err.message })
     }
   })
 
