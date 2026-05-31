@@ -138,6 +138,7 @@ services:
       - "traefik.http.routers.supercrmapi.tls=true"
       - "traefik.http.routers.supercrmapi.tls.certresolver=letsencrypt"
       - "traefik.http.services.supercrmapi.loadbalancer.server.port=3000"
+      - "traefik.docker.network=coolify"
 
   # ── SCHEDULER (Worker de agendamentos) ───────────────────
   scheduler:
@@ -180,6 +181,7 @@ services:
       - "traefik.http.routers.supercrmapp.tls=true"
       - "traefik.http.routers.supercrmapp.tls.certresolver=letsencrypt"
       - "traefik.http.services.supercrmapp.loadbalancer.server.port=80"
+      - "traefik.docker.network=coolify"
 
 # ── VOLUMES PERSISTENTES ──────────────────────────────────
 volumes:
