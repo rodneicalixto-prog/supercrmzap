@@ -1,0 +1,1296 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+ <FrmMain>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>Bulk WhatsApp Sender</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_LICENSE</BwsKey>
+   <BwsValue>الترخيص صالح حتى :</BwsValue>
+ </FrmMain>
+  <FrmMain>
+   <BwsKey>BWS_FILE</BwsKey>
+   <BwsValue>ملف|</BwsValue>
+ </FrmMain>
+    <FrmMain>
+   <BwsKey>BWS_NEW_BULK</BwsKey>
+   <BwsValue>إرسال مجمع جديد</BwsValue>
+ </FrmMain>
+     <FrmMain>
+   <BwsKey>BWS_NEW_GROUP</BwsKey>
+   <BwsValue>إرسال جديد للمجموعات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_IMPORT_NUMBERS</BwsKey>
+   <BwsValue>استيراد الأرقام</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_FROM_FILES</BwsKey>
+   <BwsValue>من ملف</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_MANUAL</BwsKey>
+   <BwsValue>يدوي</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_NUMBER_GENERATOR</BwsKey>
+   <BwsValue>تأليف أرقام</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_IMPORT_MESSAGE</BwsKey>
+   <BwsValue>استيراد رسالة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_EXPORT_NUMBERS</BwsKey>
+   <BwsValue>تصدير الأرقام</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_SAVE_MESSAGE</BwsKey>
+   <BwsValue>حفظ رسالة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_EXIT</BwsKey>
+   <BwsValue>خروج</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_EDIT</BwsKey>
+   <BwsValue>تحرير|</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_CLEAR_NUMBERS</BwsKey>
+   <BwsValue>إفراغ قائمة الأرقام</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_CLEAR_MESSAGE</BwsKey>
+   <BwsValue>حذف رسالة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_CLEAR_LOG</BwsKey>
+   <BwsValue>إفراغ السجل</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_ACCOUNTS</BwsKey>
+   <BwsValue>الحسابات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_MANAGE_ACCOUNTS</BwsKey>
+   <BwsValue>إدارة الحسابات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_TOOLS</BwsKey>
+   <BwsValue>الأدوات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_WHATSAPPNUMBER_FILTER</BwsKey>
+   <BwsValue>فرز أرقام الـ Whatsapp</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_GROUPS_CONTACTS</BwsKey>
+   <BwsValue>محصل أرقام المجموعات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_SETTINGS</BwsKey>
+   <BwsValue>الإعدادات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_THEME</BwsKey>
+   <BwsValue>المظهر</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_LANGUAGE</BwsKey>
+   <BwsValue>اللغة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_HELP</BwsKey>
+   <BwsValue>المساعدة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_VIEW_HELP</BwsKey>
+   <BwsValue>عرض المساعدة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_UPDATE_LICENSE</BwsKey>
+   <BwsValue>تجديد الترخيص</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_ABOUT</BwsKey>
+   <BwsValue>حول</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_NEW</BwsKey>
+   <BwsValue>جديد</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_IMPORTS</BwsKey>
+   <BwsValue>استيراد</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_EXPORTS</BwsKey>
+   <BwsValue>تصدير</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_CLEAR</BwsKey>
+   <BwsValue>إفراغ</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_DELETE</BwsKey>
+   <BwsValue>حذف</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_WHATSAPP_NUMBERS</BwsKey>
+   <BwsValue>(0)إجمالي الأرقام</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_MESSAGE</BwsKey>
+   <BwsValue>رسالة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_ADD_MESSAGE</BwsKey>
+   <BwsValue>إضافة رسالة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_DELETE_MESSAGE</BwsKey>
+   <BwsValue>حذف رسالة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_MESSAGE1</BwsKey>
+   <BwsValue>رسالة 1</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_NUMBERS_FILTER</BwsKey>
+   <BwsValue>فرز الأرقام</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_GROUP_GRABBER</BwsKey>
+   <BwsValue>محصل أرقام المجموعات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_ACCOUNTS</BwsKey>
+   <BwsValue>الحسابات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_SETTINGS</BwsKey>
+   <BwsValue>الإعدادات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_SENDING_LOG</BwsKey>
+   <BwsValue>سجل الإرسال</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_EMOJI</BwsKey>
+   <BwsValue>تعبيرات </BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_FULL_NAME</BwsKey>
+   <BwsValue>الاسم كامل</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_FIRST_NAME</BwsKey>
+   <BwsValue>الاسم الأول</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_LAST_NAME</BwsKey>
+   <BwsValue>الاسم الاخير</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_RANDOM_TAG</BwsKey>
+   <BwsValue>وسم عشوائي</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_ATTACH</BwsKey>
+   <BwsValue>إرفاق ملفات ||صور</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_ADD_FILES</BwsKey>
+   <BwsValue>إضافة ملفات او صور</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_CLEAR</BwsKey>
+   <BwsValue>إفراغ</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_SENDING_PROGRESS</BwsKey>
+   <BwsValue>حالة الإرسال : 0/0</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_TURBO</BwsKey>
+   <BwsValue>الوضع الفائق(بدون ملفات)</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_ADVANCED_SENDING</BwsKey>
+   <BwsValue>إعدادت الإرسال المتقدمة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_END_BULK</BwsKey>
+   <BwsValue>إنهاء الإرسال</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_SEND</BwsKey>
+   <BwsValue>إرسال</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_NAME</BwsKey>
+   <BwsValue>الاسم</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_NUMBER</BwsKey>
+   <BwsValue>الرقم</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_STATUS</BwsKey>
+   <BwsValue>الحالة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_FILE_NAME</BwsKey>
+   <BwsValue>اسم الملف</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_TYPE</BwsKey>
+   <BwsValue>النوع</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_CAPTION</BwsKey>
+   <BwsValue>عنوان مضمن</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_IMPORT_FROMFILES</BwsKey>
+   <BwsValue>استيراد من ملفات</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_MANUAL_IMPORTS</BwsKey>
+   <BwsValue>استيراد يدوي</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_CLEAR_LIST</BwsKey>
+   <BwsValue>إفراغ القائمة</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_SET_CAPTION</BwsKey>
+   <BwsValue>تخضيص عنوان مضمن</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_DELETE_FILE</BwsKey>
+   <BwsValue>حذف ملف</BwsValue>
+ </FrmMain>
+ <FrmMain>
+   <BwsKey>BWS_OPEN_FILE</BwsKey>
+   <BwsValue>فتح ملف</BwsValue>
+ </FrmMain>
+ <FrmSetCaption>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>تخصيص عنوان مضمن</BwsValue>
+ </FrmSetCaption>
+ <FrmSetCaption>
+   <BwsKey>BWS_FULL_NAME</BwsKey>
+   <BwsValue>الاسم كامل</BwsValue>
+ </FrmSetCaption>
+ <FrmSetCaption>
+   <BwsKey>BWS_FIRST_NAME</BwsKey>
+   <BwsValue>الاسم الأول</BwsValue>
+ </FrmSetCaption>
+ <FrmSetCaption>
+   <BwsKey>BWS_LAST_NAME</BwsKey>
+   <BwsValue>الاسم الأخير</BwsValue>
+ </FrmSetCaption>
+ <FrmSetCaption>
+   <BwsKey>BWS_EMOJI</BwsKey>
+   <BwsValue>تعبيرات</BwsValue>
+ </FrmSetCaption>
+ <FrmSetCaption>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmSetCaption>
+ <FrmSetCaption>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmSetCaption>
+ <FrmOptions>
+   <BwsKey>BWS_OPTIONS</BwsKey>
+   <BwsValue>خيارات</BwsValue>
+ </FrmOptions>
+ <FrmOptions>
+   <BwsKey>BWS_DELAY</BwsKey>
+   <BwsValue>المهلة بين الرسائل</BwsValue>
+ </FrmOptions>
+ <FrmOptions>
+   <BwsKey>BWS_DELETE_MESSAGE</BwsKey>
+   <BwsValue>حذف الرسالة بعد الإرسال</BwsValue>
+ </FrmOptions>
+ <FrmOptions>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmOptions>
+ <FrmOptions>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmOptions>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_GENERATE_NUMBER</BwsKey>
+   <BwsValue>تأليف رقم</BwsValue>
+ </FrmNumberGenerator>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>تأليف أرقام</BwsValue>
+ </FrmNumberGenerator>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_AUTO_GENERATE</BwsKey>
+   <BwsValue>تأليف تلقائي للأرقام</BwsValue>
+ </FrmNumberGenerator>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_START</BwsKey>
+   <BwsValue>رقم البدء</BwsValue>
+ </FrmNumberGenerator>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_START_NUMBER</BwsKey>
+   <BwsValue>رقم البدء يجب أن يكون بصيغة دولية</BwsValue>
+ </FrmNumberGenerator>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_COUNT</BwsKey>
+   <BwsValue>العدد</BwsValue>
+ </FrmNumberGenerator>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_COUNT_GENERATED</BwsKey>
+   <BwsValue>إجمالي الأرقام المؤلفة</BwsValue>
+ </FrmNumberGenerator>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmNumberGenerator>
+ <FrmNumberGenerator>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmNumberGenerator>
+ <FrmMustKnow>
+   <BwsKey>BWS_MUST_KNOW</BwsKey>
+   <BwsValue>يجب أن تعلم !!</BwsValue>
+ </FrmMustKnow>
+ <FrmMustKnow>
+   <BwsKey>BWS_IMPORTANT</BwsKey>
+   <BwsValue>معلومات هامة يتحتم عليك معرفتها قبل الإرسال</BwsValue>
+ </FrmMustKnow>
+ <FrmMustKnow>
+   <BwsKey>BWS_KEEP_APP</BwsKey>
+   <BwsValue>اترك التطبيق مفتوح حتى تتأكد أن كل الرسائل أرسلت من هاتفك.</BwsValue>
+ </FrmMustKnow>
+ <FrmMustKnow>
+   <BwsKey>BWS_ENSURE</BwsKey>
+   <BwsValue>تأكد أن هاتفك وحاسوبك متصلان بالإنترنت أثناء عملية الإرسال.</BwsValue>
+ </FrmMustKnow>
+ <FrmMustKnow>
+   <BwsKey>BWS_CLEAR_WHATSAPP</BwsKey>
+   <BwsValue>قم بتنظيف سجل المحادثات(وفقايناسب جهازك) بعد إرسال من 1000إلى2000 رسالة،حتى يظل كل شيئ سلس.</BwsValue>
+ </FrmMustKnow>
+ <FrmMustKnow>
+   <BwsKey>BWS_BULK_WHATSAPP4</BwsKey>
+   <BwsValue>البرنامج يقوم بإرسال الرسائل إلى هاتفك، وليس مسئول عن تسلمها.
+</BwsValue>
+ </FrmMustKnow>
+ <FrmMustKnow>
+   <BwsKey>BWS_BULK_WHATSAPP5</BwsKey>
+   <BwsValue>البرنامج غير مسئول إذا تعطل حسابك أو تم حظره.</BwsValue>
+ </FrmMustKnow>
+ <FrmMustKnow>
+   <BwsKey>BWS_DONT_SHOW_AGAIN</BwsKey>
+   <BwsValue>لا تظهرها مرة أخرى</BwsValue>
+ </FrmMustKnow>
+ <FrmMustKnow>
+   <BwsKey>BWS_CLOSE</BwsKey>
+   <BwsValue>إغلاق</BwsValue>
+ </FrmMustKnow>
+ <FrmManualImports>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>استيراد يدوي</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_MANUAL_IMPORT</BwsKey>
+   <BwsValue>استيراد يدوي</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_ENTER_MOBILE</BwsKey>
+   <BwsValue>أدخل رقم الهاتف، رقم واحد في كل سطر</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_ENTER_MOBILENUMBERS</BwsKey>
+   <BwsValue>أدخل أرقام الهواتف</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_NAME_NUMBER</BwsKey>
+   <BwsValue>يمكنك إدخال الاسم ثم فاصلة ثم رقم الهاتف(الاسم,الهاتف)</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_REMOVE_DUPLICATION</BwsKey>
+   <BwsValue>إزالة المكرر</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_IMPORT</BwsKey>
+   <BwsValue>استيراد</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_NAME</BwsKey>
+   <BwsValue>الاسم</BwsValue>
+ </FrmManualImports>
+ <FrmManualImports>
+   <BwsKey>BWS_NUMBERS</BwsKey>
+   <BwsValue>الأرقام</BwsValue>
+ </FrmManualImports>
+ <FrmManualFilterImport>
+   <BwsKey>BWS_IMPORT_MANUAL</BwsKey>
+   <BwsValue>استيراد يدوي</BwsValue>
+ </FrmManualFilterImport>
+ <FrmManualFilterImport>
+   <BwsKey>BWS_ENTER_PASTE</BwsKey>
+   <BwsValue>أدخل أو ألصق الرقم في المربع النصي التالي</BwsValue>
+ </FrmManualFilterImport>
+ <FrmManualFilterImport>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmManualFilterImport>
+ <FrmManualFilterImport>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmManualFilterImport>
+ <FrmLicense>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>تفعيل البرنامج</BwsValue>
+ </FrmLicense>
+ <FrmLicense>
+   <BwsKey>BWS_REQUEST_KEY</BwsKey>
+   <BwsValue>طلب مفتاح</BwsValue>
+ </FrmLicense>
+ <FrmLicense>
+   <BwsKey>BWS_PURCHASING_PROOF</BwsKey>
+   <BwsValue>يرجى إرسال مفتاح طلب التفعيل مع مايثبت عملية الشراء</BwsValue>
+ </FrmLicense>
+ <FrmLicense>
+   <BwsKey>BWS_COPY</BwsKey>
+   <BwsValue>نسخ</BwsValue>
+ </FrmLicense>
+ <FrmLicense>
+   <BwsKey>BWS_LICENSE_KEY</BwsKey>
+   <BwsValue>مفتاح الترخيص</BwsValue>
+ </FrmLicense>
+ <FrmLicense>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmLicense>
+ <FrmLicense>
+   <BwsKey>BWS_ACTIVATE</BwsKey>
+   <BwsValue>تفعيل</BwsValue>
+ </FrmLicense>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>استيراد من ملف</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_IMPORT_FILE</BwsKey>
+   <BwsValue>استيراد من ملف</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_IMPORT_NUMBER</BwsKey>
+   <BwsValue>استيراد من ملف TXT أو ملف CSV</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_SELECT</BwsKey>
+   <BwsValue>اختر ملف الاستيراد</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_FORMAT_SAMPLES</BwsKey>
+   <BwsValue>نموذج تنسيق الملفات</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_COUNTRY_CODE</BwsKey>
+   <BwsValue>إدراج مفتاح الدولة إلى عمود الأرقام</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_REMOVE_DUPLICATION</BwsKey>
+   <BwsValue>إزالة المكرر</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_IMPORT</BwsKey>
+   <BwsValue>استيراد</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_NAME</BwsKey>
+   <BwsValue>الاسم</BwsValue>
+ </FrmImportFromFiles>
+ <FrmImportFromFiles>
+   <BwsKey>BWS_NUMBERS</BwsKey>
+   <BwsValue>الأرقام</BwsValue>
+ </FrmImportFromFiles>
+ <FrmGroupsSender>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>الإرسال للمجموعات</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_IMPORT_GROUPS</BwsKey>
+   <BwsValue>استيراد روابط المجموعات</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_IMPORT_FROM_FILE</BwsKey>
+   <BwsValue>استيراد من ملف</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_SCRAP</BwsKey>
+   <BwsValue>فئات المجموعات</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_EXTRACT</BwsKey>
+   <BwsValue>استخراج</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_GROUPS_LIST</BwsKey>
+   <BwsValue>قائمة المجموعات(0)</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_VERIFIED_GROUPS</BwsKey>
+   <BwsValue>المجموعات الموثقة(0)</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_SAVE</BwsKey>
+   <BwsValue>حفظ</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_CLEAR</BwsKey>
+   <BwsValue>إفراغ</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_MESSAGE</BwsKey>
+   <BwsValue>الرسالة</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_ATTACH</BwsKey>
+   <BwsValue>إرفاق ملفات || صور</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_ADD</BwsKey>
+   <BwsValue>أضف ملفات أو صور</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_CLEAR1</BwsKey>
+   <BwsValue>إفراغ</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_VERIFY_GROUPS</BwsKey>
+   <BwsValue>توثيق المجموعات</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_SENDING</BwsKey>
+   <BwsValue>جاري الإرسال</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_STOP</BwsKey>
+   <BwsValue>إيقاف</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_SEND</BwsKey>
+   <BwsValue>إرسال</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_GROUP_NAME</BwsKey>
+   <BwsValue>اسم المجموعة</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_GROUP_LINK</BwsKey>
+   <BwsValue>رابط المجموعة</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_STATUS</BwsKey>
+   <BwsValue>الحالة</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_FILE_NAME</BwsKey>
+   <BwsValue>اسم الملف</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_TYPE</BwsKey>
+   <BwsValue>النوع</BwsValue>
+ </FrmGroupsSender>
+ <FrmGroupsSender>
+   <BwsKey>BWS_CAPTION</BwsKey>
+   <BwsValue>نص مضمن</BwsValue>
+ </FrmGroupsSender>
+ <FrmGrabber>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>المحصل</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_CONTACT_GRABBER</BwsKey>
+   <BwsValue>محصل أرقام الإتصال</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_GRAB_CONT</BwsKey>
+   <BwsValue>تحصيل أرقام الإتصال من المجموعة المحددة</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_OPEN_WHATSAPP</BwsKey>
+   <BwsValue>افتح الـ Whatsapp</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_GRAB_CONTACTS</BwsKey>
+   <BwsValue>تحصيل أرقام الإتصال</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_CLOSE</BwsKey>
+   <BwsValue>إغلاق</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_CLEAR</BwsKey>
+   <BwsValue>إفراغ</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_SAVE</BwsKey>
+   <BwsValue>حفظ</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_ADD</BwsKey>
+   <BwsValue>أضف للقائمة</BwsValue>
+ </FrmGrabber>
+ <FrmGrabber>
+   <BwsKey>BWS_CONTACTS_COUNT</BwsKey>
+   <BwsValue>إجمالي الأرقام :0</BwsValue>
+ </FrmGrabber>
+ <FrmFilter>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>التصفية والفرز</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_WHATSAPP_FILTER</BwsKey>
+   <BwsValue>فرز الـ Whatsapp</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_FILTER_NUMBERS</BwsKey>
+   <BwsValue>فرز أرقام الـ Whatsapp</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_ALL_NUMBERS</BwsKey>
+   <BwsValue>جميع الأرقام</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_WHATSAPP_ACC</BwsKey>
+   <BwsValue>له حساب  whatsapp</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_NONWHATSAPP_ACC</BwsKey>
+   <BwsValue>ليس له حساب  whatsapp</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_FROM_FILE</BwsKey>
+   <BwsValue>من ملف</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_MANUAL</BwsKey>
+   <BwsValue>يدوي</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_NUMBER_GENERATOR</BwsKey>
+   <BwsValue>مؤلف الأرقام</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_ADD_TOSENDER</BwsKey>
+   <BwsValue>أضف للإرسال</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_CLEAR</BwsKey>
+   <BwsValue>إفراغ</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_SAVE</BwsKey>
+   <BwsValue>حفظ</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_FAST</BwsKey>
+   <BwsValue>سريع</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_ACCURATE</BwsKey>
+   <BwsValue>دقيق</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_STOP</BwsKey>
+   <BwsValue>إيقاف</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_START</BwsKey>
+   <BwsValue>إبدأ الفرز</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_NOTE</BwsKey>
+   <BwsValue>يرجى الانتباه إلى أن عملية الفرز أكثر خطورة من الإرسال ، لذا يُرجى توخي الحذر عند استخدامها ، وكذلك إرسال حسابك دائمًا إلى المستلمين المعروفين الذين يتفاعلون مع رسائلك ، مما يمنح حسابك مزيدًا من المصداقية ويقلل من فرصة الحظر .</BwsValue>
+ </FrmFilter>
+ <FrmFilter>
+   <BwsKey>BWS_PROGRESS</BwsKey>
+   <BwsValue>حالة العملية</BwsValue>
+ </FrmFilter>
+ <FrmFilessmaplesPreview>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>ملف أرقام لها اسم</BwsValue>
+ </FrmFilessmaplesPreview>
+ <FrmFilessmaplesPreview>
+   <BwsKey>BWS_FILE_WITHNAME</BwsKey>
+   <BwsValue>ملف أرقام لها اسم</BwsValue>
+ </FrmFilessmaplesPreview>
+ <FrmFilessmaplesPreview>
+   <BwsKey>BWS_NOTE</BwsKey>
+   <BwsValue>عندما يحتوي الملف على عمودين ، سيعتبر العمود الأول على أنه اسم جهة الاتصال العمود الثاني كرقم اتصال إذا كان الملف يحتوي على عمود واحد فقط فسيتم اعتباره رقم اتصال.
+لاحظ أنه إذا احتوى الملف على أكثر من عمودين ، فسيتم الأخذ في الاعتبار عمودين فقط</BwsValue>
+ </FrmFilessmaplesPreview>
+ <FrmFilessmaplesPreview>
+   <BwsKey>BWS_CLOSE</BwsKey>
+   <BwsValue>إغلاق</BwsValue>
+ </FrmFilessmaplesPreview>
+ <FrmAdvanced>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>إعدادات الإرسال</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_WHATSAPP_ACC</BwsKey>
+   <BwsValue>حسابات الـ Whatsapp المألوفة</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_MESSAGES_DICT</BwsKey>
+   <BwsValue>قاموس الرسائل (يتم الإختيار العشوائي وإرسالها إلى الحسابات المألوفة)</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_CONNECTION_SPEED</BwsKey>
+   <BwsValue>سرعة الإتصال</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_DELAY</BwsKey>
+   <BwsValue>المهلة بين الرسائل</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_WAIT</BwsKey>
+   <BwsValue>انتظار</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_SECONDS</BwsKey>
+   <BwsValue>ثواني</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_ACTIVATE_DIALOG</BwsKey>
+   <BwsValue>تفعيل الحوار مع الحسابات المألوفة</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_AFTER</BwsKey>
+   <BwsValue>بعد</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_MESSAGES</BwsKey>
+   <BwsValue>رسائل</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_SEC_BETWEEN</BwsKey>
+   <BwsValue>ثواني بين الرسائل</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_COUNT</BwsKey>
+   <BwsValue>عدد</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_ACTIVATE_SLEEP</BwsKey>
+   <BwsValue>تفعيل السكون خلال الإرسال</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_FOR</BwsKey>
+   <BwsValue>لمدة</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_SENDING</BwsKey>
+   <BwsValue>نوع الإرسال</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_SEND</BwsKey>
+   <BwsValue>مفاتيح الإرسال(إيجاء بالكتابة)</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_TEXT</BwsKey>
+   <BwsValue>إدراج النص</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_ADD</BwsKey>
+   <BwsValue>أضف</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_DELETE</BwsKey>
+   <BwsValue>حذف</BwsValue>
+ </FrmAdvanced>
+ <FrmAdvanced>
+   <BwsKey>BWS_CLOSE</BwsKey>
+   <BwsValue>إغلاق</BwsValue>
+ </FrmAdvanced>
+ <FrmAddMessage>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>أضف رسالة</BwsValue>
+ </FrmAddMessage>
+ <FrmAddMessage>
+   <BwsKey>BWS_MESSAGE</BwsKey>
+   <BwsValue>الرسالة</BwsValue>
+ </FrmAddMessage>
+ <FrmAddMessage>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmAddMessage>
+ <FrmAddMessage>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmAddMessage>
+ <FrmAddFamiliarAccount>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>أضف حساب Whatsapp مألوف</BwsValue>
+ </FrmAddFamiliarAccount>
+ <FrmAddFamiliarAccount>
+   <BwsKey>BWS_WHATSAPP_ACCOUNT</BwsKey>
+   <BwsValue>رقم حساب الـ whatsapp</BwsValue>
+ </FrmAddFamiliarAccount>
+ <FrmAddFamiliarAccount>
+   <BwsKey>BWS_ENSURANCE</BwsKey>
+   <BwsValue>يُرجى التأكد من أن الحساب الذي تضيفه هو حساب WhatsApp وأنه على دراية بتلقى رسائل منك </BwsValue>
+ </FrmAddFamiliarAccount>
+ <FrmAddFamiliarAccount>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmAddFamiliarAccount>
+ <FrmAddFamiliarAccount>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmAddFamiliarAccount>
+ <FrmAdd>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>أضف رمز الدولة</BwsValue>
+ </FrmAdd>
+ <FrmAdd>
+   <BwsKey>BWS_COUNTRY_CODE</BwsKey>
+   <BwsValue>رمز الدولة</BwsValue>
+ </FrmAdd>
+ <FrmAdd>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmAdd>
+ <FrmAdd>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmAdd>
+ <FrmAccountSwticher>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>تبديل الحساب</BwsValue>
+ </FrmAccountSwticher>
+ <FrmAccountSwticher>
+   <BwsKey>BWS_QUESTION</BwsKey>
+   <BwsValue>ماذا تريد أن تفعل؟</BwsValue>
+ </FrmAccountSwticher><FrmAccountSwticher>
+   <BwsKey>BWS_SNEDFROM_NEW</BwsKey>
+   <BwsValue>إرسال من جلسة جديدة (يتطلب تسجيل الدخول) </BwsValue>
+ </FrmAccountSwticher>
+ <FrmAccountSwticher>
+   <BwsKey>BWS_SENDFROM_SAVED</BwsKey>
+   <BwsValue>إرسال من حساب محفوظ (لا يتطلب تسجيل الدخول)</BwsValue>
+ </FrmAccountSwticher>
+ <FrmAccountSwticher>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmAccountSwticher>
+ <FrmAccountSwticher>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmAccountSwticher>
+ <FrmAccounts>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>الحسابات</BwsValue>
+ </FrmAccounts>
+ <FrmAccounts>
+   <BwsKey>BWS_ACCOUNTS</BwsKey>
+   <BwsValue>الحسابات</BwsValue>
+ </FrmAccounts>
+ <FrmAccounts>
+   <BwsKey>BWS_ADD</BwsKey>
+   <BwsValue>أضف</BwsValue>
+ </FrmAccounts>
+ <FrmAccounts>
+   <BwsKey>BWS_DELETE</BwsKey>
+   <BwsValue>حذف</BwsValue>
+ </FrmAccounts>
+ <FrmAccounts>
+   <BwsKey>BWS_CLOSE</BwsKey>
+   <BwsValue>إغلاق</BwsValue>
+ </FrmAccounts>
+ <FrmAccounts>
+   <BwsKey>BWS_NOTE</BwsKey>
+   <BwsValue>ملحوظة : استخدام الحسابات أمر اختياري ، فقط لتسهيل الأمور بدلاً من تسجيل الدخول في كل مرة. فإذا وجدت أنه معقد ومن الصعب التعامل تجاهله </BwsValue>
+ </FrmAccounts>
+ <FrmAccounts>
+   <BwsKey>BWS_ACCOUNT_NAME</BwsKey>
+   <BwsValue>اسم الحساب</BwsValue>
+ </FrmAccounts>
+ <FrmAccounts>
+   <BwsKey>BWS_PATH</BwsKey>
+   <BwsValue>المسار</BwsValue>
+ </FrmAccounts>
+ <FrmAbout>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>حول</BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_ABOUT</BwsKey>
+   <BwsValue>حول البرنامج</BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_DESIGN</BwsKey>
+   <BwsValue>هذا التطبيق تم تصميمه وتطويره من قبل MediaPlus (خلدون باز) وبيعه حصريا على Envato Code Canyon </BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_PROVIDE</BwsKey>
+   <BwsValue>يتوفر هذا البرنامج مع شفرة المصدر كاملة ونوعبن من الترخيص</BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_REGULAR_LICENSE</BwsKey>
+   <BwsValue>ترخيص دائم</BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_PRICE_NOTCHARGED</BwsKey>
+   <BwsValue>Use, by you or one client, in a single end product which end users are not charged for. The total price includes the item price and a buyer fee.</BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_EXTENDED_LICENSE</BwsKey>
+   <BwsValue>ترخيص ممتد</BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_PRICE_CHARGED</BwsKey>
+   <BwsValue>Use, by you or one client, in a single end product which end users can be charged for. The total price includes the item price and a buyer fee.</BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_FOLLOW</BwsKey>
+   <BwsValue>تابعنا على</BwsValue>
+ </FrmAbout>
+ <FrmAbout>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmAbout>
+ <MessagesStrings>
+   <BwsKey>BWS_CLEAR_LOG</BwsKey>
+   <BwsValue>هل أنت متأكد من تفريغ السجل؟</BwsValue>
+</MessagesStrings>
+ <MessagesStrings>
+   <BwsKey>BWS_SEND</BwsKey>
+   <BwsValue>إرسال</BwsValue>
+</MessagesStrings>
+ <MessagesStrings>
+   <BwsKey>BWS_PAUSE</BwsKey>
+   <BwsValue>إيقاف مؤقت</BwsValue>
+</MessagesStrings>
+ <MessagesStrings>
+   <BwsKey>BWS_RESUME</BwsKey>
+   <BwsValue>استئناف</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_APPEND_LIST</BwsKey>
+   <BwsValue>هل تريد إلحاق الأرقام للقائمة؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_NUMBERFILTER_NOTAVAILABLE</BwsKey>
+   <BwsValue>فرز الأرقام غير متوفر للنسخة التجريبية</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CONTACTGRABBER_NOTAVAILABLE</BwsKey>
+   <BwsValue>محصل أرقام المجموعات غير متوفر للنسخة التجريبية</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CONTINUE_FROMSTOPED</BwsKey>
+   <BwsValue>هل تريد المتابعة من حيث توقفت؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_UNABLE_CONNECTION</BwsKey>
+   <BwsValue>غير قادر على الاتصال بالخادم للتحقق. يرجى التأكد من اتصالك</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_FIRST_CONV</BwsKey>
+   <BwsValue>البدء في أول محادثة</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_BULK_STOPED</BwsKey>
+   <BwsValue>توقف الإرسال المجمع</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CLOSE_CHROME</BwsKey>
+   <BwsValue>تم الإنتهاء من الإرسال. هل تريد إغلاق المتصفح؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_FINISH_VERIFYING</BwsKey>
+   <BwsValue>الإنتهاء من التحقق من الأرقام.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_SENDING_PROGRESS</BwsKey>
+   <BwsValue>حالة الإرسال</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_BULK_DONE</BwsKey>
+   <BwsValue>تم الإنتهاءمن الإرسال المجمع بنجاح</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CLOSE_APPLICATION</BwsKey>
+   <BwsValue>هل أنت متأكد من الخروج من البرنامج؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_LICENSE_VALID</BwsKey>
+   <BwsValue>الترخيص صالح حتى :</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_LICENSE_NOTVALID</BwsKey>
+   <BwsValue>الترخيص صالح حتى : رقم أو الترخيص غير صالح</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_WHATSAPP_NUMBERS</BwsKey>
+   <BwsValue>أرقام الـWhatsapp</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_SENT</BwsKey>
+   <BwsValue>تم الإرسال</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_PENDING</BwsKey>
+   <BwsValue>معلق</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_DELETE_NUMBERS</BwsKey>
+   <BwsValue>هل أنت متأكد من حذف الأرقام؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CLEAR_LIST</BwsKey>
+   <BwsValue>هل أنت متأكد من إفراغ القائمة؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_NEW_BULK</BwsKey>
+   <BwsValue>هل انت متاكد من إنشاء إرسال مجمع جديد؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_NO_NUMBERS</BwsKey>
+   <BwsValue>لا يوجد أرقام هواتف في قائمة الأرقام ، أضف أرقام أو قم باستيراد من ملف</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_NO_MESSAGE</BwsKey>
+   <BwsValue>لا يوجد رسائل للإرسال، ادخل رسالتك</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_STOP_BULK</BwsKey>
+   <BwsValue>هل أنت متأكد من إيقاف الإرسال المجمع ، إذا توقفت، فلن تتمكن من الاستئناف</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_EXPIRED</BwsKey>
+   <BwsValue>انتهى الترخيص</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_LOCATE_ELEMENT</BwsKey>
+   <BwsValue>غير قادر على تحديد مكان العنصر</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_ERROR_LOADING</BwsKey>
+   <BwsValue>خطأ في التحميل</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CHECKING_DISPLAYED</BwsKey>
+   <BwsValue>خطأ في التحقق من المحادثة المعروضة</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_FINISH_POSTING</BwsKey>
+   <BwsValue>انتهى الإرسال للمجموعات</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_THIRD_STAGE</BwsKey>
+   <BwsValue>المرحلة الثالثة للخطأ:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CHROME_FAILED</BwsKey>
+   <BwsValue>فشل متصفح Chrome في البدء</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_UNABLE_LAUNCH</BwsKey>
+   <BwsValue>غير قادر على تشغيل chrome</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_OLD_INSTANCE</BwsKey>
+   <BwsValue>يبدو وكأنه نسخة قديمة من Whatsapp web يرجى إغلاق الحساب المفتوح  وإعادة تشغيله مرة أخرى ...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_DEMO_VERSION</BwsKey>
+   <BwsValue>نسخة تجريبية</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_SLEEP_FOR</BwsKey>
+   <BwsValue>سكون لمدة:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_SECONDS</BwsKey>
+   <BwsValue>ثواني</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_MESSAGE_SENTTO</BwsKey>
+   <BwsValue>الرسالة أرسلت إلى: </BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_FOURTH_STAGE</BwsKey>
+   <BwsValue>المرحلة الرابعة للخطأ:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_TOTAL</BwsKey>
+   <BwsValue>الإجمالي:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_DUPLICATION</BwsKey>
+   <BwsValue> المكرر:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_VALID_UNTILL</BwsKey>
+   <BwsValue>صالح حتى :</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_INVALID_LICENSE</BwsKey>
+   <BwsValue>مفتاح ترخيص غير صالح</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_LICENSE_ACTIVATED</BwsKey>
+   <BwsValue>تم تفعيل الترخيص بنجاح</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_COUNTRY_CODE</BwsKey>
+   <BwsValue>مفتاح الدولة يجب أن يكون أرقام فقط</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_ERROR_FETCHING</BwsKey>
+   <BwsValue>خطأ بالإستدعاء...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_ENTER_MESSAGE</BwsKey>
+   <BwsValue>أدخل الرسالة أو اختر ملفا للإرسال...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_GROUP_LINKS</BwsKey>
+   <BwsValue>لايود روابط للمجموعات...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_VERIFYING_GROUPS</BwsKey>
+   <BwsValue>يتحقق من المجموعات...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_VERIFY_GROUPS</BwsKey>
+   <BwsValue>مجموعات موثقة</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_VERIFYING_DONE</BwsKey>
+   <BwsValue>تمت عملية التحقق</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_SENDING</BwsKey>
+   <BwsValue>جاري الإرسال </BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_APPEND_CURRENT_LIST</BwsKey>
+   <BwsValue>هل تريد إلحاق قائمتك الحالية؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CONTACTS_GRABBED</BwsKey>
+   <BwsValue>تم تحصيل أرقام الإتصال بنجاح من </BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_NOCONTACTS_FOUND</BwsKey>
+   <BwsValue>لا توجد أرقام...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CONTACTS_COUNT</BwsKey>
+   <BwsValue>إجمالي الأرقام:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_GRABBING_DONE</BwsKey>
+   <BwsValue>تم التحصيل</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_INFORMATION</BwsKey>
+   <BwsValue>معلومات</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CLEAR_LIST</BwsKey>
+   <BwsValue>هل أنت متأكد من تفريغ القائمة؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_ERROR</BwsKey>
+   <BwsValue>خطأ</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_COUNT</BwsKey>
+   <BwsValue>الإجمالي:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_VERIFYING_COMPLETE</BwsKey>
+   <BwsValue>إكتملت عملية التحقق</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_DELETE_ACCOUNT</BwsKey>
+   <BwsValue>هل أنت متأكد من حذف هذا الحساب؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_DELETE_MESSAGE</BwsKey>
+   <BwsValue>هل أنت متأكد من حذف هذة الرسالة؟</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_ADD_ACCOUNT</BwsKey>
+   <BwsValue>يجب أن تضيف حسابات</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_NUMERIC_ACCOUNT</BwsKey>
+   <BwsValue>الحساب لابد أن يكون أرقام</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CHROME_CLOSED</BwsKey>
+   <BwsValue>تم إغلاق Chrome غير قادر على إضافة حساب يرجى المحاولة مرة أخرى.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_ACCOUNT_ADDED</BwsKey>
+   <BwsValue>تمت إضافة الحسا بنجاح، يمكنك أن تغلق المتصفح</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_INVALID_ACCOUNT</BwsKey>
+   <BwsValue>اسم حساب غير صالح من الممكن أن يحتوى على حروف وأرقام بدون مسافات أو رموز</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+   <BwsKey>BWS_CHROME_SESSION</BwsKey>
+   <BwsValue>من فضلك أغلق جلسة Chrome الحالية</BwsValue>
+</MessagesStrings>
+<FrmLanguage>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>اللغة</BwsValue>
+ </FrmLanguage>
+<FrmLanguage>
+   <BwsKey>BWS_CANCEL</BwsKey>
+   <BwsValue>إلغاء</BwsValue>
+ </FrmLanguage>
+ <FrmLanguage>
+   <BwsKey>BWS_SELECT_LANGUAGE</BwsKey>
+   <BwsValue>اختر لغة</BwsValue>
+ </FrmLanguage>
+<FrmLanguage>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmLanguage>
+ <FrmTheme>
+   <BwsKey>BWS_TITLE</BwsKey>
+   <BwsValue>المظهر</BwsValue>
+ </FrmTheme>
+ <FrmTheme>
+   <BwsKey>BWS_MENU</BwsKey>
+   <BwsValue>لون القوائم || الأزرار</BwsValue>
+ </FrmTheme>
+ <FrmTheme>
+   <BwsKey>BWS_SUBMENU</BwsKey>
+   <BwsValue>لون القوائم الفرعية</BwsValue>
+ </FrmTheme>
+ <FrmTheme>
+   <BwsKey>BWS_OK</BwsKey>
+   <BwsValue>موافق</BwsValue>
+ </FrmTheme>
+</NewDataSet>

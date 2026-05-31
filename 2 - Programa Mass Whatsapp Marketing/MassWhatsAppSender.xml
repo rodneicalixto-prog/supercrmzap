@@ -1,0 +1,196 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+MassWhatsAppSender
+</name>
+</assembly>
+<members>
+<member name="T:BulkWhatsappSender.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.CaptionSendert">
+<summary>
+  Looks up a localized string similar to function CaptionSender(body){
+
+for (let ac of document.getElementsByClassName(&quot;selectable-text&quot;))
+{
+    if (ac.getAttribute(&quot;data-tab&quot;)==&quot;6&quot;){
+        ac.innerText=body + &quot;.&quot;;
+        ac.id=&quot;textbody&quot;;
+    }
+} 
+} CaptionSender(&quot;{{Body}}&quot;).
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.ClickSend">
+<summary>
+  Looks up a localized string similar to     for (let btnspan of document.getElementsByTagName(&quot;span&quot;))
+    {
+        if(btnspan.getAttribute(&quot;data-icon&quot;)==&quot;send&quot;)
+        {
+        btnspan.click();
+        }
+    }.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.CloseInvalid">
+<summary>
+  Looks up a localized string similar to function closeInvalid() {
+  let divs = document.getElementsByTagName(&quot;div&quot;);
+  for (div of divs) {
+    if (div.getAttribute(&quot;data-animate-modal-popup&quot;) == &quot;true&quot;) {
+      let subdivs = div.getElementsByTagName(&quot;div&quot;);
+      for (let subdiv of subdivs) {
+
+        subdiv.click();
+
+      }
+
+    }
+  }
+} closeInvalid().
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.InitiateMessage">
+<summary>
+  Looks up a localized string similar to function InitiateMessage(num,message){
+    var senderLink = document.getElementById(&quot;senderLink&quot;);
+    senderLink.setAttribute(&quot;href&quot;,`https://api.whatsapp.com/send?phone=${num}&amp;text=${message}`);
+    senderLink.click();
+
+}InitiateMessage(&quot;{{NUM}}&quot;,&quot;{{MESSAGE}}&quot;);.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.InitiateSender">
+<summary>
+  Looks up a localized string similar to function InitiateSender(){
+    var app =document.getElementsByTagName(&quot;header&quot;)[0];
+    var a=document.createElement(&quot;a&quot;);
+    a.id=&quot;senderLink&quot;;
+    app.appendChild(a);
+}InitiateSender();.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.IsInvalid">
+<summary>
+  Looks up a localized string similar to function isInvalid() {
+  let divs = document.getElementsByTagName(&quot;div&quot;);
+  for (div of divs) {
+    if (div.getAttribute(&quot;data-animate-modal-popup&quot;) == &quot;true&quot;) {
+      return true;
+    }
+  }
+  return false;
+} return isInvalid();.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.IsLoggedIn">
+<summary>
+  Looks up a localized string similar to function IsLoggedIn(){
+   for( let span of document.getElementsByTagName(&quot;span&quot;))
+   {
+      if (span.getAttribute(&quot;data-icon&quot;)===&quot;default-user&quot;) 
+      {
+         return true ;
+      }
+   }
+   return false;
+}
+return IsLoggedIn();.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.JavaScriptInject">
+<summary>
+  Looks up a localized string similar to (function(){var StatusCode={STALE_ELEMENT_REFERENCE:10,UNKNOWN_ERROR:13,};var NodeType={ELEMENT:1,DOCUMENT:9,};var ELEMENT_KEY=&apos;ELEMENT&apos;;var w3cEnabled=!1;var SHADOW_DOM_ENABLED=typeof ShadowRoot===&apos;function&apos;;function generateUUID(){var array=new Uint8Array(16);window.crypto.getRandomValues(array);array[6]=0x40|(array[6]&amp;0x0f);array[8]=0x80|(array[8]&amp;0x3f);var UUID=&quot;&quot;;for(var i=0;i&lt;16;i++){var temp=array[i].toString(16);if(temp.length&lt;2)
+temp=&quot;0&quot;+temp;UUID+=temp;if(i==3||i==5||i==7||i==9)
+UUID+=&quot;-&quot;}
+retu [rest of string was truncated]&quot;;.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.JsExec">
+<summary>
+  Looks up a localized string similar to document.getElementsByClassName(&quot;_1Ra05&quot;)[0].innerHTML=&quot;&lt;a href=&apos;#&apos; id=&apos;sender&apos; class=&apos;executor&apos;&gt;.&lt;/a&gt;&quot;.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.logo">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.Report">
+<summary>
+  Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+&lt;!-- saved from url=(0089)file:///C:/Users/khillo_baz/Desktop/New%20folder%20(7)/WindowsApplication1/UpgradeLog.htm --&gt;
+&lt;html xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot;&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-16LE&quot;&gt;
+      &lt;meta content=&quot;en-us&quot; http-equiv=&quot;Content-Language&quot;&gt;
+      &lt;title _locid=&quot;ConversionReport0&quot;&gt;
+         Bulk WhatsApp Sender - Report
+      &lt;/title&gt;
+      &lt;style&gt; 
+         /* Body style, for the entire document */
+       [rest of string was truncated]&quot;;.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.test">
+<summary>
+  Looks up a localized string similar to (function() { // Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+/**
+ * Enum for WebDriver status codes.
+ * @enum {number}
+ */
+var StatusCode = {
+  STALE_ELEMENT_REFERENCE: 10,
+  UNKNOWN_ERROR: 13,
+};
+
+/**
+ * Enum for node types.
+ * @enum {number}
+ */
+var NodeType = {
+  ELEMENT: 1,
+  DOCUMENT: 9,
+};
+
+/**
+ * Dictionary key to use for holding an element ID.
+ * @const
+ [rest of string was truncated]&quot;;.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.WAPI">
+<summary>
+  Looks up a localized string similar to const _0x5493=[&apos;create&apos;,&apos;downloadFile&apos;,&apos;addEventListener&apos;,&apos;promoteParticipantAdminGroup&apos;,&apos;getBufferedNewMessages&apos;,&apos;prototype&apos;,&apos;apply&apos;,&apos;_newMessagesBuffer&apos;,&apos;string&apos;,&apos;stale&apos;,&apos;messages&apos;,&apos;stickers&apos;,&apos;stringify&apos;,&apos;width&apos;,&apos;ServiceWorker&apos;,&apos;keys&apos;,&apos;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&apos;,&apos;sendDeleteMsgs&apos;,&apos;image/webp&apos;,&apos;contactUnblock&apos;,&apos;isMe&apos;,&apos;data:image/webp;base64,&apos;,&apos;loadEarlierMsgs&apos;,&apos;raw&apos;,&apos;_quotedMsgObj&apos;,&apos;toUpperCase&apos;,&apos;Wap&apos;,&apos;function&apos;,&apos;profilePicThumb&apos;,&apos;send&apos;,&apos;pageunload&apos;,&apos;update&apos;,&apos;default&apos;,&apos;S [rest of string was truncated]&quot;;.
+</summary>
+</member>
+<member name="P:BulkWhatsappSender.My.Resources.Resources.WhatsAppApi">
+<summary>
+  Looks up a localized string similar to const _0x5493=[&apos;create&apos;,&apos;downloadFile&apos;,&apos;addEventListener&apos;,&apos;promoteParticipantAdminGroup&apos;,&apos;getBufferedNewMessages&apos;,&apos;prototype&apos;,&apos;apply&apos;,&apos;_newMessagesBuffer&apos;,&apos;string&apos;,&apos;stale&apos;,&apos;messages&apos;,&apos;stickers&apos;,&apos;stringify&apos;,&apos;width&apos;,&apos;ServiceWorker&apos;,&apos;keys&apos;,&apos;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&apos;,&apos;sendDeleteMsgs&apos;,&apos;image/webp&apos;,&apos;contactUnblock&apos;,&apos;isMe&apos;,&apos;data:image/webp;base64,&apos;,&apos;loadEarlierMsgs&apos;,&apos;raw&apos;,&apos;_quotedMsgObj&apos;,&apos;toUpperCase&apos;,&apos;Wap&apos;,&apos;function&apos;,&apos;profilePicThumb&apos;,&apos;send&apos;,&apos;pageunload&apos;,&apos;update&apos;,&apos;default&apos;,&apos;S [rest of string was truncated]&quot;;.
+</summary>
+</member>
+<member name="T:BulkWhatsappSender.ModuleConfig.Brand">
+ <summary>
+  Brand configuration
+ </summary>
+</member>
+</members>
+</doc>

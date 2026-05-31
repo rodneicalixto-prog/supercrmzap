@@ -1,0 +1,1296 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+<FrmMain>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>En vrac WhatsApp Sender</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_LICENSE</BwsKey>
+  <BwsValue>Licence valide jusqu'au:</BwsValue>
+</FrmMain>
+ <FrmMain>
+  <BwsKey>BWS_FILE</BwsKey>
+  <BwsValue>| Fichier</BwsValue>
+</FrmMain>
+   <FrmMain>
+  <BwsKey>BWS_NEW_BULK</BwsKey>
+  <BwsValue>Nouveau bloc</BwsValue>
+</FrmMain>
+    <FrmMain>
+  <BwsKey>BWS_NEW_GROUP</BwsKey>
+  <BwsValue>Groupes nouveau poste</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_IMPORT_NUMBERS</BwsKey>
+  <BwsValue>Numéros d'importation</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_FROM_FILES</BwsKey>
+  <BwsValue>De fichiers</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_MANUAL</BwsKey>
+  <BwsValue>Manuel</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_NUMBER_GENERATOR</BwsKey>
+  <BwsValue>Number Generator</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_IMPORT_MESSAGE</BwsKey>
+  <BwsValue>Importer un message</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_EXPORT_NUMBERS</BwsKey>
+  <BwsValue>Numéros d'exportation</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_SAVE_MESSAGE</BwsKey>
+  <BwsValue>Enregistrer le message</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_EXIT</BwsKey>
+  <BwsValue>Quitter</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_EDIT</BwsKey>
+  <BwsValue>| Modifier</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_CLEAR_NUMBERS</BwsKey>
+  <BwsValue>Effacer la liste des numéros</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_CLEAR_MESSAGE</BwsKey>
+  <BwsValue>Effacer un message</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_CLEAR_LOG</BwsKey>
+  <BwsValue>Effacer le journal</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_ACCOUNTS</BwsKey>
+  <BwsValue>Comptes</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_MANAGE_ACCOUNTS</BwsKey>
+  <BwsValue>Gérer les comptes</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_TOOLS</BwsKey>
+  <BwsValue>Outils</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_WHATSAPPNUMBER_FILTER</BwsKey>
+  <BwsValue>Filtre WhatsAppNumber</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_GROUPS_CONTACTS</BwsKey>
+  <BwsValue>Groupes les contacts Grabber</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_SETTINGS</BwsKey>
+  <BwsValue>Paramètres</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_THEME</BwsKey>
+  <BwsValue>Thème</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_LANGUAGE</BwsKey>
+  <BwsValue>Langue</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_HELP</BwsKey>
+  <BwsValue>Aide</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_VIEW_HELP</BwsKey>
+  <BwsValue>Voir Aide</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_UPDATE_LICENSE</BwsKey>
+  <BwsValue>Licence de mise à jour</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_ABOUT</BwsKey>
+  <BwsValue>A propos</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_NEW</BwsKey>
+  <BwsValue>Nouveau</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_IMPORTS</BwsKey>
+  <BwsValue>Importations</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_EXPORTS</BwsKey>
+  <BwsValue>Exportations</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_CLEAR</BwsKey>
+  <BwsValue>Effacer</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_DELETE</BwsKey>
+  <BwsValue>Supprimer</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_WHATSAPP_NUMBERS</BwsKey>
+  <BwsValue>Nombres WhatsApp (0)</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_MESSAGE</BwsKey>
+  <BwsValue>MESSAGE</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_ADD_MESSAGE</BwsKey>
+  <BwsValue>Ajouter un message</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_DELETE_MESSAGE</BwsKey>
+  <BwsValue>Supprimer le message</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_MESSAGE1</BwsKey>
+  <BwsValue>Message 1</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_NUMBERS_FILTER</BwsKey>
+  <BwsValue>Références de filtre</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_GROUP_GRABBER</BwsKey>
+  <BwsValue>Grabber Groupe</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_ACCOUNTS</BwsKey>
+  <BwsValue>Comptes</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_SETTINGS</BwsKey>
+  <BwsValue>Paramètres</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_SENDING_LOG</BwsKey>
+  <BwsValue>Envoi Log</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_EMOJI</BwsKey>
+  <BwsValue>EMOJI</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_FULL_NAME</BwsKey>
+  <BwsValue>Nom complet</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_FIRST_NAME</BwsKey>
+  <BwsValue>Prénom</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_LAST_NAME</BwsKey>
+  <BwsValue>Nom</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_RANDOM_TAG</BwsKey>
+  <BwsValue>Tag aléatoire</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_ATTACH</BwsKey>
+  <BwsValue>Joindre des fichiers || Photos</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_ADD_FILES</BwsKey>
+  <BwsValue>Ajouter des fichiers ou des photos</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_CLEAR</BwsKey>
+  <BwsValue>Effacer</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_SENDING_PROGRESS</BwsKey>
+  <BwsValue>Envoi Progress: 0/0</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_TURBO</BwsKey>
+  <BwsValue>mode Turbo (Aucun fichier)</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_ADVANCED_SENDING</BwsKey>
+  <BwsValue>Paramètres avancés Envoi</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_END_BULK</BwsKey>
+  <BwsValue>VRAC END</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_SEND</BwsKey>
+  <BwsValue>ENVOYER</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_NAME</BwsKey>
+  <BwsValue>Nom</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_NUMBER</BwsKey>
+  <BwsValue>Nombre</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_STATUS</BwsKey>
+  <BwsValue>État</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_FILE_NAME</BwsKey>
+  <BwsValue>Nom du fichier</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_TYPE</BwsKey>
+  <BwsValue>Type</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_CAPTION</BwsKey>
+  <BwsValue>Légende</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_IMPORT_FROMFILES</BwsKey>
+  <BwsValue>Importer à partir de fichiers</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_MANUAL_IMPORTS</BwsKey>
+  <BwsValue>Importations Manuel</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_CLEAR_LIST</BwsKey>
+  <BwsValue>Effacer la liste</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_SET_CAPTION</BwsKey>
+  <BwsValue>Set Légende</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_DELETE_FILE</BwsKey>
+  <BwsValue>Supprimer le fichier</BwsValue>
+</FrmMain>
+<FrmMain>
+  <BwsKey>BWS_OPEN_FILE</BwsKey>
+  <BwsValue>Ouvrir un fichier</BwsValue>
+</FrmMain>
+<FrmSetCaption>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Set Légende</BwsValue>
+</FrmSetCaption>
+<FrmSetCaption>
+  <BwsKey>BWS_FULL_NAME</BwsKey>
+  <BwsValue>Nom complet</BwsValue>
+</FrmSetCaption>
+<FrmSetCaption>
+  <BwsKey>BWS_FIRST_NAME</BwsKey>
+  <BwsValue>Prénom</BwsValue>
+</FrmSetCaption>
+<FrmSetCaption>
+  <BwsKey>BWS_LAST_NAME</BwsKey>
+  <BwsValue>Nom</BwsValue>
+</FrmSetCaption>
+<FrmSetCaption>
+  <BwsKey>BWS_EMOJI</BwsKey>
+  <BwsValue>EMOJI</BwsValue>
+</FrmSetCaption>
+<FrmSetCaption>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmSetCaption>
+<FrmSetCaption>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmSetCaption>
+<FrmOptions>
+  <BwsKey>BWS_OPTIONS</BwsKey>
+  <BwsValue>Options</BwsValue>
+</FrmOptions>
+<FrmOptions>
+  <BwsKey>BWS_DELAY</BwsKey>
+  <BwsValue>Délai entre les messages</BwsValue>
+</FrmOptions>
+<FrmOptions>
+  <BwsKey>BWS_DELETE_MESSAGE</BwsKey>
+  <BwsValue>Supprimer le message après l'envoi</BwsValue>
+</FrmOptions>
+<FrmOptions>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmOptions>
+<FrmOptions>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmOptions>
+<FrmNumberGenerator>
+  <BwsKey>BWS_GENERATE_NUMBER</BwsKey>
+  <BwsValue>Générer des nombres</BwsValue>
+</FrmNumberGenerator>
+<FrmNumberGenerator>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Générer des nombres</BwsValue>
+</FrmNumberGenerator>
+<FrmNumberGenerator>
+  <BwsKey>BWS_AUTO_GENERATE</BwsKey>
+  <BwsValue>Générer automatiquement les numéros mobiles</BwsValue>
+</FrmNumberGenerator>
+<FrmNumberGenerator>
+  <BwsKey>BWS_START</BwsKey>
+  <BwsValue>Démarrer Nombre</BwsValue>
+</FrmNumberGenerator>
+<FrmNumberGenerator>
+  <BwsKey>BWS_START_NUMBER</BwsKey>
+  <BwsValue>numéro de départ doit être un format internation</BwsValue>
+</FrmNumberGenerator>
+<FrmNumberGenerator>
+  <BwsKey>BWS_COUNT</BwsKey>
+  <BwsValue>Count</BwsValue>
+</FrmNumberGenerator>
+<FrmNumberGenerator>
+  <BwsKey>BWS_COUNT_GENERATED</BwsKey>
+  <BwsValue>Nombre de numéros générés</BwsValue>
+</FrmNumberGenerator>
+<FrmNumberGenerator>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmNumberGenerator>
+<FrmNumberGenerator>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmNumberGenerator>
+<FrmMustKnow>
+  <BwsKey>BWS_MUST_KNOW</BwsKey>
+  <BwsValue>Must Know !!</BwsValue>
+</FrmMustKnow>
+<FrmMustKnow>
+  <BwsKey>BWS_IMPORTANT</BwsKey>
+  <BwsValue>Informations importantes que vous devez savoir avant d'envoyer</BwsValue>
+</FrmMustKnow>
+<FrmMustKnow>
+  <BwsKey>BWS_KEEP_APP</BwsKey>
+  <BwsValue>Garder l'application ouverte lors de l'envoi jusqu'à ce que vous assurer que tous les messages sont envoyés à partir de votre mobile.</BwsValue>
+</FrmMustKnow>
+<FrmMustKnow>
+  <BwsKey>BWS_ENSURE</BwsKey>
+  <BwsValue>Assurez-vous que votre mobile et votre PC est toujours connecté à Internet lors de l'envoi.</BwsValue>
+</FrmMustKnow>
+<FrmMustKnow>
+  <BwsKey>BWS_CLEAR_WHATSAPP</BwsKey>
+  <BwsValue>Effacer l'historique des conversations WhatsApp après 1000 à 2000 messages (selon votre matériel combiné) pour maintenir lisse evrything.</BwsValue>
+</FrmMustKnow>
+<FrmMustKnow>
+  <BwsKey>BWS_BULK_WHATSAPP4</BwsKey>
+  <BwsValue>Sender en vrac WhatsApp a tendance à envoyer des messages à votre téléphone, et non responsable sur la livraison.
+</BwsValue>
+</FrmMustKnow>
+<FrmMustKnow>
+  <BwsKey>BWS_BULK_WHATSAPP5</BwsKey>
+  <BwsValue>expéditeur en vrac WhatsApp pas responsable si le compte de WhatsApp est désactivé ou interdit.</BwsValue>
+</FrmMustKnow>
+<FrmMustKnow>
+  <BwsKey>BWS_DONT_SHOW_AGAIN</BwsKey>
+  <BwsValue>Dont't montrent à nouveau.</BwsValue>
+</FrmMustKnow>
+<FrmMustKnow>
+  <BwsKey>BWS_CLOSE</BwsKey>
+  <BwsValue>Fermer</BwsValue>
+</FrmMustKnow>
+<FrmManualImports>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Manuel Importer</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_MANUAL_IMPORT</BwsKey>
+  <BwsValue>Manuel Importer</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_ENTER_MOBILE</BwsKey>
+  <BwsValue>Entrer numéro de téléphone mobile, un numéro par ligne</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_ENTER_MOBILENUMBERS</BwsKey>
+  <BwsValue>Entrez les numéros mobiles</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_NAME_NUMBER</BwsKey>
+  <BwsValue>Vous pouvez nommer par saisir le nom puis la virgule mobile (nom, numéro)</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_REMOVE_DUPLICATION</BwsKey>
+  <BwsValue>Supprimer la duplication</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_IMPORT</BwsKey>
+  <BwsValue>Importer</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_NAME</BwsKey>
+  <BwsValue>Nom</BwsValue>
+</FrmManualImports>
+<FrmManualImports>
+  <BwsKey>BWS_NUMBERS</BwsKey>
+  <BwsValue>Numbers</BwsValue>
+</FrmManualImports>
+<FrmManualFilterImport>
+  <BwsKey>BWS_IMPORT_MANUAL</BwsKey>
+  <BwsValue>Manuel d'importation</BwsValue>
+</FrmManualFilterImport>
+<FrmManualFilterImport>
+  <BwsKey>BWS_ENTER_PASTE</BwsKey>
+  <BwsValue>Entrer ou le numéro de pâte sur champ de saisie</BwsValue>
+</FrmManualFilterImport>
+<FrmManualFilterImport>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmManualFilterImport>
+<FrmManualFilterImport>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmManualFilterImport>
+<FrmLicense>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Activer Sender Bulk WhatsApp</BwsValue>
+</FrmLicense>
+<FrmLicense>
+  <BwsKey>BWS_REQUEST_KEY</BwsKey>
+  <BwsValue>Demande clé</BwsValue>
+</FrmLicense>
+<FrmLicense>
+  <BwsKey>BWS_PURCHASING_PROOF</BwsKey>
+  <BwsValue>S'il vous plaît envoyez-nous votre clé de demande avec votre purshasing preuve</BwsValue>
+</FrmLicense>
+<FrmLicense>
+  <BwsKey>BWS_COPY</BwsKey>
+  <BwsValue>Copier</BwsValue>
+</FrmLicense>
+<FrmLicense>
+  <BwsKey>BWS_LICENSE_KEY</BwsKey>
+  <BwsValue>clé de licence</BwsValue>
+</FrmLicense>
+<FrmLicense>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmLicense>
+<FrmLicense>
+  <BwsKey>BWS_ACTIVATE</BwsKey>
+  <BwsValue>Activer</BwsValue>
+</FrmLicense>
+<FrmImportFromFiles>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Importer à partir du fichier</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_IMPORT_FILE</BwsKey>
+  <BwsValue>Importer à partir du fichier</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_IMPORT_NUMBER</BwsKey>
+  <BwsValue>Numéro d'importation de fichiers texte ou CSV</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_SELECT</BwsKey>
+  <BwsValue>Sélectionner le fichier à importer</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_FORMAT_SAMPLES</BwsKey>
+  <BwsValue>Fichiers échantillons Format</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_COUNTRY_CODE</BwsKey>
+  <BwsValue>Insérer le code de pays à la colonne Nombre</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_REMOVE_DUPLICATION</BwsKey>
+  <BwsValue>Supprimer la duplication</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_IMPORT</BwsKey>
+  <BwsValue>Importer</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_NAME</BwsKey>
+  <BwsValue>Nom</BwsValue>
+</FrmImportFromFiles>
+<FrmImportFromFiles>
+  <BwsKey>BWS_NUMBERS</BwsKey>
+  <BwsValue>Numbers</BwsValue>
+</FrmImportFromFiles>
+<FrmGroupsSender>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Groupe Affiche</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_IMPORT_GROUPS</BwsKey>
+  <BwsValue>Groupes lien Importer</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_IMPORT_FROM_FILE</BwsKey>
+  <BwsValue>Importer à partir du fichier</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_SCRAP</BwsKey>
+  <BwsValue>Groupes de ferraille Par Catégories</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_EXTRACT</BwsKey>
+  <BwsValue>Extrait</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_GROUPS_LIST</BwsKey>
+  <BwsValue>Liste Groupes (0)</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_VERIFIED_GROUPS</BwsKey>
+  <BwsValue>groupes contrôlés (0)</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_SAVE</BwsKey>
+  <BwsValue>Enregistrer</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_CLEAR</BwsKey>
+  <BwsValue>Effacer</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_MESSAGE</BwsKey>
+  <BwsValue>MESSAGE</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_ATTACH</BwsKey>
+  <BwsValue>Joindre des fichiers || Photos</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_ADD</BwsKey>
+  <BwsValue>Ajouter des fichiers ou photos</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_CLEAR1</BwsKey>
+  <BwsValue>Effacer</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_VERIFY_GROUPS</BwsKey>
+  <BwsValue>Vérifier Groupes</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_SENDING</BwsKey>
+  <BwsValue>Envoi</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_STOP</BwsKey>
+  <BwsValue>Arrêter</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_SEND</BwsKey>
+  <BwsValue>Envoyer</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_GROUP_NAME</BwsKey>
+  <BwsValue>Nom du groupe</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_GROUP_LINK</BwsKey>
+  <BwsValue>Link Group</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_STATUS</BwsKey>
+  <BwsValue>État</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_FILE_NAME</BwsKey>
+  <BwsValue>Nom du fichier</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_TYPE</BwsKey>
+  <BwsValue>Type</BwsValue>
+</FrmGroupsSender>
+<FrmGroupsSender>
+  <BwsKey>BWS_CAPTION</BwsKey>
+  <BwsValue>Légende</BwsValue>
+</FrmGroupsSender>
+<FrmGrabber>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Grabber</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_CONTACT_GRABBER</BwsKey>
+  <BwsValue>Contact Grabber</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_GRAB_CONT</BwsKey>
+  <BwsValue>Contacts Grab des groupes sélectionnés</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_OPEN_WHATSAPP</BwsKey>
+  <BwsValue>Ouvrir WhatsApp</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_GRAB_CONTACTS</BwsKey>
+  <BwsValue>Contacts Grab</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_CLOSE</BwsKey>
+  <BwsValue>Fermer</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_CLEAR</BwsKey>
+  <BwsValue>Effacer</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_SAVE</BwsKey>
+  <BwsValue>Enregistrer</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_ADD</BwsKey>
+  <BwsValue>Ajouter à la liste</BwsValue>
+</FrmGrabber>
+<FrmGrabber>
+  <BwsKey>BWS_CONTACTS_COUNT</BwsKey>
+  <BwsValue>Contacts comptent: 0</BwsValue>
+</FrmGrabber>
+<FrmFilter>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Filtres</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_WHATSAPP_FILTER</BwsKey>
+  <BwsValue>Filtre WhatsApp</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_FILTER_NUMBERS</BwsKey>
+  <BwsValue>Filtrer les nombres WhatsApp</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_ALL_NUMBERS</BwsKey>
+  <BwsValue>Tous les numéros</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_WHATSAPP_ACC</BwsKey>
+  <BwsValue>WhatsApp compte</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_NONWHATSAPP_ACC</BwsKey>
+  <BwsValue>NonWhatsapp compte</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_FROM_FILE</BwsKey>
+  <BwsValue>À partir du fichier</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_MANUAL</BwsKey>
+  <BwsValue>Manuel</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_NUMBER_GENERATOR</BwsKey>
+  <BwsValue>Number Generator</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_ADD_TOSENDER</BwsKey>
+  <BwsValue>Ajouter à l'expéditeur</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_CLEAR</BwsKey>
+  <BwsValue>Effacer</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_SAVE</BwsKey>
+  <BwsValue>Enregistrer</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_FAST</BwsKey>
+  <BwsValue>Rapide</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_ACCURATE</BwsKey>
+  <BwsValue>Précision</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_STOP</BwsKey>
+  <BwsValue>Arrêter</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_START</BwsKey>
+  <BwsValue>Filtrage Démarrer</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_NOTE</BwsKey>
+  <BwsValue>S'il vous plaît garder à l'esprit que le processus de filtrage est plus dangereux que l'envoi, donc s'il vous plaît soyez prudent lorsque vous utilisez, et toujours garder votre compte envoyer en toute sécurité à des destinataires connus qui interagissent avec vos messages, ce qui est donner à votre compte plus de crédibilité et de réduire risque de blocage.</BwsValue>
+</FrmFilter>
+<FrmFilter>
+  <BwsKey>BWS_PROGRESS</BwsKey>
+  <BwsValue>Progrès</BwsValue>
+</FrmFilter>
+<FrmFilessmaplesPreview>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Contact avec fichier Nom</BwsValue>
+</FrmFilessmaplesPreview>
+<FrmFilessmaplesPreview>
+  <BwsKey>BWS_FILE_WITHNAME</BwsKey>
+  <BwsValue>Contact avec fichier Nom</BwsValue>
+</FrmFilessmaplesPreview>
+<FrmFilessmaplesPreview>
+  <BwsKey>BWS_NOTE</BwsKey>
+  <BwsValue>Lorsque le fichier contient 2 colonnes, il considérera la première colonne comme Nom du contact et deuxième colonnes comme un numéro de contact si le fichier contient seulement 1 colonne, il sera considéré comme un numéro de contact.
+Notez que si le fichier contient plus de 2 colonnes les 2 premières colonnes seront prises en considération que</BwsValue>
+</FrmFilessmaplesPreview>
+<FrmFilessmaplesPreview>
+  <BwsKey>BWS_CLOSE</BwsKey>
+  <BwsValue>Fermer</BwsValue>
+</FrmFilessmaplesPreview>
+<FrmAdvanced>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Paramètres d'envoi</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_WHATSAPP_ACC</BwsKey>
+  <BwsValue>Familiers WhatsApp Comptes</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_MESSAGES_DICT</BwsKey>
+  <BwsValue>Messages Dictionnaire (aléatoire sélectionnés et envoyés aux comptes familiers)</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_CONNECTION_SPEED</BwsKey>
+  <BwsValue>Vitesse de connexion</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_DELAY</BwsKey>
+  <BwsValue>Délai entre les messages</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_WAIT</BwsKey>
+  <BwsValue>Attendez</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_SECONDS</BwsKey>
+  <BwsValue>secondes</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_ACTIVATE_DIALOG</BwsKey>
+  <BwsValue>Activation du dialogue avec les comptes familiers</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_AFTER</BwsKey>
+  <BwsValue>après</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_MESSAGES</BwsKey>
+  <BwsValue>Messages</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_SEC_BETWEEN</BwsKey>
+  <BwsValue>secondes entre les messages</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_COUNT</BwsKey>
+  <BwsValue>Count</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_ACTIVATE_SLEEP</BwsKey>
+  <BwsValue>Activer sommeil entre l'envoi</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_FOR</BwsKey>
+  <BwsValue>pour</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_SENDING</BwsKey>
+  <BwsValue>Type d'envoi</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_SEND</BwsKey>
+  <BwsValue>Envoyer clés (sensation de frappe)</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_TEXT</BwsKey>
+  <BwsValue>Texte Injecter</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_ADD</BwsKey>
+  <BwsValue>Ajouter</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_DELETE</BwsKey>
+  <BwsValue>Supprimer</BwsValue>
+</FrmAdvanced>
+<FrmAdvanced>
+  <BwsKey>BWS_CLOSE</BwsKey>
+  <BwsValue>Fermer</BwsValue>
+</FrmAdvanced>
+<FrmAddMessage>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Ajouter un message</BwsValue>
+</FrmAddMessage>
+<FrmAddMessage>
+  <BwsKey>BWS_MESSAGE</BwsKey>
+  <BwsValue>Message</BwsValue>
+</FrmAddMessage>
+<FrmAddMessage>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmAddMessage>
+<FrmAddMessage>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmAddMessage>
+<FrmAddFamiliarAccount>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Ajouter WhatsApp Familier compte</BwsValue>
+</FrmAddFamiliarAccount>
+<FrmAddFamiliarAccount>
+  <BwsKey>BWS_WHATSAPP_ACCOUNT</BwsKey>
+  <BwsValue>WhatsApp Numéro de compte</BwsValue>
+</FrmAddFamiliarAccount>
+<FrmAddFamiliarAccount>
+  <BwsKey>BWS_ENSURANCE</BwsKey>
+  <BwsValue>S'il vous plaît assurez-vous que le compte que vous ajoutez c'est un compte WhatsApp et il est conscient qu'il va recevoir des messages de votre part</BwsValue>
+</FrmAddFamiliarAccount>
+<FrmAddFamiliarAccount>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmAddFamiliarAccount>
+<FrmAddFamiliarAccount>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmAddFamiliarAccount>
+<FrmAdd>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Ajouter un code Pays</BwsValue>
+</FrmAdd>
+<FrmAdd>
+  <BwsKey>BWS_COUNTRY_CODE</BwsKey>
+  <BwsValue>Code de pays</BwsValue>
+</FrmAdd>
+<FrmAdd>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmAdd>
+<FrmAdd>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmAdd>
+<FrmAccountSwticher>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Compte Switcher</BwsValue>
+</FrmAccountSwticher>
+<FrmAccountSwticher>
+  <BwsKey>BWS_QUESTION</BwsKey>
+  <BwsValue>Que voulez-vous faire?</BwsValue>
+</FrmAccountSwticher><FrmAccountSwticher>
+  <BwsKey>BWS_SNEDFROM_NEW</BwsKey>
+  <BwsValue>Envoyer de la nouvelle nouvelle session (Exiger une connexion)</BwsValue>
+</FrmAccountSwticher>
+<FrmAccountSwticher>
+  <BwsKey>BWS_SENDFROM_SAVED</BwsKey>
+  <BwsValue>Envoyer des comptes enregistrés (ne nécessitent pas login)</BwsValue>
+</FrmAccountSwticher>
+<FrmAccountSwticher>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmAccountSwticher>
+<FrmAccountSwticher>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmAccountSwticher>
+<FrmAccounts>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Comptes</BwsValue>
+</FrmAccounts>
+<FrmAccounts>
+  <BwsKey>BWS_ACCOUNTS</BwsKey>
+  <BwsValue>Comptes</BwsValue>
+</FrmAccounts>
+<FrmAccounts>
+  <BwsKey>BWS_ADD</BwsKey>
+  <BwsValue>Ajouter</BwsValue>
+</FrmAccounts>
+<FrmAccounts>
+  <BwsKey>BWS_DELETE</BwsKey>
+  <BwsValue>Supprimer</BwsValue>
+</FrmAccounts>
+<FrmAccounts>
+  <BwsKey>BWS_CLOSE</BwsKey>
+  <BwsValue>Fermer</BwsValue>
+</FrmAccounts>
+<FrmAccounts>
+  <BwsKey>BWS_NOTE</BwsKey>
+  <BwsValue>Notez que: l'utilisation de comptes est facultative, pour faciliter les choses au lieu de se connecter evrytime. donc si vous trouvez qu'il est complexe et difficile à gérer, il oublie simplement</BwsValue>
+</FrmAccounts>
+<FrmAccounts>
+  <BwsKey>BWS_ACCOUNT_NAME</BwsKey>
+  <BwsValue>AccountName</BwsValue>
+</FrmAccounts>
+<FrmAccounts>
+  <BwsKey>BWS_PATH</BwsKey>
+  <BwsValue>Chemin</BwsValue>
+</FrmAccounts>
+<FrmAbout>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>A propos</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_ABOUT</BwsKey>
+  <BwsValue>A propos de l'expéditeur en bloc WhatsApp</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_DESIGN</BwsKey>
+  <BwsValue>Cette application a été conçue et développée par MediaPlus (Baz Khaldoun) et vendu exclusivement sur le code Envato Canyon</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_PROVIDE</BwsKey>
+  <BwsValue>Cette application est fournie avec le code source complet et 2 types de licence</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_REGULAR_LICENSE</BwsKey>
+  <BwsValue>Licence ordinaire</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_PRICE_NOTCHARGED</BwsKey>
+  <BwsValue>Utilisation, par vous ou un client, en un seul produit final que les utilisateurs finaux ne sont pas facturés. Le prix total comprend le prix de l'article et les frais de l'acheteur.</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_EXTENDED_LICENSE</BwsKey>
+  <BwsValue>Licence étendue</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_PRICE_CHARGED</BwsKey>
+  <BwsValue>Utilisation, par vous ou un client, en un seul produit final que les utilisateurs finaux peuvent être facturés. Le prix total comprend le prix de l'article et les frais de l'acheteur.</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_FOLLOW</BwsKey>
+  <BwsValue>Suivez US</BwsValue>
+</FrmAbout>
+<FrmAbout>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmAbout>
+<MessagesStrings>
+  <BwsKey>BWS_CLEAR_LOG</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir effacer le journal?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_SEND</BwsKey>
+  <BwsValue>ENVOYER</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_PAUSE</BwsKey>
+  <BwsValue>PAUSE</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_RESUME</BwsKey>
+  <BwsValue>REPRENDRE</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_APPEND_LIST</BwsKey>
+  <BwsValue>Souhaitez-vous ajouter des numéros sur la liste?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_NUMBERFILTER_NOTAVAILABLE</BwsKey>
+  <BwsValue>Filtre Numéro Non disponible en version de démonstration.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CONTACTGRABBER_NOTAVAILABLE</BwsKey>
+  <BwsValue>Contact Grabber Non disponible en version de démonstration.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CONTINUE_FROMSTOPED</BwsKey>
+  <BwsValue>Voulez-vous continuer d'où vous stoped?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_UNABLE_CONNECTION</BwsKey>
+  <BwsValue>Impossible de connexion au serveur de validation. S'il vous plaît vérifier votre connexion</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_FIRST_CONV</BwsKey>
+  <BwsValue>Lancer la première conversation</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_BULK_STOPED</BwsKey>
+  <BwsValue>en vrac a été stoped</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CLOSE_CHROME</BwsKey>
+  <BwsValue>L'envoi a été fait, voulez-vous près navigateur Chrome?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_FINISH_VERIFYING</BwsKey>
+  <BwsValue>Terminer numéros Verifying.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_SENDING_PROGRESS</BwsKey>
+  <BwsValue>Envoi Progress</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_BULK_DONE</BwsKey>
+  <BwsValue>en vrac a été fait avec succès</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CLOSE_APPLICATION</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir fermer l'application?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_LICENSE_VALID</BwsKey>
+  <BwsValue>Licence valide jusqu'au:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_LICENSE_NOTVALID</BwsKey>
+  <BwsValue>Licence jusqu'au valide: Non ou Licences non valides</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_WHATSAPP_NUMBERS</BwsKey>
+  <BwsValue>Nombres WhatsApp</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_SENT</BwsKey>
+  <BwsValue>Sent</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_PENDING</BwsKey>
+  <BwsValue>En attente</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_DELETE_NUMBERS</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir supprimer les numéros?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CLEAR_LIST</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir effacer la liste?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_NEW_BULK</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir créer de nouvelles en vrac WhatsApp?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_NO_NUMBERS</BwsKey>
+  <BwsValue>Il n'y a pas de numéros mobiles dans la liste des numéros, ajouter ou numéros d'importation.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_NO_MESSAGE</BwsKey>
+  <BwsValue>Il y a un message noo d'envoyer, entrez votre message</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_STOP_BULK</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir arrêter en vrac?, Si vous arrêtez vous ne pourrez pas reprendre</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_EXPIRED</BwsKey>
+  <BwsValue>échues</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_LOCATE_ELEMENT</BwsKey>
+  <BwsValue>Impossible de trouver l'élément</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_ERROR_LOADING</BwsKey>
+  <BwsValue>Erreur lors du chargement</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CHECKING_DISPLAYED</BwsKey>
+  <BwsValue>Erreur de vérification chat affiché</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_FINISH_POSTING</BwsKey>
+  <BwsValue>affichage Terminer dans les groupes</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_THIRD_STAGE</BwsKey>
+  <BwsValue>Erreur Troisième étape:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CHROME_FAILED</BwsKey>
+  <BwsValue>Chrome n'a pas pu démarrer</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_UNABLE_LAUNCH</BwsKey>
+  <BwsValue>Impossible de lancer le chrome.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_OLD_INSTANCE</BwsKey>
+  <BwsValue>il semble une ancienne instance de web WhatsApp avec la même compte ouvert s'il vous plaît fermer et redémarrer à nouveau ...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_DEMO_VERSION</BwsKey>
+  <BwsValue>Sa version de démonstration</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_SLEEP_FOR</BwsKey>
+  <BwsValue>Sommeil pour:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_SECONDS</BwsKey>
+  <BwsValue>secondes</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_MESSAGE_SENTTO</BwsKey>
+  <BwsValue>Message envoyé à:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_FOURTH_STAGE</BwsKey>
+  <BwsValue>Quatrième erreur:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_TOTAL</BwsKey>
+  <BwsValue>Total:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_DUPLICATION</BwsKey>
+  <BwsValue>Duplication:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_VALID_UNTILL</BwsKey>
+  <BwsValue>Untill valide:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_INVALID_LICENSE</BwsKey>
+  <BwsValue>Clé de licence non valide</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_LICENSE_ACTIVATED</BwsKey>
+  <BwsValue>Licence activé avec succès.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_COUNTRY_CODE</BwsKey>
+  <BwsValue>Code de pays doit être un nombre</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_ERROR_FETCHING</BwsKey>
+  <BwsValue>Erreur lors de la ...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_ENTER_MESSAGE</BwsKey>
+  <BwsValue>Entrer message ou choisir d'envoyer des fichiers ...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_GROUP_LINKS</BwsKey>
+  <BwsValue>Il n'y a pas de lien de groupe ...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_VERIFYING_GROUPS</BwsKey>
+  <BwsValue>Vérification des groupes ...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_VERIFY_GROUPS</BwsKey>
+  <BwsValue>Vérifier Groupes</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_VERIFYING_DONE</BwsKey>
+  <BwsValue>processus Vérification a été fait</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_SENDING</BwsKey>
+  <BwsValue>Envoi</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_APPEND_CURRENT_LIST</BwsKey>
+  <BwsValue>Voulez-vous ajouter votre liste actuelle?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CONTACTS_GRABBED</BwsKey>
+  <BwsValue>Contacts saisirent avec succès à partir de</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_NOCONTACTS_FOUND</BwsKey>
+  <BwsValue>Aucun contact trouvé ...</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CONTACTS_COUNT</BwsKey>
+  <BwsValue>Contacts comptent:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_GRABBING_DONE</BwsKey>
+  <BwsValue>fait l'accaparement des</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_INFORMATION</BwsKey>
+  <BwsValue>Informations</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CLEAR_LIST</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir effacer la liste?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_ERROR</BwsKey>
+  <BwsValue>Erreur</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_COUNT</BwsKey>
+  <BwsValue>Count:</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_VERIFYING_COMPLETE</BwsKey>
+  <BwsValue>Vérification complète processus</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_DELETE_ACCOUNT</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir supprimer ce compte?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_DELETE_MESSAGE</BwsKey>
+  <BwsValue>Êtes-vous sûr de vouloir supprimer ce message?</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_ADD_ACCOUNT</BwsKey>
+  <BwsValue>Vous devez ajouter des comptes</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_NUMERIC_ACCOUNT</BwsKey>
+  <BwsValue>Le compte doit être numérique</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CHROME_CLOSED</BwsKey>
+  <BwsValue>Chrome fermé incapable d'ajouter le compte s'il vous plaît essayer à nouveau.</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_ACCOUNT_ADDED</BwsKey>
+  <BwsValue>Le compte a été ajouté avec succès, vous pouvez fermer le navigateur</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_INVALID_ACCOUNT</BwsKey>
+  <BwsValue>nom de compte non valide s'il vous plaît utilisez le alfanumeric pas d'espace et pas charaters spéciales</BwsValue>
+</MessagesStrings>
+<MessagesStrings>
+  <BwsKey>BWS_CHROME_SESSION</BwsKey>
+  <BwsValue>S'il vous plaît fermer la session chrome exsisting</BwsValue>
+</MessagesStrings>
+<FrmLanguage>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Langue</BwsValue>
+</FrmLanguage>
+<FrmLanguage>
+  <BwsKey>BWS_CANCEL</BwsKey>
+  <BwsValue>Annuler</BwsValue>
+</FrmLanguage>
+<FrmLanguage>
+  <BwsKey>BWS_SELECT_LANGUAGE</BwsKey>
+  <BwsValue>Sélectionnez la langue</BwsValue>
+</FrmLanguage>
+<FrmLanguage>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmLanguage>
+<FrmTheme>
+  <BwsKey>BWS_TITLE</BwsKey>
+  <BwsValue>Thème</BwsValue>
+</FrmTheme>
+<FrmTheme>
+  <BwsKey>BWS_MENU</BwsKey>
+  <BwsValue>Menu || Couleur Boutons</BwsValue>
+</FrmTheme>
+<FrmTheme>
+  <BwsKey>BWS_SUBMENU</BwsKey>
+  <BwsValue>Sous-menu Couleur</BwsValue>
+</FrmTheme>
+<FrmTheme>
+  <BwsKey>BWS_OK</BwsKey>
+  <BwsValue>OK</BwsValue>
+</FrmTheme>
+</NewDataSet>
