@@ -101,7 +101,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: "3000"
-      DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-troque_esta_senha}@postgres:5432/supercrmzap
+      DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-troque_esta_senha}@sos_postgres:5432/supercrmzap
       REDIS_URL: redis://redis:6379
       JWT_SECRET: ${JWT_SECRET:-troque_esta_chave_jwt}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-troque_esta_chave_refresh}
@@ -149,7 +149,7 @@ services:
     command: ["node", "src/workers/scheduler.js"]
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-troque_esta_senha}@postgres:5432/supercrmzap
+      DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-troque_esta_senha}@sos_postgres:5432/supercrmzap
       EVOLUTION_API_URL: ${EVOLUTION_API_URL:-http://10.0.2.4:8080}
       EVOLUTION_API_KEY: ${EVOLUTION_API_KEY:-troque_esta_chave}
     depends_on:
