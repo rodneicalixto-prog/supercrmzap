@@ -1,0 +1,37 @@
+.main-b {
+  background: transparent !important;
+  height: 100%;
+}
+.divider,
+label {
+  color: rgb(68, 66, 54) !important;
+}
+
+html,
+body {
+  background-image: url('/cool-background.png');
+  background-size: cover;
+}
+
+textarea,
+input {
+  background: rgba(213, 213, 213, 0.5) !important;
+}
+.ui.segment.showlist {
+  background: rgba(213, 213, 213, 0.5) !important;
+}
+
+.ui.secondary.segment {
+  background: rgba(213, 213, 213, 0.7) !important;
+}
+.group-result {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+#example2 {
+  margin-bottom: 0px;
+}
+.killans {
+  max-height: 180px;
+  overflow-y: auto;
+}
