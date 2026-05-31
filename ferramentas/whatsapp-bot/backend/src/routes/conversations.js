@@ -61,6 +61,23 @@ export default async function conversationRoutes(app) {
     return conv
   })
 
+  // Atualizar status genérico (ex: pending)
+  app.patch('/:id', async (req, reply) => {
+    const { status } = req.body
+    const allowed = ['open', 'pending', 'resolved']
+    if (status && !allowed.includes(status)) return reply.status(400).send({ error: 'Status inválido' })
+    const conv = await prisma.conversation.findFirst({
+      where: { id: req.params.id, tenantId: req.user.tenantId },
+    })
+    if (!conv) return reply.status(404).send({ error: 'Não encontrada' })
+    const updated = await prisma.conversation.update({
+      where: { id: req.params.id },
+      data: { ...(status && { status }) },
+    })
+    broadcast(req.user.tenantId, { event: 'conversa_atualizada', data: { conversationId: updated.id, status: updated.status } })
+    return updated
+  })
+
   // Intervenção silenciosa — admin envia mensagem que só o agente vê
   app.post('/:id/silent', { preHandler: requireRole('admin', 'super_admin') }, async (req) => {
     const { content } = req.body
