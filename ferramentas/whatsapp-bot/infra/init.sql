@@ -1,3 +1,6 @@
+-- Criar banco n8n se não existir
+SELECT 'CREATE DATABASE n8n' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'n8n')\gexec
+
 -- Inicialização do banco supercrmzap
 -- Executado automaticamente pelo Postgres na primeira vez
 
