@@ -13,6 +13,7 @@ import kanbanRoutes from './routes/kanban.js'
 import scheduleRoutes from './routes/schedules.js'
 import webhookRoutes from './routes/webhooks.js'
 import userRoutes from './routes/users.js'
+import tenantRoutes from './routes/tenants.js'
 import { wsHandler } from './websocket/handler.js'
 
 const app = Fastify({ logger: true })
@@ -57,6 +58,7 @@ app.register(contactRoutes,      { prefix: '/contacts' })
 app.register(kanbanRoutes,       { prefix: '/kanban' })
 app.register(scheduleRoutes,     { prefix: '/schedules' })
 app.register(userRoutes,         { prefix: '/users' })
+app.register(tenantRoutes,       { prefix: '/tenants' })
 
 app.get('/health', () => ({ status: 'ok', ambiente: process.env.NODE_ENV, ts: new Date() }))
 

@@ -156,6 +156,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - default
+      - coolify
 
   # ── FRONTEND (React + Vite — build de produção) ───────────
   frontend:
