@@ -59,6 +59,7 @@ model WaInstance {
   schedules     Schedule[]
 }
 
+// Contatos salvos manualmente ou capturados automaticamente pelo webhook
 model Contact {
   id        String   @id @default(uuid())
   tenantId  String
@@ -73,7 +74,6 @@ model Contact {
   createdAt DateTime @default(now())
 
   conversations Conversation[]
-  schedules     Schedule[]
 }
 
 model Conversation {
