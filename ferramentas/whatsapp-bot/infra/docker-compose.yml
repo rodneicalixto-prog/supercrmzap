@@ -131,6 +131,7 @@ services:
     networks:
       - default
       - coolify
+      - evolution_net
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.supercrmapi.rule=Host(`supercrmapi.openwave.online`)"
@@ -159,6 +160,7 @@ services:
     networks:
       - default
       - coolify
+      - evolution_net
 
   # ── FRONTEND (React + Vite — build de produção) ───────────
   frontend:
@@ -202,3 +204,6 @@ networks:
     driver: bridge
   coolify:
     external: true
+  evolution_net:
+    external: true
+    name: v1j7s5nxx9kc69qf4qbpv3kk
