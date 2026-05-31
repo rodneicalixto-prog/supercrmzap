@@ -13,6 +13,9 @@ import Schedules from './pages/Schedules'
 import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
 import Tenants from './pages/Tenants'
+import Logs from './pages/Logs'
+import Queues from './pages/Queues'
+import Academy from './pages/Academy'
 
 function PrivateRoute({ children, adminOnly = false, superOnly = false }) {
   const { user, loading } = useAuth()
@@ -49,6 +52,9 @@ export default function App() {
             {/* Rotas exclusivas para admin */}
             <Route path="/users" element={<PrivateRoute adminOnly><Users /></PrivateRoute>} />
             <Route path="/tenants" element={<PrivateRoute superOnly><Tenants /></PrivateRoute>} />
+            <Route path="/logs" element={<PrivateRoute adminOnly><Logs /></PrivateRoute>} />
+            <Route path="/queues" element={<PrivateRoute><Queues /></PrivateRoute>} />
+            <Route path="/academy" element={<PrivateRoute><Academy /></PrivateRoute>} />
 
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

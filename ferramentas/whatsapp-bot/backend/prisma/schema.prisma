@@ -22,6 +22,7 @@ model Tenant {
   subscriptions Subscription[]
   actionsLog    ActionsLog[]
   webhooks      Webhook[]
+  academyCourses AcademyCourse[]
 }
 
 model User {
@@ -36,10 +37,11 @@ model User {
   lastLogin    DateTime?
   createdAt    DateTime  @default(now())
 
-  instances     WaInstance[]
-  conversations Conversation[]
-  schedules     Schedule[]
-  actionsLog    ActionsLog[]
+  instances       WaInstance[]
+  conversations   Conversation[]
+  schedules       Schedule[]
+  actionsLog      ActionsLog[]
+  academyProgress AcademyProgress[]
 }
 
 model WaInstance {
@@ -183,4 +185,43 @@ model ActionsLog {
   details   Json?
   ip        String?
   createdAt DateTime @default(now())
+}
+
+model AcademyCourse {
+  id          String          @id @default(uuid())
+  tenantId    String
+  tenant      Tenant          @relation(fields: [tenantId], references: [id])
+  title       String
+  description String?
+  thumbnail   String?
+  category    String?
+  order       Int             @default(0)
+  published   Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+  lessons     AcademyLesson[]
+}
+
+model AcademyLesson {
+  id          String        @id @default(uuid())
+  courseId    String
+  course      AcademyCourse @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  videoUrl    String?
+  duration    Int?          // segundos
+  order       Int           @default(0)
+  published   Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  progress    AcademyProgress[]
+}
+
+model AcademyProgress {
+  id         String        @id @default(uuid())
+  lessonId   String
+  lesson     AcademyLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  userId     String
+  completed  Boolean       @default(false)
+  watchedAt  DateTime      @default(now())
+
+  @@unique([lessonId, userId])
 }

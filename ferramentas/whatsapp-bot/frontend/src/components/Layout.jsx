@@ -4,15 +4,18 @@ import { useWS } from '../contexts/WSContext'
 
 const nav = [
   { to: '/',            icon: '💬', label: 'Atendimentos' },
+  { to: '/queues',      icon: '🎯', label: 'Fila'         },
   { to: '/kanban',      icon: '🗂️', label: 'Kanban'       },
   { to: '/contacts',   icon: '👥', label: 'Contatos'     },
   { to: '/instances',  icon: '📱', label: 'Conexões'     },
   { to: '/schedules',  icon: '📅', label: 'Agenda'       },
   { to: '/dashboard',  icon: '📊', label: 'Dashboard'    },
+  { to: '/academy',    icon: '🎓', label: 'Academy'      },
 ]
 
 const adminNav = [
   { to: '/users',   icon: '🔐', label: 'Usuários' },
+  { to: '/logs',    icon: '📋', label: 'Logs' },
   { to: '/tenants', icon: '🏢', label: 'Tenants',  superOnly: true },
 ]
 
