@@ -1,22 +1,18 @@
-FROM node:20-alpine AS base
+FROM node:20-slim
 
-# OpenSSL necessário para o Prisma no Alpine Linux
-RUN apk add --no-cache openssl openssl-dev
+# Dependências do sistema para o Prisma no Debian slim
+RUN apt-get update -y && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Instalar dependências
 COPY package.json ./
 RUN npm install --omit=dev
 
-# Gerar cliente Prisma (com binaryTargets para musl)
 COPY prisma ./prisma
 RUN npx prisma generate
 
-# Copiar código-fonte
 COPY src ./src
 
 EXPOSE 3000
 
-# Rodar migrações e iniciar servidor
 CMD ["sh", "-c", "npx prisma migrate deploy && node src/server.js"]
