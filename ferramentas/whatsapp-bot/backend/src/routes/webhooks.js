@@ -9,8 +9,8 @@ export default async function webhookRoutes(app) {
     const { event, data, instance } = req.body
     const userId = req.params.userId
 
-    // Mensagem recebida
-    if (event === 'messages.upsert') {
+    // Mensagem recebida (Evolution API v2 usa maiúsculas)
+    if (event === 'messages.upsert' || event === 'MESSAGES_UPSERT') {
       const { key, message, pushName } = data
       if (key.fromMe) return { recebido: true } // ignora eco de mensagens enviadas
 
@@ -49,6 +49,7 @@ export default async function webhookRoutes(app) {
         conversa = await prisma.conversation.create({
           data: {
             tenantId: user.tenantId,
+            userId: user.id,
             instanceId: instancia.id,
             contactId: contato.id,
             status: 'open',
@@ -81,7 +82,7 @@ export default async function webhookRoutes(app) {
     }
 
     // Atualização de estado da conexão / QR Code
-    if (event === 'connection.update' || event === 'qrcode.updated') {
+    if (['connection.update', 'CONNECTION_UPDATE', 'qrcode.updated', 'QRCODE_UPDATED'].includes(event)) {
       const estado = data?.state || data?.connection
       const qr = data?.qr || data?.qrcode?.base64
 

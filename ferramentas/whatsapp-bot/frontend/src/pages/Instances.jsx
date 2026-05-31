@@ -53,8 +53,13 @@ export default function Instances() {
   }
 
   async function connect(id) {
-    const r = await api.get(`/instances/${id}/qr`)
-    if (r.data?.code) setQr({ instanceId: id, code: r.data.code })
+    try {
+      const r = await api.post(`/instances/${id}/connect`)
+      const code = r.data?.base64 || r.data?.qrcode?.base64 || r.data?.code
+      if (code) setQr({ instanceId: id, code: code.startsWith('data:') ? code : `data:image/png;base64,${code}` })
+    } catch (err) {
+      alert(err.response?.data?.error || 'Erro ao conectar. Verifique se a Evolution API está acessível.')
+    }
   }
 
   async function remove(id) {
