@@ -159,9 +159,6 @@ services:
         condition: service_healthy
       evolution:
         condition: service_started
-    volumes:
-      - ../backend:/app
-      - /app/node_modules
 
   # ── SCHEDULER (Worker de agendamentos) ───────────────────
   scheduler:
