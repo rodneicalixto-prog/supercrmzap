@@ -318,6 +318,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 </div>
 
 <script>
+var BASE = 'https://raw.githubusercontent.com/rodneicalixto-prog/supercrmzap/main/ferramentas/';
 var tools = {
   instabot: {
     name: 'Instabot',
@@ -325,7 +326,9 @@ var tools = {
     icon: 'ti-brand-instagram',
     iconBg: 'rgba(212,83,126,0.15)',
     iconColor: '#ED93B1',
-    url: '#',
+    url: BASE + 'instabot/InstaBotPro%20Setup.exe',
+    urlLabel: 'Baixar InstaBotPro Setup.exe',
+    urlIcon: 'ti-download',
     desc: 'Automatiza todas as interações do Instagram: curtidas, comentários, seguidores/deixar de seguir e mensagens diretas em massa. Utiliza Chrome para acessar o Instagram Web e opera com delay aleatório para evitar bloqueios.',
     features: ['Auto Like por hashtag','Auto Like por lista de usuários','Unlike automático','Auto Comment multi-template','Import comentários .txt','Auto Follow/Unfollow','Bulk DM com {username}','Extractor de seguidores','Extractor por hashtag','Export CSV/clipboard','Delay aleatório anti-ban','Até 300 ações/sessão'],
     type: 'Executável Windows (.exe)',
@@ -337,7 +340,9 @@ var tools = {
     icon: 'ti-brand-facebook',
     iconBg: 'rgba(24,119,242,0.15)',
     iconColor: '#85B7EB',
-    url: '#',
+    url: BASE + 'facebook-mkt/facebook-auto-join.zip',
+    urlLabel: 'Baixar Extensão Auto Join (.zip)',
+    urlIcon: 'ti-download',
     desc: 'Extensão Chrome que entra automaticamente em grupos do Facebook. Cola lista de IDs de grupos, responde automaticamente às perguntas de aprovação do admin com frases aleatórias e configura delay entre cada entrada.',
     features: ['Auto join por lista de IDs','Até 200 grupos por sessão','Auto Answer aleatório para perguntas do admin','5 respostas pré-configuradas personalizáveis','Delay min/max configurável (padrão 70–120s)','Barra de progresso em tempo real','Lista de resultados ao vivo','Anti-ban com delay humano-like'],
     type: 'Extensão Chrome (instalar no modo dev)',
@@ -349,7 +354,9 @@ var tools = {
     icon: 'ti-brand-telegram',
     iconBg: 'rgba(83,74,183,0.15)',
     iconColor: '#AFA9EC',
-    url: '#',
+    url: BASE + 'telegram-mkt/telegram-sender.zip',
+    urlLabel: 'Baixar Extensão Telegram (.zip)',
+    urlIcon: 'ti-download',
     desc: 'Extensão Chrome para automação do Telegram Web. Extrai usernames de membros de grupos e envia mensagens em massa para listas de usuários. Módulo de convite em massa já implementado.',
     features: ['Group Scraper (extrai até 200 membros/sessão)','Bulk Messages para lista de @usuários','Delay aleatório min-max entre mensagens','Invites em massa (módulo preparado)','Log diário de ações com limite','Notificação Chrome ao finalizar','Pause/Resume/Stop do disparo','12 licenças pré-configuradas','Requer Telegram Web versão legada'],
     type: 'Extensão Chrome (instalar no modo dev)',
@@ -361,7 +368,9 @@ var tools = {
     icon: 'ti-brand-whatsapp',
     iconBg: 'rgba(29,158,117,0.15)',
     iconColor: '#5DCAA5',
-    url: '#',
+    url: BASE + 'whatsapp-mkt/MassWhatsAppSender.exe',
+    urlLabel: 'Baixar MassWhatsAppSender.exe',
+    urlIcon: 'ti-download',
     desc: 'Disparador em massa de WhatsApp via Selenium + ChromeDriver. Gerencia múltiplas contas, filtra números com WA ativo, extrai contatos de grupos e envia mensagens, imagens, vídeos e documentos.',
     features: ['Disparo em massa (múltiplas contas)','Modo Turbo sem arquivo','Filtro de números WA válidos','Groups Grabber via link','Import de arquivos / manual / gerador numérico','Remoção de duplicatas','Mensagens com nome/sobrenome/tag aleatória','Emoji + anexos + legendas (mídias)','Log de envios + progresso','Delay configurável entre mensagens','Retomar disparo pausado','5 idiomas: EN · PT · ES · FR · AR'],
     type: 'Executável Windows (.exe) — .NET 4.6',
@@ -373,7 +382,9 @@ var tools = {
     icon: 'ti-mail-forward',
     iconBg: 'rgba(239,159,39,0.15)',
     iconColor: '#FAC775',
-    url: '#',
+    url: BASE + 'email-mkt/setup.exe',
+    urlLabel: 'Baixar UltraMailer Setup.exe',
+    urlIcon: 'ti-download',
     desc: 'Plataforma completa de email marketing desktop. 340 templates HTML profissionais, rotação entre múltiplos servidores SMTP, rastreamento built-in vitalício de abertura e cliques, sem mensalidade de tracking.',
     features: ['340 templates HTML (testados em todos clients)','Editor WYSIWYG (DHTMLEd)','Personalização ##nome## ##empresa##','Rotação multi-SMTP','Amazon SES (R$0,10/1.000 emails)','Gmail / Outlook / SMTP próprio','Agendamento data e hora','Autoresponder sequencial','DKIM Signature (inbox delivery)','Bounce Management POP3/IMAP','Blacklist automática de bounces','Rastreamento abertura + cliques (lifetime)','Google Analytics integrado','Email Harvester (extrai @ de sites)','Email Verifier built-in','API PHP/C# unsubscribe','Filtros avançados (provedor, aniversário…)','4 vídeo-aulas de treinamento incluídas'],
     type: 'Executável Windows (.exe) — Delphi/VCL',
@@ -385,7 +396,9 @@ var tools = {
     icon: 'ti-robot',
     iconBg: 'rgba(29,158,117,0.15)',
     iconColor: '#5DCAA5',
-    url: '#',
+    url: null,
+    urlLabel: null,
+    urlIcon: null,
     desc: 'Plataforma SaaS completa em desenvolvimento. Multi-tenant com 3 níveis de acesso (Super Admin, Admin, Usuário), automação via n8n, CRM de contatos, Kanban por workflow e Academy de vídeo-aulas.',
     features: ['Evolution Go API (WhatsApp real)','Webhooks sinc. com n8n','Super Admin · Admin · User (hierarquia)','Intervenção silenciosa do Admin nas conversas','Kanban inteligente por workflow','CRM contatos (auto-save + import/export)','Agenda individualizada por usuário','Conexões e Filas separadas','Planos recorrentes Asaas (PIX + cartão)','SMTP para recuperação de senha','Dashboard inteligente (cards clicáveis)','Academy estilo Netflix','Logs e auditoria completa'],
     type: 'SaaS Web — Node.js + React + Docker',
@@ -409,8 +422,8 @@ function openModal(id) {
       t.features.map(function(f){ return '<span class="ms-feat">' + f + '</span>'; }).join('') +
     '</div></div>' +
     '<div class="modal-section"><div class="ms-title">Tipo · Versão</div><div class="ms-desc" style="font-size:12px;">' + t.type + ' · ' + t.version + '</div></div>' +
-    '<button class="modal-open-btn' + (isActive ? '' : ' disabled') + '" onclick="' + (isActive ? 'alert(\'Configure o caminho da ferramenta no código.\')' : '') + '">' +
-      (isActive ? '<i class="ti ti-external-link"></i> Abrir ' + t.name : '<i class="ti ti-clock"></i> Em desenvolvimento') +
+    '<button class="modal-open-btn' + (isActive && t.url ? '' : ' disabled') + '"' + (isActive && t.url ? ' onclick="window.open(\'' + t.url + '\',\'_blank\')"' : '') + '>' +
+      (isActive && t.url ? '<i class="ti ' + t.urlIcon + '"></i> ' + t.urlLabel : '<i class="ti ti-clock"></i> Em desenvolvimento') +
     '</button>';
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
