@@ -1,7 +1,7 @@
-FROM node:20-slim
+FROM node:20-bullseye-slim
 
-# Dependências do sistema para o Prisma no Debian slim
-RUN apt-get update -y && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+# Dependências do sistema para o Prisma no Debian Bullseye (OpenSSL 1.1.x)
+RUN apt-get update -y && apt-get install -y openssl libssl1.1 ca-certificates && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
