@@ -40,36 +40,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # ── EVOLUTION GO (WhatsApp API — escrita em Go) ───────────
-  evolution:
-    image: atendai/evolution-api:latest
-    container_name: sos_evolution
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    environment:
-      SERVER_PORT: "8080"
-      GLOBAL_API_KEY: ${EVOLUTION_API_KEY:-troque_esta_chave}
-      DATABASE_PROVIDER: postgresql
-      DATABASE_CONNECTION_URI: postgresql://postgres:${DB_PASSWORD:-troque_esta_senha}@postgres:5432/supercrmzap
-      # Webhook padrão para todas as instâncias
-      WEBHOOK_GLOBAL_URL: https://supercrmapi.openwave.online/webhook/evolution
-      WEBHOOK_GLOBAL_ENABLED: "false"   # cada instância registra o próprio webhook
-      # Armazenamento de mídias via MinIO
-      S3_ENABLED: "true"
-      S3_ENDPOINT: minio
-      S3_PORT: "9000"
-      S3_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
-      S3_SECRET_KEY: ${MINIO_SECRET_KEY:-troque_senha_minio}
-      S3_BUCKET: supercrmzap
-      S3_USE_SSL: "false"
-      TIMEZONE: America/Sao_Paulo
-    depends_on:
-      postgres:
-        condition: service_healthy
-    volumes:
-      - evolution_data:/app/instances
-
   # ── MINIO (Armazenamento de mídias) ──────────────────────
   minio:
     image: minio/minio:latest
@@ -136,7 +106,7 @@ services:
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-troque_esta_chave_refresh}
       API_URL: https://supercrmapi.openwave.online
       FRONTEND_URL: https://supercrmapp.openwave.online
-      EVOLUTION_API_URL: http://evolution:8080
+      EVOLUTION_API_URL: ${EVOLUTION_API_URL:-http://10.0.2.4:8080}
       EVOLUTION_API_KEY: ${EVOLUTION_API_KEY:-troque_esta_chave}
       N8N_WEBHOOK_URL: http://n8n:5678/webhook
       ASAAS_API_KEY: ${ASAAS_API_KEY:-}
@@ -157,8 +127,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      evolution:
-        condition: service_started
 
   # ── SCHEDULER (Worker de agendamentos) ───────────────────
   scheduler:
@@ -171,13 +139,11 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-troque_esta_senha}@postgres:5432/supercrmzap
-      EVOLUTION_API_URL: http://evolution:8080
+      EVOLUTION_API_URL: ${EVOLUTION_API_URL:-http://10.0.2.4:8080}
       EVOLUTION_API_KEY: ${EVOLUTION_API_KEY:-troque_esta_chave}
     depends_on:
       postgres:
         condition: service_healthy
-      evolution:
-        condition: service_started
 
   # ── FRONTEND (React + Vite — build de produção) ───────────
   frontend:
@@ -187,7 +153,7 @@ services:
     container_name: sos_frontend
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8282:80"
     environment:
       VITE_API_URL: https://supercrmapi.openwave.online
       VITE_WS_URL: wss://supercrmapi.openwave.online
@@ -201,8 +167,6 @@ volumes:
   minio_data:
     driver: local
   n8n_data:
-    driver: local
-  evolution_data:
     driver: local
 
 # ── REDE INTERNA ──────────────────────────────────────────
