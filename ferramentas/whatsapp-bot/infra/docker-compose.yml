@@ -128,6 +128,20 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    networks:
+      - default
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.supercrmapi.rule=Host(`supercrmapi.openwave.online`)"
+      - "traefik.http.routers.supercrmapi.entrypoints=https"
+      - "traefik.http.routers.supercrmapi.tls=true"
+      - "traefik.http.routers.supercrmapi.tls.certresolver=letsencrypt"
+      - "traefik.http.services.supercrmapi.loadbalancer.server.port=3000"
+      # WebSocket
+      - "traefik.http.middlewares.supercrmapi-ws.headers.customrequestheaders.Connection=Upgrade"
+      - "traefik.http.middlewares.supercrmapi-ws.headers.customrequestheaders.Upgrade=websocket"
+      - "traefik.http.routers.supercrmapi.middlewares=supercrmapi-ws"
 
   # ── SCHEDULER (Worker de agendamentos) ───────────────────
   scheduler:
@@ -160,6 +174,16 @@ services:
       VITE_WS_URL: wss://supercrmapi.openwave.online
     depends_on:
       - backend
+    networks:
+      - default
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.supercrmapp.rule=Host(`supercrmapp.openwave.online`)"
+      - "traefik.http.routers.supercrmapp.entrypoints=https"
+      - "traefik.http.routers.supercrmapp.tls=true"
+      - "traefik.http.routers.supercrmapp.tls.certresolver=letsencrypt"
+      - "traefik.http.services.supercrmapp.loadbalancer.server.port=80"
 
 # ── VOLUMES PERSISTENTES ──────────────────────────────────
 volumes:
@@ -170,8 +194,10 @@ volumes:
   n8n_data:
     driver: local
 
-# ── REDE INTERNA ──────────────────────────────────────────
+# ── REDES ─────────────────────────────────────────────────
 networks:
   default:
     name: sos_network
     driver: bridge
+  coolify:
+    external: true
