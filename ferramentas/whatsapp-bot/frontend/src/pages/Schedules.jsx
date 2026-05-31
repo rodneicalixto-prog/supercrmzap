@@ -109,7 +109,7 @@ export default function Schedules() {
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
                 >
                   <option value="">Selecione...</option>
-                  {instances.filter(i => i.status === 'connected').map(i => (
+                  {instances.filter(i => i.status === 'conectado').map(i => (
                     <option key={i.id} value={i.id}>{i.name}</option>
                   ))}
                 </select>
