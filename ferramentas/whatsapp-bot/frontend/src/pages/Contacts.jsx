@@ -1,20 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { api } from '../services/api'
 
 export default function Contacts() {
   const [contacts, setContacts] = useState([])
+  const [total, setTotal] = useState(0)
+  const [page, setPage] = useState(1)
+  const [pages, setPages] = useState(1)
   const [search, setSearch] = useState('')
   const [modal, setModal] = useState(null) // null | 'new' | contact object
   const [form, setForm] = useState({ name: '', phone: '', email: '', tags: '', notes: '' })
   const [loading, setLoading] = useState(false)
+  const [importing, setImporting] = useState(false)
+  const fileRef = useRef()
+  const LIMIT = 50
+
+  useEffect(() => {
+    setPage(1)
+  }, [search])
 
   useEffect(() => {
     load()
-  }, [search])
+  }, [search, page])
 
   async function load() {
-    const r = await api.get('/contacts', { params: { search } })
-    setContacts(r.data)
+    const r = await api.get('/contacts', { params: { search, page, limit: LIMIT } })
+    setContacts(r.data.data)
+    setTotal(r.data.total)
+    setPages(r.data.pages)
   }
 
   function openNew() {
@@ -50,19 +62,56 @@ export default function Contacts() {
     load()
   }
 
+  async function handleExport() {
+    const r = await api.get('/contacts/export', { responseType: 'blob' })
+    const url = URL.createObjectURL(r.data)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'contatos.csv'
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  async function handleImport(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    setImporting(true)
+    try {
+      const text = await file.text()
+      const r = await api.post('/contacts/import', { csv: text })
+      alert(`Importados: ${r.data.created} contatos. Ignorados: ${r.data.skipped}`)
+      load()
+    } catch {
+      alert('Erro ao importar CSV')
+    } finally {
+      setImporting(false)
+      if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
   return (
     <div className="h-full flex flex-col bg-gray-950">
       {/* Header */}
-      <div className="p-4 border-b border-gray-800 flex items-center gap-3">
+      <div className="p-4 border-b border-gray-800 flex items-center gap-3 flex-wrap">
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Buscar contato..."
-          className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
+          className="flex-1 min-w-40 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
         />
         <button onClick={openNew} className="px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-sm font-medium rounded-lg whitespace-nowrap">
-          + Novo contato
+          + Novo
         </button>
+        <button onClick={handleExport} className="px-3 py-2 border border-gray-700 hover:border-gray-500 text-gray-400 hover:text-white text-sm rounded-lg whitespace-nowrap">
+          Exportar CSV
+        </button>
+        <label className={`px-3 py-2 border border-gray-700 hover:border-gray-500 text-gray-400 hover:text-white text-sm rounded-lg cursor-pointer whitespace-nowrap ${importing ? 'opacity-50' : ''}`}>
+          {importing ? 'Importando...' : 'Importar CSV'}
+          <input ref={fileRef} type="file" accept=".csv" className="hidden" onChange={handleImport} disabled={importing} />
+        </label>
+        {total > 0 && (
+          <span className="text-xs text-gray-500 ml-auto">{total} contato{total !== 1 ? 's' : ''}</span>
+        )}
       </div>
 
       {/* Lista */}
@@ -106,6 +155,27 @@ export default function Contacts() {
           <div className="text-center text-gray-600 py-16">Nenhum contato encontrado</div>
         )}
       </div>
+
+      {/* Paginação */}
+      {pages > 1 && (
+        <div className="p-3 border-t border-gray-800 flex items-center justify-center gap-2">
+          <button
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="px-3 py-1 text-sm border border-gray-700 rounded-lg text-gray-400 disabled:opacity-40 hover:border-gray-500"
+          >
+            Anterior
+          </button>
+          <span className="text-xs text-gray-500">{page} / {pages}</span>
+          <button
+            onClick={() => setPage(p => Math.min(pages, p + 1))}
+            disabled={page === pages}
+            className="px-3 py-1 text-sm border border-gray-700 rounded-lg text-gray-400 disabled:opacity-40 hover:border-gray-500"
+          >
+            Próxima
+          </button>
+        </div>
+      )}
 
       {/* Modal */}
       {modal && (

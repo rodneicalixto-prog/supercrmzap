@@ -2,6 +2,7 @@ import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
 import websocket from '@fastify/websocket'
+import rateLimit from '@fastify/rate-limit'
 
 import authRoutes from './routes/auth.js'
 import instanceRoutes from './routes/instances.js'
@@ -28,6 +29,12 @@ await app.register(cors, {
     cb(new Error('Origem não permitida pelo CORS'), false)
   },
   credentials: true,
+})
+
+await app.register(rateLimit, {
+  max: 120,
+  timeWindow: '1 minute',
+  errorResponseBuilder: () => ({ error: 'Muitas requisições. Tente novamente em instantes.' }),
 })
 
 await app.register(jwt, { secret: process.env.JWT_SECRET || 'dev_secret' })

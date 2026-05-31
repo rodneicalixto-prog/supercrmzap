@@ -21,19 +21,20 @@ export default function Dashboard() {
 
   useEffect(() => {
     Promise.all([
-      api.get('/conversations?status=open'),
-      api.get('/conversations?status=pending'),
-      api.get('/conversations?status=resolved'),
-      api.get('/contacts'),
+      api.get('/conversations', { params: { status: 'open', limit: 1 } }),
+      api.get('/conversations', { params: { status: 'pending', limit: 1 } }),
+      api.get('/conversations', { params: { status: 'resolved', limit: 1 } }),
+      api.get('/contacts', { params: { limit: 1 } }),
       api.get('/instances'),
     ]).then(([open, pending, resolved, contacts, instances]) => {
+      const insts = Array.isArray(instances.data) ? instances.data : []
       setStats({
-        open: open.data.length,
-        pending: pending.data.length,
-        resolved: resolved.data.length,
-        contacts: contacts.data.length,
-        instances: instances.data.length,
-        connected: instances.data.filter(i => i.status === 'connected').length,
+        open: open.data.total ?? 0,
+        pending: pending.data.total ?? 0,
+        resolved: resolved.data.total ?? 0,
+        contacts: contacts.data.total ?? 0,
+        instances: insts.length,
+        connected: insts.filter(i => i.status === 'conectado').length,
       })
     }).catch(() => {})
   }, [])
@@ -59,7 +60,7 @@ export default function Dashboard() {
             onClick={() => navigate('/?status=pending')}
           />
           <KpiCard
-            label="Resolvidos hoje"
+            label="Resolvidos"
             value={stats?.resolved}
             color="text-gray-300"
             sub="finalizados"
@@ -79,8 +80,9 @@ export default function Dashboard() {
           />
           <KpiCard
             label="Status"
-            value={stats?.connected > 0 ? '✅' : '⚠️'}
-            sub={stats?.connected > 0 ? 'WhatsApp online' : 'Nenhuma conexão ativa'}
+            value={stats?.connected > 0 ? 'Online' : 'Offline'}
+            sub={stats?.connected > 0 ? 'WhatsApp ativo' : 'Nenhuma conexão ativa'}
+            color={stats?.connected > 0 ? 'text-green-400' : 'text-red-400'}
           />
         </div>
 
@@ -88,7 +90,7 @@ export default function Dashboard() {
           <h3 className="text-sm font-semibold text-gray-300 mb-3">Acesso rápido</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { label: 'Nova conversa', icon: '💬', to: '/' },
+              { label: 'Atendimentos', icon: '💬', to: '/' },
               { label: 'Ver Kanban', icon: '🗂️', to: '/kanban' },
               { label: 'Contatos', icon: '👥', to: '/contacts' },
               { label: 'Agenda', icon: '📅', to: '/schedules' },

@@ -23,7 +23,7 @@ export default function Conversations() {
   const { on } = useWS()
 
   useEffect(() => {
-    api.get('/conversations').then(r => setConversations(r.data))
+    api.get('/conversations', { params: { limit: 100 } }).then(r => setConversations(r.data.data ?? r.data))
   }, [])
 
   useEffect(() => {
