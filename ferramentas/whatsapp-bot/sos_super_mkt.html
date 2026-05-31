@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOS Super MKT — Central de Ferramentas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #0c0c0e;
+  --surface: #141418;
+  --card: #1a1a20;
+  --card-hover: #20202a;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.15);
+  --text: #f0f0f4;
+  --muted: rgba(240,240,244,0.5);
+  --faint: rgba(240,240,244,0.2);
+  --accent: #1D9E75;
+  --accent-glow: rgba(29,158,117,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+/* ── NOISE TEXTURE ── */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+/* ── HEADER ── */
+.header{position:relative;padding:3rem 2rem 2rem;text-align:center;z-index:1;}
+.header::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse at center top,rgba(29,158,117,0.12) 0%,transparent 70%);pointer-events:none;}
+.header-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);background:rgba(29,158,117,0.1);border:0.5px solid rgba(29,158,117,0.3);padding:5px 14px;border-radius:100px;margin-bottom:1.25rem;}
+.header-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.header-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:#fff;line-height:1.05;letter-spacing:-0.02em;margin-bottom:0.75rem;}
+.header-title .accent{color:var(--accent);}
+.header-sub{font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto 2rem;line-height:1.6;font-weight:300;}
+.stats-row{display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-n{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:700;color:#fff;}
+.stat-l{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px;}
+
+/* ── SEARCH ── */
+.search-wrap{max-width:480px;margin:2rem auto 0;position:relative;z-index:1;}
+.search-wrap input{width:100%;background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:12px 16px 12px 42px;color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
+.search-wrap input:focus{border-color:rgba(29,158,117,0.5);}
+.search-wrap input::placeholder{color:var(--faint);}
+.search-wrap .s-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--faint);}
+
+/* ── GRID ── */
+.grid-section{position:relative;z-index:1;padding:2rem;max-width:1200px;margin:0 auto;}
+.grid-label{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--faint);margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;}
+.grid-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;}
+
+/* ── TOOL CARD ── */
+.tool-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;cursor:pointer;transition:background 0.2s,border-color 0.2s,transform 0.2s;text-decoration:none;position:relative;overflow:hidden;}
+.tool-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.2s;border-radius:16px;}
+.tool-card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-3px);}
+.tool-card:hover::before{opacity:1;}
+.tool-card.coming-soon{opacity:0.5;cursor:default;}
+.tool-card.coming-soon:hover{transform:none;border-color:var(--border);}
+
+/* Card accent strip */
+.tool-card .accent-strip{position:absolute;top:0;left:0;right:0;height:2px;border-radius:16px 16px 0 0;opacity:0;transition:opacity 0.2s;}
+.tool-card:hover .accent-strip{opacity:1;}
+
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.card-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.card-badges{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+.card-num{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--faint);letter-spacing:0.1em;}
+.status-badge{font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:100px;letter-spacing:0.04em;}
+.s-active{background:rgba(29,158,117,0.15);color:#5DCAA5;border:0.5px solid rgba(29,158,117,0.25);}
+.s-dev{background:rgba(127,119,221,0.15);color:#AFA9EC;border:0.5px solid rgba(127,119,221,0.25);}
+.s-soon{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.3);border:0.5px solid rgba(255,255,255,0.1);}
+.s-ext{background:rgba(24,119,242,0.12);color:#85B7EB;border:0.5px solid rgba(24,119,242,0.2);}
+
+.card-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;line-height:1.2;}
+.card-tech{font-size:11px;color:var(--faint);margin-top:3px;font-style:italic;}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6;font-weight:300;}
+
+.card-features{display:flex;flex-wrap:wrap;gap:5px;}
+.feat-chip{font-size:10.5px;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.45);}
+
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:0.75rem;border-top:0.5px solid var(--border);}
+.open-link{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--accent);transition:gap 0.15s;}
+.tool-card:hover .open-link{gap:8px;}
+.card-type{font-size:10px;color:var(--faint);}
+
+/* ── SMS PLACEHOLDER ── */
+.sms-placeholder{grid-column:1/-1;background:var(--card);border:1.5px dashed rgba(255,255,255,0.1);border-radius:16px;padding:1.5rem;display:flex;align-items:center;gap:1.25rem;}
+.sms-placeholder .sms-icon{width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--faint);flex-shrink:0;}
+.sms-placeholder .sms-info{}
+.sms-placeholder .sms-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:rgba(255,255,255,0.3);}
+.sms-placeholder .sms-desc{font-size:12px;color:var(--faint);margin-top:3px;}
+.sms-placeholder .sms-badge{margin-left:auto;font-size:10px;padding:4px 12px;border-radius:100px;background:rgba(255,255,255,0.04);color:var(--faint);border:0.5px dashed rgba(255,255,255,0.1);white-space:nowrap;}
+
+/* ── FOOTER ── */
+.footer{text-align:center;padding:2rem;color:var(--faint);font-size:12px;border-top:0.5px solid var(--border);margin-top:2rem;position:relative;z-index:1;}
+.footer span{color:var(--accent);}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(8px);}
+.modal-overlay.open{display:flex;}
+.modal{background:#18181f;border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;width:100%;max-width:580px;max-height:85vh;overflow-y:auto;padding:2rem;}
+.modal::-webkit-scrollbar{width:4px;}
+.modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;gap:12px;}
+.modal-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.modal-info{}
+.modal-name{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;color:#fff;}
+.modal-tech{font-size:12px;color:var(--muted);margin-top:3px;font-style:italic;}
+.modal-close{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--muted);flex-shrink:0;}
+.modal-close:hover{background:rgba(255,255,255,0.12);color:#fff;}
+.modal-section{margin-bottom:1.25rem;}
+.ms-title{font-size:10.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+.ms-desc{font-size:13.5px;color:var(--muted);line-height:1.7;font-weight:300;}
+.ms-features{display:flex;flex-wrap:wrap;gap:6px;}
+.ms-feat{font-size:11.5px;padding:4px 10px;border-radius:7px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);}
+.modal-open-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1.5rem;transition:background 0.15s;}
+.modal-open-btn:hover{background:#0F6E56;}
+.modal-open-btn.disabled{background:rgba(255,255,255,0.06);color:var(--faint);cursor:default;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.tool-card,.sms-placeholder{animation:fadeUp 0.4s ease both;}
+.tool-card:nth-child(1){animation-delay:0.05s;}
+.tool-card:nth-child(2){animation-delay:0.1s;}
+.tool-card:nth-child(3){animation-delay:0.15s;}
+.tool-card:nth-child(4){animation-delay:0.2s;}
+.tool-card:nth-child(5){animation-delay:0.25s;}
+.tool-card:nth-child(6){animation-delay:0.3s;}
+.sms-placeholder{animation-delay:0.35s;}
+
+/* Responsive */
+@media(max-width:600px){
+  .header{padding:2rem 1rem 1.5rem;}
+  .grid-section{padding:1rem;}
+  .tools-grid{grid-template-columns:1fr;}
+  .stats-row{gap:1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge"><div class="dot"></div>Central de ferramentas</div>
+  <h1 class="header-title">⚡ SOS <span class="accent">Super MKT</span></h1>
+  <p class="header-sub">Acesse, gerencie e automatize todas as suas ferramentas de marketing digital em um único painel.</p>
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-n">7</div><div class="stat-l">Ferramentas</div></div>
+    <div class="stat-item"><div class="stat-n">6</div><div class="stat-l">Ativas</div></div>
+    <div class="stat-item"><div class="stat-n">1</div><div class="stat-l">Em desenvolvimento</div></div>
+  </div>
+  <div class="search-wrap">
+    <i class="ti ti-search s-ico"></i>
+    <input type="text" id="search-input" placeholder="Buscar ferramenta..." oninput="filterCards(this.value)">
+  </div>
+</div>
+
+<div class="grid-section">
+  <div class="grid-label">Todas as ferramentas</div>
+  <div class="tools-grid" id="tools-grid">
+
+    <!-- 01 SMS MKT -->
+    <div class="tool-card coming-soon searchable" data-name="sms mkt mensagens" onclick="">
+      <div class="accent-strip" style="background:linear-gradient(90deg,#888,#aaa);"></div>
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);"><i class="ti ti-message-2"></i></div>
+        <div class="card-badges"><div class="card-num">01</div><span class="status-badge s-soon">em breve</span></div>
+      </div>
+      <div><div class="card-name">SMS MKT</div><div class="card-tech">Aguardando arquivo para mapeamento</div></div>
+      <div class="card-desc">Ferramenta de disparo de SMS em massa. Será integrada ao painel assim que os arquivos forem recebidos.</div>
+      <div class="card-features"><span class="feat-chip">disparo em massa</span><span class="feat-chip">lista contatos</span><span class="feat-chip">a mapear</span></div>
+      <div class="card-footer"><span class="card-type">Em breve</span></div>
+    </div>
+
+    <!-- 02 INSTABOT -->
+    <div class="tool-card searchable" data-name="instabot instagram auto like follow comment dm" onclick="openModal('instabot')">
+      <div class="accent-strip" style="background:linear-gradient(90deg,#D4537E,#834AB4,#F56040);"></div>
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(212,83,126,0.12);color:#ED93B1;"><i class="ti ti-brand-instagram"></i></div>
+        <div class="card-badges"><div class="card-num">02</div><span class="status-badge s-active">● ativo</span></div>
+      </div>
+      <div><div class="card-name">Instabot</div><div class="card-tech">InstaBot Pro v5.0 · Delphi + Chrome</div></div>
+      <div class="card-desc">Automatiza curtidas, comentários, seguidores e DMs no Instagram. Extrai usuários por hashtag e lista de perfis.</div>
+      <div class="card-features">
+        <span class="feat-chip">auto like</span><span class="feat-chip">auto comment</span><span class="feat-chip">follow/unfollow</span>
+        <span class="feat-chip">bulk DM</span><span class="feat-chip">extractor</span><span class="feat-chip">hashtag target</span>
+        <span class="feat-chip">delay anti-ban</span>
+      </div>
+      <div class="card-footer">
+        <span class="open-link"><i class="ti ti-external-link" style="font-size:14px;"></i>Abrir ferramenta</span>
+        <span class="card-type">.exe · Windows</span>
+      </div>
+    </div>
+
+    <!-- 03 FACEBOOK MKT -->
+    <div class="tool-card searchable" data-name="facebook mkt auto join group grupos entrar admin" onclick="openModal('facebook')">
+      <div class="accent-strip" style="background:linear-gradient(90deg,#1877F2,#42B5F5);"></div>
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(24,119,242,0.12);color:#85B7EB;"><i class="ti ti-brand-facebook"></i></div>
+        <div class="card-badges"><div class="card-num">03</div><span class="status-badge s-ext">extensão</span></div>
+      </div>
+      <div><div class="card-name">Facebook MKT</div><div class="card-tech">Auto Join Group · Chrome Extension MV2</div></div>
+      <div class="card-desc">Entra automaticamente em grupos do Facebook com resposta automática às perguntas do admin e delay configurável.</div>
+      <div class="card-features">
+        <span class="feat-chip">auto join</span><span class="feat-chip">auto answer admin</span><span class="feat-chip">delay min/max</span>
+        <span class="feat-chip">200 grupos/sessão</span><span class="feat-chip">progresso ao vivo</span>
+      </div>
+      <div class="card-footer">
+        <span class="open-link"><i class="ti ti-puzzle" style="font-size:14px;"></i>Instalar no Chrome</span>
+        <span class="card-type">Chrome Extension</span>
+      </div>
+    </div>
+
+    <!-- 04 TELEGRAM MKT -->
+    <div class="tool-card searchable" data-name="telegram mkt mensagem grupo scraper extrator disparo" onclick="openModal('telegram')">
+      <div class="accent-strip" style="background:linear-gradient(90deg,#534AB7,#9B4FD4,#E84FD4);"></div>
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(83,74,183,0.12);color:#AFA9EC;"><i class="ti ti-brand-telegram"></i></div>
+        <div class="card-badges"><div class="card-num">04</div><span class="status-badge s-ext">extensão</span></div>
+      </div>
+      <div><div class="card-name">Telegram MKT</div><div class="card-tech">Telegram Sender v1.0.1 · Chrome Extension MV2</div></div>
+      <div class="card-desc">Extrai membros de grupos do Telegram e envia mensagens em massa com delay aleatório. Módulo de convites preparado.</div>
+      <div class="card-features">
+        <span class="feat-chip">group scraper</span><span class="feat-chip">bulk messages</span><span class="feat-chip">invites</span>
+        <span class="feat-chip">delay aleatório</span><span class="feat-chip">log diário</span><span class="feat-chip">notif. Chrome</span>
+      </div>
+      <div class="card-footer">
+        <span class="open-link"><i class="ti ti-puzzle" style="font-size:14px;"></i>Instalar no Chrome</span>
+        <span class="card-type">Chrome Extension</span>
+      </div>
+    </div>
+
+    <!-- 05 WHATSAPP MKT -->
+    <div class="tool-card searchable" data-name="whatsapp mkt disparo massa grupos contatos filtro" onclick="openModal('whatsapp')">
+      <div class="accent-strip" style="background:linear-gradient(90deg,#1D9E75,#5DCAA5);"></div>
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(29,158,117,0.12);color:#5DCAA5;"><i class="ti ti-brand-whatsapp"></i></div>
+        <div class="card-badges"><div class="card-num">05</div><span class="status-badge s-active">● ativo</span></div>
+      </div>
+      <div><div class="card-name">WhatsApp MKT</div><div class="card-tech">MassWhatsAppSender · .NET 4.6 + ChromeDriver</div></div>
+      <div class="card-desc">Disparador em massa de WhatsApp com gestão de contas, filtro de números, grupos grabber e personalização. 5 idiomas.</div>
+      <div class="card-features">
+        <span class="feat-chip">disparo em massa</span><span class="feat-chip">grupos grabber</span><span class="feat-chip">filtro números</span>
+        <span class="feat-chip">multi-conta</span><span class="feat-chip">modo turbo</span><span class="feat-chip">mídias + legendas</span>
+        <span class="feat-chip">EN·PT·ES·FR·AR</span>
+      </div>
+      <div class="card-footer">
+        <span class="open-link"><i class="ti ti-external-link" style="font-size:14px;"></i>Abrir ferramenta</span>
+        <span class="card-type">.exe · Windows</span>
+      </div>
+    </div>
+
+    <!-- 06 EMAIL MKT -->
+    <div class="tool-card searchable" data-name="email mkt ultramailer smtp rotação disparo template html" onclick="openModal('email')">
+      <div class="accent-strip" style="background:linear-gradient(90deg,#854F0B,#EF9F27);"></div>
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(239,159,39,0.12);color:#FAC775;"><i class="ti ti-mail-forward"></i></div>
+        <div class="card-badges"><div class="card-num">06</div><span class="status-badge s-active">● ativo</span></div>
+      </div>
+      <div><div class="card-name">Email MKT</div><div class="card-tech">UltraMailer v3.5 · Delphi/VCL · Windows</div></div>
+      <div class="card-desc">Disparador de e-mails em massa com 340 templates HTML, rotação multi-SMTP, rastreamento de abertura/cliques e autoresponder.</div>
+      <div class="card-features">
+        <span class="feat-chip">340 templates</span><span class="feat-chip">multi-SMTP rotatório</span><span class="feat-chip">Amazon SES</span>
+        <span class="feat-chip">agendamento</span><span class="feat-chip">autoresponder</span><span class="feat-chip">DKIM</span>
+        <span class="feat-chip">tracking abertura</span><span class="feat-chip">bounce mgmt</span>
+      </div>
+      <div class="card-footer">
+        <span class="open-link"><i class="ti ti-external-link" style="font-size:14px;"></i>Abrir ferramenta</span>
+        <span class="card-type">.exe · Windows</span>
+      </div>
+    </div>
+
+    <!-- 07 WHATSAPP BOT -->
+    <div class="tool-card searchable" data-name="whatsapp bot evolution n8n kanban crm agenda pagamentos" onclick="openModal('wabot')">
+      <div class="accent-strip" style="background:linear-gradient(90deg,#1D9E75,#534AB7,#E50914);"></div>
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(29,158,117,0.12);color:#5DCAA5;"><i class="ti ti-robot"></i></div>
+        <div class="card-badges"><div class="card-num">07</div><span class="status-badge s-dev">⚙ em dev</span></div>
+      </div>
+      <div><div class="card-name">WhatsApp Bot</div><div class="card-tech">Evolution Go + n8n + Node.js + React · SaaS</div></div>
+      <div class="card-desc">Plataforma SaaS completa com automação via bot, CRM de contatos, Kanban inteligente, agenda, hierarquia de usuários e pagamentos.</div>
+      <div class="card-features">
+        <span class="feat-chip">Evolution Go API</span><span class="feat-chip">webhooks n8n</span><span class="feat-chip">3 níveis acesso</span>
+        <span class="feat-chip">kanban por workflow</span><span class="feat-chip">CRM contatos</span><span class="feat-chip">agenda</span>
+        <span class="feat-chip">Asaas pagamentos</span><span class="feat-chip">Academy</span>
+      </div>
+      <div class="card-footer">
+        <span class="open-link" style="color:#AFA9EC;"><i class="ti ti-clock" style="font-size:14px;"></i>Em desenvolvimento</span>
+        <span class="card-type">SaaS · Web</span>
+      </div>
+    </div>
+
+    <!-- SMS PLACEHOLDER -->
+    <div class="sms-placeholder searchable" data-name="sms mkt">
+      <div class="sms-icon"><i class="ti ti-message-2"></i></div>
+      <div class="sms-info">
+        <div class="sms-name">SMS MKT</div>
+        <div class="sms-desc">Ferramenta #01 — aguardando envio dos arquivos para mapeamento completo</div>
+      </div>
+      <div class="sms-badge">⏳ em breve</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  Desenvolvido para <span>SOS Super MKT</span> · Painel Central de Ferramentas de Marketing Digital
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+var tools = {
+  instabot: {
+    name: 'Instabot',
+    tech: 'InstaBot Pro v5.0 · Delphi + Chrome · Windows',
+    icon: 'ti-brand-instagram',
+    iconBg: 'rgba(212,83,126,0.15)',
+    iconColor: '#ED93B1',
+    url: '#',
+    desc: 'Automatiza todas as interações do Instagram: curtidas, comentários, seguidores/deixar de seguir e mensagens diretas em massa. Utiliza Chrome para acessar o Instagram Web e opera com delay aleatório para evitar bloqueios.',
+    features: ['Auto Like por hashtag','Auto Like por lista de usuários','Unlike automático','Auto Comment multi-template','Import comentários .txt','Auto Follow/Unfollow','Bulk DM com {username}','Extractor de seguidores','Extractor por hashtag','Export CSV/clipboard','Delay aleatório anti-ban','Até 300 ações/sessão'],
+    type: 'Executável Windows (.exe)',
+    version: 'v5.0'
+  },
+  facebook: {
+    name: 'Facebook MKT',
+    tech: 'Auto Join Group v0.1 · Chrome Extension MV2 · JS',
+    icon: 'ti-brand-facebook',
+    iconBg: 'rgba(24,119,242,0.15)',
+    iconColor: '#85B7EB',
+    url: '#',
+    desc: 'Extensão Chrome que entra automaticamente em grupos do Facebook. Cola lista de IDs de grupos, responde automaticamente às perguntas de aprovação do admin com frases aleatórias e configura delay entre cada entrada.',
+    features: ['Auto join por lista de IDs','Até 200 grupos por sessão','Auto Answer aleatório para perguntas do admin','5 respostas pré-configuradas personalizáveis','Delay min/max configurável (padrão 70–120s)','Barra de progresso em tempo real','Lista de resultados ao vivo','Anti-ban com delay humano-like'],
+    type: 'Extensão Chrome (instalar no modo dev)',
+    version: 'v0.1'
+  },
+  telegram: {
+    name: 'Telegram MKT',
+    tech: 'Telegram Sender v1.0.1 · Chrome Extension MV2',
+    icon: 'ti-brand-telegram',
+    iconBg: 'rgba(83,74,183,0.15)',
+    iconColor: '#AFA9EC',
+    url: '#',
+    desc: 'Extensão Chrome para automação do Telegram Web. Extrai usernames de membros de grupos e envia mensagens em massa para listas de usuários. Módulo de convite em massa já implementado.',
+    features: ['Group Scraper (extrai até 200 membros/sessão)','Bulk Messages para lista de @usuários','Delay aleatório min-max entre mensagens','Invites em massa (módulo preparado)','Log diário de ações com limite','Notificação Chrome ao finalizar','Pause/Resume/Stop do disparo','12 licenças pré-configuradas','Requer Telegram Web versão legada'],
+    type: 'Extensão Chrome (instalar no modo dev)',
+    version: 'v1.0.1'
+  },
+  whatsapp: {
+    name: 'WhatsApp MKT',
+    tech: 'MassWhatsAppSender · .NET 4.6 + Selenium + ChromeDriver',
+    icon: 'ti-brand-whatsapp',
+    iconBg: 'rgba(29,158,117,0.15)',
+    iconColor: '#5DCAA5',
+    url: '#',
+    desc: 'Disparador em massa de WhatsApp via Selenium + ChromeDriver. Gerencia múltiplas contas, filtra números com WA ativo, extrai contatos de grupos e envia mensagens, imagens, vídeos e documentos.',
+    features: ['Disparo em massa (múltiplas contas)','Modo Turbo sem arquivo','Filtro de números WA válidos','Groups Grabber via link','Import de arquivos / manual / gerador numérico','Remoção de duplicatas','Mensagens com nome/sobrenome/tag aleatória','Emoji + anexos + legendas (mídias)','Log de envios + progresso','Delay configurável entre mensagens','Retomar disparo pausado','5 idiomas: EN · PT · ES · FR · AR'],
+    type: 'Executável Windows (.exe) — .NET 4.6',
+    version: 'Bulk WhatsApp Sender'
+  },
+  email: {
+    name: 'Email MKT',
+    tech: 'UltraMailer v3.5 · Delphi/VCL · Inno Setup',
+    icon: 'ti-mail-forward',
+    iconBg: 'rgba(239,159,39,0.15)',
+    iconColor: '#FAC775',
+    url: '#',
+    desc: 'Plataforma completa de email marketing desktop. 340 templates HTML profissionais, rotação entre múltiplos servidores SMTP, rastreamento built-in vitalício de abertura e cliques, sem mensalidade de tracking.',
+    features: ['340 templates HTML (testados em todos clients)','Editor WYSIWYG (DHTMLEd)','Personalização ##nome## ##empresa##','Rotação multi-SMTP','Amazon SES (R$0,10/1.000 emails)','Gmail / Outlook / SMTP próprio','Agendamento data e hora','Autoresponder sequencial','DKIM Signature (inbox delivery)','Bounce Management POP3/IMAP','Blacklist automática de bounces','Rastreamento abertura + cliques (lifetime)','Google Analytics integrado','Email Harvester (extrai @ de sites)','Email Verifier built-in','API PHP/C# unsubscribe','Filtros avançados (provedor, aniversário…)','4 vídeo-aulas de treinamento incluídas'],
+    type: 'Executável Windows (.exe) — Delphi/VCL',
+    version: 'v3.5'
+  },
+  wabot: {
+    name: 'WhatsApp Bot',
+    tech: 'Evolution Go + n8n + Node.js + React + PostgreSQL',
+    icon: 'ti-robot',
+    iconBg: 'rgba(29,158,117,0.15)',
+    iconColor: '#5DCAA5',
+    url: '#',
+    desc: 'Plataforma SaaS completa em desenvolvimento. Multi-tenant com 3 níveis de acesso (Super Admin, Admin, Usuário), automação via n8n, CRM de contatos, Kanban por workflow e Academy de vídeo-aulas.',
+    features: ['Evolution Go API (WhatsApp real)','Webhooks sinc. com n8n','Super Admin · Admin · User (hierarquia)','Intervenção silenciosa do Admin nas conversas','Kanban inteligente por workflow','CRM contatos (auto-save + import/export)','Agenda individualizada por usuário','Conexões e Filas separadas','Planos recorrentes Asaas (PIX + cartão)','SMTP para recuperação de senha','Dashboard inteligente (cards clicáveis)','Academy estilo Netflix','Logs e auditoria completa'],
+    type: 'SaaS Web — Node.js + React + Docker',
+    version: 'Em desenvolvimento'
+  }
+};
+
+function openModal(id) {
+  var t = tools[id];
+  if (!t) return;
+  var isActive = id !== 'wabot';
+  var content = document.getElementById('modal-content');
+  content.innerHTML =
+    '<div class="modal-header">' +
+      '<div class="modal-icon" style="background:' + t.iconBg + ';color:' + t.iconColor + ';"><i class="ti ' + t.icon + '"></i></div>' +
+      '<div class="modal-info"><div class="modal-name">' + t.name + '</div><div class="modal-tech">' + t.tech + '</div></div>' +
+      '<button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>' +
+    '</div>' +
+    '<div class="modal-section"><div class="ms-title">Sobre a ferramenta</div><div class="ms-desc">' + t.desc + '</div></div>' +
+    '<div class="modal-section"><div class="ms-title">Funcionalidades (' + t.features.length + ')</div><div class="ms-features">' +
+      t.features.map(function(f){ return '<span class="ms-feat">' + f + '</span>'; }).join('') +
+    '</div></div>' +
+    '<div class="modal-section"><div class="ms-title">Tipo · Versão</div><div class="ms-desc" style="font-size:12px;">' + t.type + ' · ' + t.version + '</div></div>' +
+    '<button class="modal-open-btn' + (isActive ? '' : ' disabled') + '" onclick="' + (isActive ? 'alert(\'Configure o caminho da ferramenta no código.\')' : '') + '">' +
+      (isActive ? '<i class="ti ti-external-link"></i> Abrir ' + t.name : '<i class="ti ti-clock"></i> Em desenvolvimento') +
+    '</button>';
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function filterCards(q) {
+  var cards = document.querySelectorAll('.searchable');
+  q = q.toLowerCase().trim();
+  cards.forEach(function(c) {
+    var name = (c.dataset.name || '').toLowerCase();
+    c.style.display = (!q || name.includes(q)) ? '' : 'none';
+  });
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
