@@ -12,7 +12,8 @@ const nav = [
 ]
 
 const adminNav = [
-  { to: '/users', icon: '🔐', label: 'Usuários' },
+  { to: '/users',   icon: '🔐', label: 'Usuários' },
+  { to: '/tenants', icon: '🏢', label: 'Tenants',  superOnly: true },
 ]
 
 export default function Layout({ children }) {
@@ -60,7 +61,7 @@ export default function Layout({ children }) {
           {isAdmin && (
             <>
               <div className="pt-3 pb-1 px-3 text-xs text-gray-600 uppercase tracking-wider">Admin</div>
-              {adminNav.map(item => (
+              {adminNav.filter(item => !item.superOnly || user?.role === 'super_admin').map(item => (
                 <NavLink
                   key={item.to}
                   to={item.to}

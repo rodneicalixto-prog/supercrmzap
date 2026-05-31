@@ -12,8 +12,9 @@ import Instances from './pages/Instances'
 import Schedules from './pages/Schedules'
 import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
+import Tenants from './pages/Tenants'
 
-function PrivateRoute({ children, adminOnly = false }) {
+function PrivateRoute({ children, adminOnly = false, superOnly = false }) {
   const { user, loading } = useAuth()
   if (loading) return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center text-gray-500 text-sm">
@@ -22,6 +23,7 @@ function PrivateRoute({ children, adminOnly = false }) {
   )
   if (!user) return <Navigate to="/login" />
   if (adminOnly && user.role !== 'admin' && user.role !== 'super_admin') return <Navigate to="/" />
+  if (superOnly && user.role !== 'super_admin') return <Navigate to="/" />
   return <Layout>{children}</Layout>
 }
 
@@ -44,8 +46,9 @@ export default function App() {
             <Route path="/schedules" element={<PrivateRoute><Schedules /></PrivateRoute>} />
             <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
 
-            {/* Rota exclusiva para admin */}
+            {/* Rotas exclusivas para admin */}
             <Route path="/users" element={<PrivateRoute adminOnly><Users /></PrivateRoute>} />
+            <Route path="/tenants" element={<PrivateRoute superOnly><Tenants /></PrivateRoute>} />
 
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
