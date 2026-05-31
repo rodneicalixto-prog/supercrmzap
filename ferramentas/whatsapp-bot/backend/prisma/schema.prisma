@@ -220,6 +220,7 @@ model AcademyProgress {
   lessonId   String
   lesson     AcademyLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   userId     String
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   completed  Boolean       @default(false)
   watchedAt  DateTime      @default(now())
 
