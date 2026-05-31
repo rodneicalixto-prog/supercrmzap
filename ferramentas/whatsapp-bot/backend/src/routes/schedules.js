@@ -1,26 +1,51 @@
 import { authenticate } from '../middlewares/auth.js'
 import { prisma } from '../utils/db.js'
+import { enviarTexto } from '../utils/evolution.js'
 
 export default async function scheduleRoutes(app) {
   app.addHook('preHandler', authenticate)
 
+  // Listar agendamentos
   app.get('/', async (req) => {
     return prisma.schedule.findMany({
-      where: { userId: req.user.id },
-      include: { contact: true },
-      orderBy: { datetime: 'asc' }
+      where: { tenantId: req.user.tenantId, userId: req.user.id },
+      orderBy: { scheduledAt: 'asc' },
     })
   })
 
-  app.post('/', async (req) => {
-    const { contactId, title, datetime } = req.body
+  // Criar agendamento de mensagem
+  app.post('/', async (req, reply) => {
+    const { instanceId, phone, message, scheduledAt } = req.body
+    if (!phone || !message || !scheduledAt) {
+      return reply.status(400).send({ error: 'Telefone, mensagem e data/hora são obrigatórios' })
+    }
+
+    const instancia = await prisma.waInstance.findFirst({
+      where: { id: instanceId, tenantId: req.user.tenantId },
+    })
+    if (!instancia) return reply.status(404).send({ error: 'Instância não encontrada' })
+
     return prisma.schedule.create({
-      data: { tenantId: req.user.tenantId, userId: req.user.id, contactId, title, datetime: new Date(datetime) }
+      data: {
+        tenantId: req.user.tenantId,
+        userId: req.user.id,
+        instanceId,
+        phone,
+        message,
+        scheduledAt: new Date(scheduledAt),
+        status: 'pending',
+      },
     })
   })
 
-  app.delete('/:id', async (req) => {
+  // Cancelar agendamento
+  app.delete('/:id', async (req, reply) => {
+    const schedule = await prisma.schedule.findFirst({
+      where: { id: req.params.id, userId: req.user.id },
+    })
+    if (!schedule) return reply.status(404).send({ error: 'Agendamento não encontrado' })
+    if (schedule.status === 'sent') return reply.status(409).send({ error: 'Mensagem já enviada, não é possível cancelar' })
     await prisma.schedule.delete({ where: { id: req.params.id } })
-    return { deleted: true }
+    return { cancelado: true }
   })
 }

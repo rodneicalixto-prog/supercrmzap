@@ -3,12 +3,19 @@ import { api } from '../services/api'
 import { useWS } from '../contexts/WSContext'
 
 const STATUS_COLOR = {
+  conectado: 'text-green-400',
+  desconectado: 'text-gray-500',
+  aguardando_qr: 'text-yellow-400',
+  // compatibilidade com eventos legados da Evolution Go
   connected: 'text-green-400',
   disconnected: 'text-gray-500',
   qr: 'text-yellow-400',
 }
 
 const STATUS_LABEL = {
+  conectado: '● Conectado',
+  desconectado: '○ Desconectado',
+  aguardando_qr: '⬡ Aguardando QR',
   connected: '● Conectado',
   disconnected: '○ Desconectado',
   qr: '⬡ Aguardando QR',
@@ -26,7 +33,7 @@ export default function Instances() {
   }, [])
 
   useEffect(() => {
-    return on('instance_status', ({ instanceId, status, qr_code }) => {
+    return on('status_instancia', ({ instanceId, status, qr_code }) => {
       setInstances(list => list.map(i => i.id === instanceId ? { ...i, status } : i))
       if (qr_code) setQr({ instanceId, code: qr_code })
     })
@@ -86,7 +93,7 @@ export default function Instances() {
                 {inst.phone && <p className="text-xs text-gray-600 mt-0.5">{inst.phone}</p>}
               </div>
               <div className="flex gap-2">
-                {inst.status !== 'connected' && (
+                {inst.status !== 'conectado' && inst.status !== 'connected' && (
                   <button
                     onClick={() => connect(inst.id)}
                     className="text-xs px-3 py-1.5 bg-green-700 hover:bg-green-600 rounded-lg"

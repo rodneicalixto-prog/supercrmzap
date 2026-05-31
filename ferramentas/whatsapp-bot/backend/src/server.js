@@ -16,7 +16,20 @@ import { wsHandler } from './websocket/handler.js'
 
 const app = Fastify({ logger: true })
 
-await app.register(cors, { origin: process.env.FRONTEND_URL || '*' })
+const allowedOrigins = [
+  'https://supercrmapp.openwave.online',
+  'http://localhost:5173',
+  'http://localhost:3000',
+]
+
+await app.register(cors, {
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
+    cb(new Error('Origem não permitida pelo CORS'), false)
+  },
+  credentials: true,
+})
+
 await app.register(jwt, { secret: process.env.JWT_SECRET || 'dev_secret' })
 await app.register(websocket)
 
@@ -29,16 +42,16 @@ app.register(async function (f) {
 app.register(authRoutes, { prefix: '/auth' })
 app.register(webhookRoutes, { prefix: '/webhook' })
 
-// Rotas protegidas
-app.register(instanceRoutes,    { prefix: '/instances' })
-app.register(conversationRoutes,{ prefix: '/conversations' })
-app.register(messageRoutes,     { prefix: '/messages' })
-app.register(contactRoutes,     { prefix: '/contacts' })
-app.register(kanbanRoutes,      { prefix: '/kanban' })
-app.register(scheduleRoutes,    { prefix: '/schedules' })
-app.register(userRoutes,        { prefix: '/users' })
+// Rotas protegidas por JWT
+app.register(instanceRoutes,     { prefix: '/instances' })
+app.register(conversationRoutes, { prefix: '/conversations' })
+app.register(messageRoutes,      { prefix: '/messages' })
+app.register(contactRoutes,      { prefix: '/contacts' })
+app.register(kanbanRoutes,       { prefix: '/kanban' })
+app.register(scheduleRoutes,     { prefix: '/schedules' })
+app.register(userRoutes,         { prefix: '/users' })
 
-app.get('/health', () => ({ status: 'ok', ts: new Date() }))
+app.get('/health', () => ({ status: 'ok', ambiente: process.env.NODE_ENV, ts: new Date() }))
 
 try {
   await app.listen({ port: Number(process.env.PORT) || 3000, host: '0.0.0.0' })

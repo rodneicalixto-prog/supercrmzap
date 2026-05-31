@@ -16,7 +16,7 @@ export default function Kanban() {
   }, [])
 
   useEffect(() => {
-    return on('kanban_moved', ({ cardId, columnId, position }) => {
+    return on('kanban_movido', ({ cardId, columnId, position }) => {
       setActive(board => {
         if (!board) return board
         const cards = board.cards.map(c => c.id === cardId ? { ...c, columnId, position } : c)

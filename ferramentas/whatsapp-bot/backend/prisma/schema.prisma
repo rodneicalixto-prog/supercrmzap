@@ -48,13 +48,15 @@ model WaInstance {
   userId      String
   user        User     @relation(fields: [userId], references: [id])
   name        String
+  nomeInterno String?  // identificador único usado internamente na Evolution Go
   phone       String?
-  status      String   @default("disconnected") // connected | disconnected | qr
+  status      String   @default("desconectado") // conectado | desconectado | aguardando_qr
   sessionData Json?
   webhookUrl  String?
   createdAt   DateTime @default(now())
 
   conversations Conversation[]
+  schedules     Schedule[]
 }
 
 model Contact {
@@ -101,6 +103,7 @@ model Message {
   content        String?
   mediaUrl       String?
   isSilent       Boolean      @default(false)
+  externalId     String?      // ID da mensagem na Evolution Go (para deduplicação)
   sentAt         DateTime     @default(now())
   readAt         DateTime?
 }
@@ -128,16 +131,18 @@ model KanbanCard {
 }
 
 model Schedule {
-  id               String   @id @default(uuid())
-  tenantId         String
-  userId           String
-  user             User     @relation(fields: [userId], references: [id])
-  contactId        String?
-  contact          Contact? @relation(fields: [contactId], references: [id])
-  title            String
-  datetime         DateTime
-  notificationSent Boolean  @default(false)
-  createdAt        DateTime @default(now())
+  id          String    @id @default(uuid())
+  tenantId    String
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  instanceId  String?
+  instance    WaInstance? @relation(fields: [instanceId], references: [id])
+  phone       String
+  message     String
+  scheduledAt DateTime
+  status      String    @default("pending") // pending | sent | failed
+  sentAt      DateTime?
+  createdAt   DateTime  @default(now())
 }
 
 model Subscription {

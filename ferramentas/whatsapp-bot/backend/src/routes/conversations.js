@@ -33,7 +33,7 @@ export default async function conversationRoutes(app) {
       where: { id: req.params.id },
       data: { assignedTo: userId }
     })
-    broadcast(req.user.tenantId, { event: 'conv_assigned', data: { conversationId: conv.id, userId } })
+    broadcast(req.user.tenantId, { event: 'conversa_atribuida', data: { conversationId: conv.id, userId } })
     return conv
   })
 
@@ -42,7 +42,7 @@ export default async function conversationRoutes(app) {
       where: { id: req.params.id },
       data: { status: 'resolved' }
     })
-    broadcast(req.user.tenantId, { event: 'conv_resolved', data: { conversationId: conv.id } })
+    broadcast(req.user.tenantId, { event: 'conversa_resolvida', data: { conversationId: conv.id } })
     return conv
   })
 

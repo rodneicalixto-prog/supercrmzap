@@ -26,7 +26,7 @@ export default async function kanbanRoutes(app) {
       data: { columnId, position }
     })
     broadcast(req.user.tenantId, {
-      event: 'kanban_moved',
+      event: 'kanban_movido',
       data: { cardId, columnId, position }
     })
     return card
