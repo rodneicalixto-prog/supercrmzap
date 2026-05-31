@@ -42,7 +42,7 @@ services:
 
   # ── EVOLUTION GO (WhatsApp API — escrita em Go) ───────────
   evolution:
-    image: evolucionapi/evolution-go:latest
+    image: atendai/evolution-api:latest
     container_name: sos_evolution
     restart: unless-stopped
     ports:
