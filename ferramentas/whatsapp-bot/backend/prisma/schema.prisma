@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id            String         @id @default(uuid())
+  name          String
+  plan          String         @default("free")
+  status        String         @default("active")
+  createdAt     DateTime       @default(now())
+  users         User[]
+  instances     WaInstance[]
+  contacts      Contact[]
+  conversations Conversation[]
+  boards        KanbanBoard[]
+  subscriptions Subscription[]
+  actionsLog    ActionsLog[]
+  webhooks      Webhook[]
+}
+
+model User {
+  id           String    @id @default(uuid())
+  tenantId     String
+  tenant       Tenant    @relation(fields: [tenantId], references: [id])
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         String    @default("user") // super_admin | admin | user
+  status       String    @default("active")
+  lastLogin    DateTime?
+  createdAt    DateTime  @default(now())
+
+  instances     WaInstance[]
+  conversations Conversation[]
+  schedules     Schedule[]
+  actionsLog    ActionsLog[]
+}
+
+model WaInstance {
+  id          String   @id @default(uuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  name        String
+  phone       String?
+  status      String   @default("disconnected") // connected | disconnected | qr
+  sessionData Json?
+  webhookUrl  String?
+  createdAt   DateTime @default(now())
+
+  conversations Conversation[]
+}
+
+model Contact {
+  id        String   @id @default(uuid())
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  name      String
+  phone     String
+  email     String?
+  tags      String[]
+  notes     String?
+  autoSaved Boolean  @default(false)
+  source    String?
+  createdAt DateTime @default(now())
+
+  conversations Conversation[]
+  schedules     Schedule[]
+}
+
+model Conversation {
+  id         String   @id @default(uuid())
+  tenantId   String
+  tenant     Tenant   @relation(fields: [tenantId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  instanceId String
+  instance   WaInstance @relation(fields: [instanceId], references: [id])
+  contactId  String
+  contact    Contact  @relation(fields: [contactId], references: [id])
+  status     String   @default("open") // open | pending | resolved
+  assignedTo String?
+  createdAt  DateTime @default(now())
+
+  messages    Message[]
+  kanbanCards KanbanCard[]
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  direction      String       // in | out
+  type           String       @default("text") // text | image | audio | video | doc
+  content        String?
+  mediaUrl       String?
+  isSilent       Boolean      @default(false)
+  sentAt         DateTime     @default(now())
+  readAt         DateTime?
+}
+
+model KanbanBoard {
+  id           String       @id @default(uuid())
+  tenantId     String
+  tenant       Tenant       @relation(fields: [tenantId], references: [id])
+  workflowName String
+  columns      Json
+  createdAt    DateTime     @default(now())
+  cards        KanbanCard[]
+}
+
+model KanbanCard {
+  id             String       @id @default(uuid())
+  boardId        String
+  board          KanbanBoard  @relation(fields: [boardId], references: [id])
+  conversationId String?
+  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+  columnId       String
+  position       Int
+  metadata       Json?
+  updatedAt      DateTime     @updatedAt
+}
+
+model Schedule {
+  id               String   @id @default(uuid())
+  tenantId         String
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  contactId        String?
+  contact          Contact? @relation(fields: [contactId], references: [id])
+  title            String
+  datetime         DateTime
+  notificationSent Boolean  @default(false)
+  createdAt        DateTime @default(now())
+}
+
+model Subscription {
+  id                   String   @id @default(uuid())
+  tenantId             String
+  tenant               Tenant   @relation(fields: [tenantId], references: [id])
+  plan                 String
+  amount               Float
+  interval             String   @default("monthly") // monthly | annual
+  asaasCustomerId      String?
+  asaasSubscriptionId  String?
+  status               String   @default("active")
+  expiresAt            DateTime?
+  createdAt            DateTime @default(now())
+}
+
+model Webhook {
+  id         String   @id @default(uuid())
+  tenantId   String
+  tenant     Tenant   @relation(fields: [tenantId], references: [id])
+  name       String
+  url        String
+  events     String[]
+  secret     String?
+  status     String   @default("active")
+  retryCount Int      @default(0)
+  createdAt  DateTime @default(now())
+}
+
+model ActionsLog {
+  id        String   @id @default(uuid())
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  details   Json?
+  ip        String?
+  createdAt DateTime @default(now())
+}
