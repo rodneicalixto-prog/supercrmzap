@@ -4,27 +4,45 @@ import { prisma } from '../utils/db.js'
 
 const USER_SELECT = {
   id: true, name: true, email: true, role: true, status: true,
-  lastLogin: true, createdAt: true, workHours: true,
+  lastLogin: true, createdAt: true, workHours: true, supervisorId: true,
   responsibleInstances: { select: { instanceId: true } },
 }
 
+// Quem o requester pode ver/gerenciar
+function whereUsuarios(user) {
+  const base = { tenantId: user.tenantId }
+  if (user.role === 'super_admin') return base                          // todos
+  if (user.role === 'admin') return { ...base, role: { notIn: ['super_admin'] } }  // exceto super_admin
+  if (user.role === 'supervisor') return { ...base, supervisorId: user.id }        // só sua equipe
+  return { ...base, id: user.id }                                      // só a si mesmo
+}
+
 export default async function userRoutes(app) {
-  app.addHook('preHandler', requireRole('admin', 'super_admin'))
+  // supervisor e acima podem listar usuários; users não
+  app.addHook('preHandler', requireRole('admin', 'super_admin', 'supervisor'))
 
   app.get('/', async (req) => {
     return prisma.user.findMany({
-      where: { tenantId: req.user.tenantId },
+      where: whereUsuarios(req.user),
       select: USER_SELECT,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { name: 'asc' },
     })
   })
 
-  app.post('/', async (req, reply) => {
-    const { name, email, password, role, workHours, instanceIds } = req.body
+  // Criar usuário — admin+
+  app.post('/', { preHandler: requireRole('admin', 'super_admin') }, async (req, reply) => {
+    const { name, email, password, role, workHours, instanceIds, supervisorId } = req.body
+    if (!name || !email || !password) return reply.status(400).send({ error: 'Nome, e-mail e senha são obrigatórios' })
+
+    // admin não pode criar super_admin
+    if (req.user.role === 'admin' && role === 'super_admin') {
+      return reply.status(403).send({ error: 'Admin não pode criar super_admin' })
+    }
+
     const existente = await prisma.user.findUnique({ where: { email } })
     if (existente) return reply.status(409).send({ error: 'E-mail já cadastrado' })
-    const hash = await bcrypt.hash(password, 12)
 
+    const hash = await bcrypt.hash(password, 12)
     const user = await prisma.user.create({
       data: {
         tenantId: req.user.tenantId,
@@ -32,6 +50,7 @@ export default async function userRoutes(app) {
         passwordHash: hash,
         role: role || 'user',
         ...(workHours && { workHours }),
+        ...(supervisorId && { supervisorId }),
       },
       select: USER_SELECT,
     })
@@ -42,16 +61,19 @@ export default async function userRoutes(app) {
         skipDuplicates: true,
       })
     }
-
-    return { ...user, responsibleInstances: instanceIds?.map(id => ({ instanceId: id })) || [] }
+    return user
   })
 
-  app.put('/:id', async (req, reply) => {
-    const { name, email, password, role, workHours, instanceIds } = req.body
+  app.put('/:id', { preHandler: requireRole('admin', 'super_admin') }, async (req, reply) => {
+    const { name, email, password, role, workHours, instanceIds, supervisorId } = req.body
     const user = await prisma.user.findFirst({
       where: { id: req.params.id, tenantId: req.user.tenantId },
     })
     if (!user) return reply.status(404).send({ error: 'Usuário não encontrado' })
+
+    if (req.user.role === 'admin' && role === 'super_admin') {
+      return reply.status(403).send({ error: 'Admin não pode promover para super_admin' })
+    }
 
     const data = {}
     if (name) data.name = name
@@ -59,6 +81,7 @@ export default async function userRoutes(app) {
     if (role) data.role = role
     if (password) data.passwordHash = await bcrypt.hash(password, 12)
     if (workHours !== undefined) data.workHours = workHours
+    if (supervisorId !== undefined) data.supervisorId = supervisorId || null
 
     const updated = await prisma.user.update({
       where: { id: req.params.id },
@@ -75,11 +98,10 @@ export default async function userRoutes(app) {
         })
       }
     }
-
     return updated
   })
 
-  app.patch('/:id/status', async (req, reply) => {
+  app.patch('/:id/status', { preHandler: requireRole('admin', 'super_admin') }, async (req, reply) => {
     const user = await prisma.user.findFirst({
       where: { id: req.params.id, tenantId: req.user.tenantId },
     })
@@ -91,7 +113,7 @@ export default async function userRoutes(app) {
     })
   })
 
-  app.delete('/:id', async (req, reply) => {
+  app.delete('/:id', { preHandler: requireRole('admin', 'super_admin') }, async (req, reply) => {
     const user = await prisma.user.findFirst({
       where: { id: req.params.id, tenantId: req.user.tenantId },
     })

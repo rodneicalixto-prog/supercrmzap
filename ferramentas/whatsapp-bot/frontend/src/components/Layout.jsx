@@ -45,7 +45,7 @@ export default function Layout({ children }) {
     navigate('/', { state: { conversaId: conversationId } })
   }
 
-  const isAdmin = user?.role === 'admin' || user?.role === 'super_admin'
+  const isAdmin = ['admin', 'super_admin', 'supervisor'].includes(user?.role)
 
   return (
     <div className="flex h-screen bg-gray-950 text-white overflow-hidden">

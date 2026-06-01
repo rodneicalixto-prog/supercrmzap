@@ -32,10 +32,13 @@ model User {
   name         String
   email        String    @unique
   passwordHash String
-  role         String    @default("user") // super_admin | admin | user
+  role         String    @default("user") // super_admin | admin | supervisor | user
   status       String    @default("active")
   lastLogin    DateTime?
   createdAt    DateTime  @default(now())
+  supervisorId String?
+  supervisor   User?     @relation("UserSupervisor", fields: [supervisorId], references: [id])
+  subordinates User[]    @relation("UserSupervisor")
 
   instances             WaInstance[]
   conversations         Conversation[]

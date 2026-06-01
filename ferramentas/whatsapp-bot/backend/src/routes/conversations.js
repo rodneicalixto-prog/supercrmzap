@@ -1,6 +1,28 @@
-import { authenticate, requireRole } from '../middlewares/auth.js'
+import { authenticate, requireRole, podeTransferir } from '../middlewares/auth.js'
 import { prisma } from '../utils/db.js'
 import { broadcast } from '../websocket/handler.js'
+
+// Monta cláusula WHERE de conversas de acordo com o papel do usuário
+async function whereConversas(user) {
+  const base = { tenantId: user.tenantId }
+
+  if (user.role === 'super_admin' || user.role === 'admin') {
+    return base // vê todas do tenant
+  }
+
+  if (user.role === 'supervisor') {
+    // Vê conversas da própria equipe (subordinados diretos) + as próprias
+    const subordinados = await prisma.user.findMany({
+      where: { supervisorId: user.id },
+      select: { id: true },
+    })
+    const ids = [user.id, ...subordinados.map(u => u.id)]
+    return { ...base, userId: { in: ids } }
+  }
+
+  // user: apenas as próprias
+  return { ...base, userId: user.id }
+}
 
 export default async function conversationRoutes(app) {
   app.addHook('preHandler', authenticate)
@@ -8,8 +30,7 @@ export default async function conversationRoutes(app) {
   app.get('/', async (req) => {
     const { status, assigned, page = 1, limit = 30, search } = req.query
     const skip = (Number(page) - 1) * Number(limit)
-    const where = { tenantId: req.user.tenantId }
-    if (req.user.role === 'user') where.userId = req.user.id
+    const where = await whereConversas(req.user)
     if (status) where.status = status
     if (assigned) where.assignedTo = assigned
     if (search) {
@@ -45,7 +66,6 @@ export default async function conversationRoutes(app) {
     if (!contato) return reply.status(404).send({ error: 'Contato não encontrado' })
     if (!instancia) return reply.status(404).send({ error: 'Instância não encontrada' })
 
-    // Reutiliza conversa aberta/pendente ou cria nova
     let conversa = await prisma.conversation.findFirst({
       where: { tenantId: req.user.tenantId, contactId, status: { in: ['open', 'pending'] } },
       include: { contact: true, instance: true, messages: { orderBy: { sentAt: 'asc' } } },
@@ -66,22 +86,82 @@ export default async function conversationRoutes(app) {
   })
 
   app.get('/:id', async (req, reply) => {
+    const where = await whereConversas(req.user)
     const conv = await prisma.conversation.findFirst({
-      where: { id: req.params.id, tenantId: req.user.tenantId },
+      where: { ...where, id: req.params.id },
       include: { contact: true, instance: true, messages: { orderBy: { sentAt: 'asc' } } }
     })
     if (!conv) return reply.status(404).send({ error: 'Não encontrada' })
     return conv
   })
 
-  app.post('/:id/assign', { preHandler: requireRole('admin', 'super_admin') }, async (req) => {
+  // Transferir conversa — valida hierarquia
+  app.post('/:id/assign', async (req, reply) => {
     const { userId } = req.body
+
+    // Só admin+ pode transferir arbitrariamente; supervisor e user têm restrições
+    if (req.user.role === 'user') {
+      // user só pode se for admin ou supervisor da conversa
+      return reply.status(403).send({ error: 'Usuários não podem reatribuir conversas. Use o botão Transferir.' })
+    }
+
+    const destino = await prisma.user.findFirst({
+      where: { id: userId, tenantId: req.user.tenantId },
+    })
+    if (!destino) return reply.status(404).send({ error: 'Usuário destinatário não encontrado' })
+
+    const { ok, motivo } = podeTransferir(req.user.role, destino.role)
+    if (!ok) return reply.status(403).send({ error: motivo })
+
+    // supervisor só pode transferir dentro da sua equipe (+ outros supervisores)
+    if (req.user.role === 'supervisor' && destino.role === 'user') {
+      const naEquipe = destino.supervisorId === req.user.id
+      if (!naEquipe) return reply.status(403).send({ error: 'Você só pode transferir para membros da sua equipe' })
+    }
+
     const conv = await prisma.conversation.update({
       where: { id: req.params.id },
-      data: { assignedTo: userId }
+      data: { assignedTo: userId, userId }
     })
     broadcast(req.user.tenantId, { event: 'conversa_atribuida', data: { conversationId: conv.id, userId } })
     return conv
+  })
+
+  // Listar usuários elegíveis para transferência (filtrado por hierarquia)
+  app.get('/:id/transferiveis', async (req, reply) => {
+    const { role, id: myId, tenantId, supervisorId } = req.user
+
+    let where = { tenantId, status: 'active', id: { not: myId } }
+
+    if (role === 'super_admin') {
+      // pode transferir para qualquer um
+    } else if (role === 'admin') {
+      // não pode transferir para super_admin
+      where.role = { notIn: ['super_admin'] }
+    } else if (role === 'supervisor') {
+      // pode transferir para sua equipe e outros supervisores
+      where.OR = [
+        { supervisorId: myId },              // minha equipe
+        { role: 'supervisor', id: { not: myId } }, // outros supervisores
+      ]
+    } else {
+      // user: apenas seus pares (mesmo supervisorId) e seu supervisor
+      const conds = []
+      if (supervisorId) {
+        conds.push({ id: supervisorId })                    // seu supervisor
+        conds.push({ supervisorId, role: 'user' })          // colegas
+      } else {
+        conds.push({ role: 'user', tenantId })              // peers sem supervisor definido
+      }
+      where.OR = conds
+    }
+
+    const usuarios = await prisma.user.findMany({
+      where,
+      select: { id: true, name: true, role: true, supervisorId: true },
+      orderBy: { name: 'asc' },
+    })
+    return usuarios
   })
 
   app.post('/:id/resolve', async (req) => {
@@ -101,14 +181,12 @@ export default async function conversationRoutes(app) {
     return conv
   })
 
-  // Atualizar status genérico (ex: pending)
   app.patch('/:id', async (req, reply) => {
     const { status } = req.body
     const allowed = ['open', 'pending', 'resolved']
     if (status && !allowed.includes(status)) return reply.status(400).send({ error: 'Status inválido' })
-    const conv = await prisma.conversation.findFirst({
-      where: { id: req.params.id, tenantId: req.user.tenantId },
-    })
+    const where = await whereConversas(req.user)
+    const conv = await prisma.conversation.findFirst({ where: { ...where, id: req.params.id } })
     if (!conv) return reply.status(404).send({ error: 'Não encontrada' })
     const updated = await prisma.conversation.update({
       where: { id: req.params.id },
@@ -133,7 +211,6 @@ export default async function conversationRoutes(app) {
     return { assinado: true }
   })
 
-  // Verificar se está assinando
   app.get('/:id/subscribe', async (req) => {
     const existing = await prisma.conversationSubscriber.findUnique({
       where: { conversationId_userId: { conversationId: req.params.id, userId: req.user.id } },
@@ -141,8 +218,8 @@ export default async function conversationRoutes(app) {
     return { assinado: !!existing }
   })
 
-  // Intervenção silenciosa — admin envia mensagem que só o agente vê
-  app.post('/:id/silent', { preHandler: requireRole('admin', 'super_admin') }, async (req) => {
+  // Intervenção silenciosa — admin/supervisor
+  app.post('/:id/silent', { preHandler: requireRole('admin', 'super_admin', 'supervisor') }, async (req) => {
     const { content } = req.body
     const msg = await prisma.message.create({
       data: {

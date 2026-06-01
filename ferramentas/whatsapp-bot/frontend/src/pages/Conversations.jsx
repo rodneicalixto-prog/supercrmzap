@@ -179,7 +179,7 @@ export default function Conversations() {
 
   async function abrirTransferir() {
     try {
-      const r = await api.get('/users')
+      const r = await api.get(`/conversations/${selected.id}/transferiveis`)
       setUsuarios(r.data)
     } catch {
       setUsuarios([])

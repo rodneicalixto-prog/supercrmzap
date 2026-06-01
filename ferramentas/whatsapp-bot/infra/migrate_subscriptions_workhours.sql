@@ -17,3 +17,6 @@ CREATE TABLE IF NOT EXISTS "UserInstance" (
 
 -- Horário de atendimento no usuário
 ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "workHours" JSONB;
+
+-- Papel supervisor e supervisorId no usuário
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "supervisorId" TEXT REFERENCES "User"("id") ON DELETE SET NULL;

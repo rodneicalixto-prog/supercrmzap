@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react'
 import { api } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
 
-const ROLES = ['user', 'admin', 'super_admin']
+const ROLES_LABELS = {
+  user: 'Usuário',
+  supervisor: 'Supervisor',
+  admin: 'Admin',
+  super_admin: 'Super Admin',
+}
 
 const DIAS = [
   { label: 'Dom', value: 0 },
@@ -22,7 +27,8 @@ function initForm(u = null) {
     email: u?.email || '',
     password: '',
     role: u?.role || 'user',
-    instanceIds: u?.instanceIds || [],
+    supervisorId: u?.supervisorId || '',
+    instanceIds: u?.responsibleInstances?.map(r => r.instanceId) || [],
     workHours: u?.workHours
       ? { ...DEFAULT_WORK_HOURS, ...u.workHours }
       : { ...DEFAULT_WORK_HOURS },
@@ -63,6 +69,7 @@ export default function Users() {
     setLoading(true)
     const payload = { ...form }
     if (!payload.password) delete payload.password
+    if (!payload.supervisorId) payload.supervisorId = null
     try {
       if (modal === 'new') {
         await api.post('/users', payload)
@@ -71,6 +78,8 @@ export default function Users() {
       }
       setModal(null)
       load()
+    } catch (err) {
+      alert(err.response?.data?.error || 'Erro ao salvar usuário')
     } finally {
       setLoading(false)
     }
@@ -104,6 +113,7 @@ export default function Users() {
   const roleColor = {
     super_admin: 'text-purple-400',
     admin: 'text-blue-400',
+    supervisor: 'text-yellow-400',
     user: 'text-gray-400',
   }
 
@@ -137,7 +147,14 @@ export default function Users() {
                   {u.id === me?.id && <span className="ml-2 text-xs text-gray-600">(você)</span>}
                 </td>
                 <td className="px-4 py-3 text-gray-400">{u.email}</td>
-                <td className={`px-4 py-3 font-medium capitalize ${roleColor[u.role] || 'text-gray-400'}`}>{u.role.replace('_', ' ')}</td>
+                <td className={`px-4 py-3 font-medium ${roleColor[u.role] || 'text-gray-400'}`}>
+                  {ROLES_LABELS[u.role] || u.role}
+                  {u.supervisorId && (
+                    <p className="text-xs text-gray-500 font-normal">
+                      ↳ {users.find(x => x.id === u.supervisorId)?.name || '—'}
+                    </p>
+                  )}
+                </td>
                 <td className="px-4 py-3 text-gray-400 text-xs">
                   {u.instanceIds?.length
                     ? <span className="bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">{u.instanceIds.length} instância{u.instanceIds.length !== 1 ? 's' : ''}</span>
@@ -194,14 +211,37 @@ export default function Users() {
                 <label className="block text-xs text-gray-400 mb-1">Perfil</label>
                 <select
                   value={form.role}
-                  onChange={e => setForm(p => ({ ...p, role: e.target.value }))}
+                  onChange={e => setForm(p => ({ ...p, role: e.target.value, supervisorId: '' }))}
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
                 >
-                  {ROLES.map(r => (
-                    <option key={r} value={r}>{r.replace('_', ' ')}</option>
-                  ))}
+                  {Object.entries(ROLES_LABELS)
+                    .filter(([r]) => me?.role === 'super_admin' || r !== 'super_admin')
+                    .map(([r, label]) => (
+                      <option key={r} value={r}>{label}</option>
+                    ))}
                 </select>
               </div>
+
+              {/* Supervisor responsável (só para user e supervisor) */}
+              {(form.role === 'user' || form.role === 'supervisor') && (
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">
+                    {form.role === 'supervisor' ? 'Admin responsável' : 'Supervisor responsável'}
+                  </label>
+                  <select
+                    value={form.supervisorId}
+                    onChange={e => setForm(p => ({ ...p, supervisorId: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
+                  >
+                    <option value="">— Sem supervisor —</option>
+                    {users
+                      .filter(u => form.role === 'supervisor' ? u.role === 'admin' : u.role === 'supervisor')
+                      .map(u => (
+                        <option key={u.id} value={u.id}>{u.name} ({ROLES_LABELS[u.role]})</option>
+                      ))}
+                  </select>
+                </div>
+              )}
 
               {/* Instâncias responsáveis */}
               <div>
