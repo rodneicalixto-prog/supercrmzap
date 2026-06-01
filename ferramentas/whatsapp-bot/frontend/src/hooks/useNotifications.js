@@ -21,8 +21,13 @@ function tocarSom() {
 export function useNotifications() {
   const [notificacoes, setNotificacoes] = useState([])
   const [naoLidas, setNaoLidas] = useState(0)
+  const [piscando, setPiscando] = useState(false)
+  const [somAtivo, setSomAtivo] = useState(() => {
+    try { return localStorage.getItem('notif_som') !== 'false' } catch { return true }
+  })
   const { on } = useWS()
   const paginaAtiva = useRef(true)
+  const piscarTimer = useRef(null)
 
   useEffect(() => {
     const onFocus = () => { paginaAtiva.current = true }
@@ -35,13 +40,35 @@ export function useNotifications() {
     }
   }, [])
 
+  function ativarPiscar() {
+    setPiscando(true)
+    clearTimeout(piscarTimer.current)
+    // Para de piscar após 8 segundos ou quando o usuário clicar na campainha
+    piscarTimer.current = setTimeout(() => setPiscando(false), 8000)
+  }
+
   useEffect(() => {
     return on('nova_mensagem', (data) => {
       const contato = data.contato
       const texto = data.mensagem?.content || data.mensagem?.body || 'Nova mensagem'
       const nome = contato?.name || contato?.phone || 'Desconhecido'
 
-      tocarSom()
+      if (somAtivo) tocarSom()
+
+      ativarPiscar()
+
+      // Piscar título da aba
+      let piscarTitulo = null
+      const tituloOriginal = document.title
+      let visible = true
+      piscarTitulo = setInterval(() => {
+        document.title = visible ? `🔔 Nova mensagem!` : tituloOriginal
+        visible = !visible
+      }, 800)
+      setTimeout(() => {
+        clearInterval(piscarTitulo)
+        document.title = tituloOriginal
+      }, 8000)
 
       const notif = {
         id: Date.now(),
@@ -54,7 +81,6 @@ export function useNotifications() {
       setNotificacoes(n => [notif, ...n].slice(0, 20))
       setNaoLidas(c => c + 1)
 
-      // Notificação nativa do browser se permitido e página em background
       if (!paginaAtiva.current && Notification.permission === 'granted') {
         new Notification(`Nova mensagem de ${nome}`, {
           body: texto,
@@ -63,17 +89,34 @@ export function useNotifications() {
         })
       }
     })
-  }, [on])
+  }, [on, somAtivo])
 
-  const limparNaoLidas = useCallback(() => setNaoLidas(0), [])
-  const limparTodas = useCallback(() => { setNotificacoes([]); setNaoLidas(0) }, [])
+  const toggleSom = useCallback(() => {
+    setSomAtivo(v => {
+      const novo = !v
+      try { localStorage.setItem('notif_som', String(novo)) } catch {}
+      return novo
+    })
+  }, [])
 
-  // Pedir permissão de notificação nativa ao montar
+  const limparNaoLidas = useCallback(() => {
+    setNaoLidas(0)
+    setPiscando(false)
+    clearTimeout(piscarTimer.current)
+  }, [])
+
+  const limparTodas = useCallback(() => {
+    setNotificacoes([])
+    setNaoLidas(0)
+    setPiscando(false)
+    clearTimeout(piscarTimer.current)
+  }, [])
+
   useEffect(() => {
     if (Notification.permission === 'default') {
       Notification.requestPermission()
     }
   }, [])
 
-  return { notificacoes, naoLidas, limparNaoLidas, limparTodas }
+  return { notificacoes, naoLidas, piscando, somAtivo, toggleSom, limparNaoLidas, limparTodas }
 }

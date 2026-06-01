@@ -25,7 +25,7 @@ export default function Layout({ children }) {
   const { user, logout } = useAuth()
   const { connected } = useWS()
   const navigate = useNavigate()
-  const { notificacoes, naoLidas, limparNaoLidas, limparTodas } = useNotifications()
+  const { notificacoes, naoLidas, piscando, somAtivo, toggleSom, limparNaoLidas, limparTodas } = useNotifications()
   const [painelAberto, setPainelAberto] = useState(false)
   const painelRef = useRef(null)
 
@@ -79,11 +79,20 @@ export default function Layout({ children }) {
               >
                 <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800">
                   <h3 className="text-sm font-semibold text-white">Notificações</h3>
-                  {notificacoes.length > 0 && (
-                    <button onClick={limparTodas} className="text-xs text-gray-500 hover:text-red-400">
-                      Limpar tudo
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={toggleSom}
+                      title={somAtivo ? 'Desativar som' : 'Ativar som'}
+                      className={`text-sm px-2 py-0.5 rounded-md border transition-colors ${somAtivo ? 'border-green-700 text-green-400 hover:bg-green-900' : 'border-gray-700 text-gray-500 hover:border-gray-500'}`}
+                    >
+                      {somAtivo ? '🔊' : '🔇'}
                     </button>
-                  )}
+                    {notificacoes.length > 0 && (
+                      <button onClick={limparTodas} className="text-xs text-gray-500 hover:text-red-400">
+                        Limpar
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="max-h-80 overflow-y-auto">
                   {notificacoes.length === 0 ? (
@@ -174,8 +183,13 @@ export default function Layout({ children }) {
       </aside>
 
       {/* Content */}
-      <main className="flex-1 overflow-hidden" onClick={() => painelAberto && setPainelAberto(false)}>
+      <main className="flex-1 overflow-hidden relative" onClick={() => painelAberto && setPainelAberto(false)}>
         {children}
+        {/* Sinalizador visual — borda piscante sobre o conteúdo */}
+        {piscando && (
+          <div className="pointer-events-none absolute inset-0 z-40 animate-pulse"
+            style={{ boxShadow: 'inset 0 0 0 4px #22c55e, inset 0 0 40px 8px rgba(34,197,94,0.25)' }} />
+        )}
       </main>
     </div>
   )
