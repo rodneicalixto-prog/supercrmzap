@@ -18,15 +18,20 @@ export default function Conversations() {
   const [text, setText] = useState('')
   const [enviando, setEnviando] = useState(false)
   const [busca, setBusca] = useState('')
+
+  // Modais
+  const [modalTransferir, setModalTransferir] = useState(false)
+  const [modalContato, setModalContato] = useState(false)
+  const [usuarios, setUsuarios] = useState([])
+  const [contatoForm, setContatoForm] = useState({ name: '', phone: '', email: '', notes: '' })
+
   const { on } = useWS()
   const location = useLocation()
   const msgEndRef = useRef(null)
 
   useEffect(() => { carregarAba(aba) }, [aba])
-
   useEffect(() => { carregarContadores() }, [])
 
-  // Abrir conversa via state (vindo da página de Fila)
   useEffect(() => {
     if (location.state?.conversaId) {
       api.get(`/conversations/${location.state.conversaId}`).then(r => {
@@ -103,18 +108,6 @@ export default function Conversations() {
     }
   }
 
-  async function mudarStatusDireto(convId, novoStatus) {
-    const endpoint = novoStatus === 'resolved' ? 'resolve' : novoStatus === 'open' ? 'reopen' : null
-    if (endpoint) {
-      await api.post(`/conversations/${convId}/${endpoint}`)
-    } else {
-      await api.patch(`/conversations/${convId}`, { status: novoStatus })
-    }
-    setConversations(c => c.filter(cv => cv.id !== convId))
-    if (selected?.id === convId) setSelected(s => ({ ...s, status: novoStatus }))
-    carregarContadores()
-  }
-
   async function mudarStatus(novoStatus) {
     const endpoint = novoStatus === 'resolved' ? 'resolve' : novoStatus === 'open' ? 'reopen' : null
     if (endpoint) {
@@ -125,6 +118,51 @@ export default function Conversations() {
     setConversations(c => c.filter(cv => cv.id !== selected.id))
     setSelected(s => ({ ...s, status: novoStatus }))
     carregarContadores()
+  }
+
+  async function abrirTransferir() {
+    try {
+      const r = await api.get('/users')
+      setUsuarios(r.data)
+    } catch {
+      setUsuarios([])
+    }
+    setModalTransferir(true)
+  }
+
+  async function transferir(userId) {
+    await api.post(`/conversations/${selected.id}/assign`, { userId })
+    setModalTransferir(false)
+    setConversations(c => c.filter(cv => cv.id !== selected.id))
+    setSelected(null)
+    carregarContadores()
+  }
+
+  function abrirEditarContato() {
+    const c = selected?.contact
+    setContatoForm({
+      name: c?.name || '',
+      phone: c?.phone || '',
+      email: c?.email || '',
+      notes: c?.notes || '',
+    })
+    setModalContato(true)
+  }
+
+  async function salvarContato(e) {
+    e.preventDefault()
+    const contactId = selected?.contact?.id
+    if (!contactId) return
+    try {
+      const r = await api.put(`/contacts/${contactId}`, contatoForm)
+      setSelected(s => ({ ...s, contact: r.data }))
+      setConversations(list => list.map(cv =>
+        cv.id === selected.id ? { ...cv, contact: r.data } : cv
+      ))
+      setModalContato(false)
+    } catch (err) {
+      alert(err.response?.data?.error || 'Erro ao salvar contato')
+    }
   }
 
   const abaAtual = ABAS.find(a => a.key === aba)
@@ -195,19 +233,9 @@ export default function Conversations() {
               <p className="text-xs text-gray-500 truncate">
                 {conv.messages?.[0]?.content || conv.messages?.[0]?.body || '—'}
               </p>
-              <div className="flex items-center justify-between mt-1.5">
-                {conv.instance?.name && (
-                  <p className="text-xs text-gray-700 truncate">via {conv.instance.name}</p>
-                )}
-                {conv.status !== 'resolved' && (
-                  <button
-                    onClick={e => { e.stopPropagation(); mudarStatusDireto(conv.id, 'resolved') }}
-                    className="ml-auto text-xs px-2 py-0.5 bg-green-800 hover:bg-green-700 text-green-200 rounded-md flex-shrink-0"
-                  >
-                    Finalizar
-                  </button>
-                )}
-              </div>
+              {conv.instance?.name && (
+                <p className="text-xs text-gray-700 mt-0.5 truncate">via {conv.instance.name}</p>
+              )}
             </div>
           ))}
         </div>
@@ -222,7 +250,23 @@ export default function Conversations() {
               <h3 className="font-semibold">{selected.contact?.name || selected.contact?.phone}</h3>
               <p className="text-xs text-gray-500">{selected.contact?.phone}</p>
             </div>
-            <div className="flex gap-2 flex-shrink-0">
+            <div className="flex gap-2 flex-shrink-0 flex-wrap justify-end">
+              {/* Editar contato */}
+              <button
+                onClick={abrirEditarContato}
+                className="text-xs px-3 py-1.5 border border-gray-700 hover:border-blue-600 hover:text-blue-400 text-gray-400 rounded-lg"
+              >
+                Editar contato
+              </button>
+              {/* Transferir */}
+              {selected.status !== 'resolved' && (
+                <button
+                  onClick={abrirTransferir}
+                  className="text-xs px-3 py-1.5 border border-gray-700 hover:border-purple-600 hover:text-purple-400 text-gray-400 rounded-lg"
+                >
+                  Transferir
+                </button>
+              )}
               {selected.status !== 'pending' && (
                 <button
                   onClick={() => mudarStatus('pending')}
@@ -298,6 +342,84 @@ export default function Conversations() {
             {aba === 'open' ? '💬' : aba === 'pending' ? '⏳' : '✅'}
           </p>
           <p>Selecione um atendimento para começar</p>
+        </div>
+      )}
+
+      {/* Modal Transferir */}
+      {modalTransferir && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setModalTransferir(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-full max-w-sm" onClick={e => e.stopPropagation()}>
+            <h3 className="font-semibold text-white mb-4">Transferir conversa</h3>
+            {usuarios.length === 0 ? (
+              <p className="text-gray-500 text-sm">Nenhum agente disponível</p>
+            ) : (
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {usuarios.map(u => (
+                  <button
+                    key={u.id}
+                    onClick={() => transferir(u.id)}
+                    className="w-full text-left px-4 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-sm"
+                  >
+                    <p className="font-medium text-white">{u.name}</p>
+                    <p className="text-xs text-gray-500">{u.role}</p>
+                  </button>
+                ))}
+              </div>
+            )}
+            <button onClick={() => setModalTransferir(false)} className="mt-4 text-xs text-gray-500 hover:text-white w-full text-center">Cancelar</button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Editar Contato */}
+      {modalContato && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setModalContato(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-full max-w-sm" onClick={e => e.stopPropagation()}>
+            <h3 className="font-semibold text-white mb-4">Editar contato</h3>
+            <form onSubmit={salvarContato} className="space-y-3">
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Nome</label>
+                <input
+                  value={contatoForm.name}
+                  onChange={e => setContatoForm(f => ({ ...f, name: e.target.value }))}
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Telefone</label>
+                <input
+                  value={contatoForm.phone}
+                  onChange={e => setContatoForm(f => ({ ...f, phone: e.target.value }))}
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">E-mail</label>
+                <input
+                  value={contatoForm.email}
+                  onChange={e => setContatoForm(f => ({ ...f, email: e.target.value }))}
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Observações</label>
+                <textarea
+                  value={contatoForm.notes}
+                  onChange={e => setContatoForm(f => ({ ...f, notes: e.target.value }))}
+                  rows={3}
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 resize-none"
+                />
+              </div>
+              <div className="flex gap-2 pt-1">
+                <button type="submit" className="flex-1 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-medium">
+                  Salvar
+                </button>
+                <button type="button" onClick={() => setModalContato(false)} className="flex-1 py-2 border border-gray-700 hover:border-gray-500 rounded-lg text-sm text-gray-400">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>
