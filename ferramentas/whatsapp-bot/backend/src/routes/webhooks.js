@@ -98,8 +98,10 @@ export default async function webhookRoutes(app) {
     // Atualização de conexão / QR
     if (event === 'CONNECTION_UPDATE' || event === 'QRCODE_UPDATED') {
       const data = body.data || {}
+      console.log(`[webhook ${event}] data:`, JSON.stringify(data).slice(0, 300))
       const estado = data.state || data.connection
-      const qr = data.qr || data.qrcode?.base64
+      const qrRaw = data.qr || data.qrcode?.base64 || data.qrcode
+      const qr = typeof qrRaw === 'string' && qrRaw.startsWith('data:') ? qrRaw.split(',')[1] : qrRaw
 
       const instancia = await prisma.waInstance.findFirst({
         where: { nomeInterno: instanceName },
