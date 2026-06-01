@@ -76,9 +76,10 @@ export default async function instanceRoutes(app) {
     // Verifica se já está conectado
     try {
       const { data: statusData } = await statusInstancia(nome)
-      const estado = statusData?.instance?.state
+      console.log(`[connect] statusData de ${nome}:`, JSON.stringify(statusData))
+      const estado = statusData?.instance?.state || statusData?.state || statusData?.connectionStatus
       console.log(`[connect] estado atual de ${nome}:`, estado)
-      if (estado === 'open') {
+      if (estado === 'open' || estado === 'connected') {
         await prisma.waInstance.update({
           where: { id: instance.id },
           data: { status: 'conectado', webhookUrl },
@@ -96,10 +97,10 @@ export default async function instanceRoutes(app) {
       const { data } = await obterQrCode(nome)
       console.log(`[connect QR] resposta para ${nome}:`, JSON.stringify(data).slice(0, 200))
 
+      // data?.code é o dado bruto do QR (ex: "2@XYZ..."), não base64 de imagem — não usar como src
       const qrBase64 = data?.base64
         || data?.qrcode?.base64
-        || data?.code
-        || (typeof data === 'string' ? data : null)
+        || (typeof data === 'string' && data.length > 100 ? data : null)
 
       await prisma.waInstance.update({
         where: { id: instance.id },
