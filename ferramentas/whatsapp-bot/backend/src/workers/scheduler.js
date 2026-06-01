@@ -1,5 +1,5 @@
 import { prisma } from '../utils/db.js'
-import { enviarTexto } from '../utils/evolution.js'
+import { enviarTexto, enviarMidia } from '../utils/evolution.js'
 
 const INTERVALO_MS = 30_000 // verifica a cada 30 segundos
 
@@ -25,11 +25,16 @@ async function processarAgendamentos() {
         throw new Error('Instância não encontrada')
       }
 
-      await enviarTexto(
-        agendamento.instance.nomeInterno || agendamento.instance.name,
-        agendamento.phone,
-        agendamento.message
-      )
+      const nomeInstancia = agendamento.instance.nomeInterno || agendamento.instance.name
+      if (agendamento.mediaUrl) {
+        await enviarMidia(nomeInstancia, agendamento.phone, {
+          tipo: agendamento.mediaType || 'document',
+          url: agendamento.mediaUrl,
+          legenda: agendamento.message || '',
+        })
+      } else {
+        await enviarTexto(nomeInstancia, agendamento.phone, agendamento.message)
+      }
 
       await prisma.schedule.update({
         where: { id: agendamento.id },

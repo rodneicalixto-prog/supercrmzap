@@ -143,6 +143,8 @@ model Schedule {
   phone       String
   message     String
   scheduledAt DateTime
+  mediaUrl    String?
+  mediaType   String?   // image | video | document | audio
   status      String    @default("pending") // pending | sent | failed
   sentAt      DateTime?
   createdAt   DateTime  @default(now())

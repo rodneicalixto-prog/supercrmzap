@@ -19,6 +19,8 @@ export default function Schedules() {
   const [modal, setModal] = useState(false)
   const [form, setForm] = useState({ instanceId: '', phone: '', message: '', scheduledAt: '' })
   const [loading, setLoading] = useState(false)
+  const [anexo, setAnexo] = useState(null) // { url, filename, mimetype }
+  const [uploadando, setUploadando] = useState(false)
 
   useEffect(() => {
     load()
@@ -34,14 +36,44 @@ export default function Schedules() {
     const now = new Date()
     now.setMinutes(now.getMinutes() + 30)
     setForm({ instanceId: '', phone: '', message: '', scheduledAt: now.toISOString().slice(0, 16) })
+    setAnexo(null)
     setModal(true)
+  }
+
+  async function handleFile(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadando(true)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const r = await api.post('/upload', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+      setAnexo(r.data)
+    } catch {
+      alert('Erro ao enviar arquivo. Tente novamente.')
+    } finally {
+      setUploadando(false)
+    }
+  }
+
+  function mediaTypeFromMime(mime) {
+    if (!mime) return 'document'
+    if (mime.startsWith('image/')) return 'image'
+    if (mime.startsWith('video/')) return 'video'
+    if (mime.startsWith('audio/')) return 'audio'
+    return 'document'
   }
 
   async function save(e) {
     e.preventDefault()
     setLoading(true)
     try {
-      await api.post('/schedules', form)
+      const payload = { ...form }
+      if (anexo) {
+        payload.mediaUrl = anexo.url
+        payload.mediaType = mediaTypeFromMime(anexo.mimetype)
+      }
+      await api.post('/schedules', payload)
       setModal(false)
       load()
     } finally {
@@ -81,6 +113,9 @@ export default function Schedules() {
                 </div>
                 <p className="text-sm font-medium text-white">{s.phone}</p>
                 <p className="text-sm text-gray-400 mt-0.5 line-clamp-2">{s.message}</p>
+                {s.mediaUrl && (
+                  <p className="text-xs text-blue-400 mt-0.5">📎 Anexo: {s.mediaType}</p>
+                )}
               </div>
               {s.status === 'pending' && (
                 <button onClick={() => remove(s.id)} className="text-xs text-gray-500 hover:text-red-400 whitespace-nowrap">
@@ -135,14 +170,32 @@ export default function Schedules() {
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-400 mb-1">Mensagem</label>
+                <label className="block text-xs text-gray-400 mb-1">Mensagem {anexo ? '(legenda do anexo — opcional)' : ''}</label>
                 <textarea
-                  required
                   value={form.message}
                   onChange={e => setForm(p => ({ ...p, message: e.target.value }))}
-                  rows={4}
+                  rows={3}
+                  placeholder={anexo ? 'Legenda opcional...' : 'Digite a mensagem...'}
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500 resize-none"
                 />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Anexo (foto, vídeo, documento)</label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <span className="px-3 py-2 bg-gray-800 border border-gray-700 hover:border-green-500 rounded-lg text-xs text-gray-300">
+                    {uploadando ? 'Enviando...' : '📎 Selecionar arquivo'}
+                  </span>
+                  <input type="file" className="hidden" onChange={handleFile} disabled={uploadando}
+                    accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.zip,.rar" />
+                  {anexo && (
+                    <span className="text-xs text-green-400 truncate max-w-[160px]">✓ {anexo.filename}</span>
+                  )}
+                </label>
+                {anexo && (
+                  <button type="button" onClick={() => setAnexo(null)} className="text-xs text-red-400 hover:text-red-300 mt-1">
+                    Remover anexo
+                  </button>
+                )}
               </div>
               <div className="flex gap-2 pt-2">
                 <button type="button" onClick={() => setModal(false)} className="flex-1 py-2 border border-gray-700 rounded-lg text-sm text-gray-400 hover:text-white">Cancelar</button>

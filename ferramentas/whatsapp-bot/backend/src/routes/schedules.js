@@ -15,9 +15,12 @@ export default async function scheduleRoutes(app) {
 
   // Criar agendamento de mensagem
   app.post('/', async (req, reply) => {
-    const { instanceId, phone, message, scheduledAt } = req.body
-    if (!phone || !message || !scheduledAt) {
-      return reply.status(400).send({ error: 'Telefone, mensagem e data/hora são obrigatórios' })
+    const { instanceId, phone, message, scheduledAt, mediaUrl, mediaType } = req.body
+    if (!phone || !scheduledAt) {
+      return reply.status(400).send({ error: 'Telefone e data/hora são obrigatórios' })
+    }
+    if (!message && !mediaUrl) {
+      return reply.status(400).send({ error: 'Informe uma mensagem ou anexo' })
     }
 
     const instancia = await prisma.waInstance.findFirst({
@@ -31,9 +34,10 @@ export default async function scheduleRoutes(app) {
         userId: req.user.id,
         instanceId,
         phone,
-        message,
+        message: message || '',
         scheduledAt: new Date(scheduledAt),
         status: 'pending',
+        ...(mediaUrl && { mediaUrl, mediaType: mediaType || 'document' }),
       },
     })
   })
