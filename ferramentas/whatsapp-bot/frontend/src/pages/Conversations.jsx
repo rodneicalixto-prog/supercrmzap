@@ -22,8 +22,13 @@ export default function Conversations() {
   // Modais
   const [modalTransferir, setModalTransferir] = useState(false)
   const [modalContato, setModalContato] = useState(false)
+  const [modalNovaConversa, setModalNovaConversa] = useState(false)
   const [usuarios, setUsuarios] = useState([])
   const [contatoForm, setContatoForm] = useState({ name: '', phone: '', email: '', notes: '' })
+  const [instancias, setInstancias] = useState([])
+  const [buscaContatos, setBuscaContatos] = useState('')
+  const [contatosResultado, setContatosResultado] = useState([])
+  const [novaConvForm, setNovaConvForm] = useState({ contactId: '', instanceId: '' })
 
   const { on } = useWS()
   const location = useLocation()
@@ -120,6 +125,41 @@ export default function Conversations() {
     carregarContadores()
   }
 
+  async function abrirNovaConversa() {
+    const [ri, rc] = await Promise.all([
+      api.get('/instances'),
+      api.get('/contacts', { params: { limit: 20 } }),
+    ])
+    setInstancias(ri.data)
+    setContatosResultado(rc.data.data ?? rc.data)
+    setBuscaContatos('')
+    setNovaConvForm({ contactId: '', instanceId: '' })
+    setModalNovaConversa(true)
+  }
+
+  async function buscarContatos(q) {
+    setBuscaContatos(q)
+    const r = await api.get('/contacts', { params: { search: q, limit: 20 } })
+    setContatosResultado(r.data.data ?? r.data)
+  }
+
+  async function iniciarConversa(e) {
+    e.preventDefault()
+    if (!novaConvForm.contactId || !novaConvForm.instanceId) return
+    try {
+      const r = await api.post('/conversations', novaConvForm)
+      const conv = r.data
+      setModalNovaConversa(false)
+      setAba(conv.status === 'open' ? 'open' : conv.status === 'pending' ? 'pending' : 'open')
+      setSelected(conv)
+      setMessages(conv.messages ?? [])
+      carregarAba(conv.status === 'open' ? 'open' : 'pending')
+      carregarContadores()
+    } catch (err) {
+      alert(err.response?.data?.error || 'Erro ao iniciar conversa')
+    }
+  }
+
   async function abrirTransferir() {
     try {
       const r = await api.get('/users')
@@ -192,14 +232,21 @@ export default function Conversations() {
           ))}
         </div>
 
-        {/* Busca */}
-        <div className="px-3 py-2 border-b border-gray-800">
+        {/* Busca + Nova conversa */}
+        <div className="px-3 py-2 border-b border-gray-800 flex gap-2">
           <input
             value={busca}
             onChange={e => { setBusca(e.target.value); carregarAba(aba, e.target.value) }}
-            placeholder="Buscar contato..."
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-green-500"
+            placeholder="Filtrar conversas..."
+            className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-green-500"
           />
+          <button
+            onClick={abrirNovaConversa}
+            title="Nova conversa"
+            className="px-2.5 py-1.5 bg-green-700 hover:bg-green-600 rounded-lg text-xs font-bold text-white flex-shrink-0"
+          >
+            +
+          </button>
         </div>
 
         {/* Lista */}
@@ -342,6 +389,63 @@ export default function Conversations() {
             {aba === 'open' ? '💬' : aba === 'pending' ? '⏳' : '✅'}
           </p>
           <p>Selecione um atendimento para começar</p>
+        </div>
+      )}
+
+      {/* Modal Nova Conversa */}
+      {modalNovaConversa && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setModalNovaConversa(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 w-full max-w-sm" onClick={e => e.stopPropagation()}>
+            <h3 className="font-semibold text-white mb-4">Nova conversa</h3>
+            <form onSubmit={iniciarConversa} className="space-y-3">
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Buscar contato</label>
+                <input
+                  value={buscaContatos}
+                  onChange={e => buscarContatos(e.target.value)}
+                  placeholder="Nome ou telefone..."
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
+                />
+                {contatosResultado.length > 0 && (
+                  <div className="mt-1 max-h-44 overflow-y-auto rounded-lg border border-gray-700 bg-gray-800">
+                    {contatosResultado.map(c => (
+                      <button
+                        type="button"
+                        key={c.id}
+                        onClick={() => { setNovaConvForm(f => ({ ...f, contactId: c.id })); setBuscaContatos(`${c.name} — ${c.phone}`); setContatosResultado([]) }}
+                        className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-700 ${novaConvForm.contactId === c.id ? 'bg-green-900 text-green-300' : 'text-white'}`}
+                      >
+                        <span className="font-medium">{c.name}</span>
+                        <span className="text-gray-400 ml-2 text-xs">{c.phone}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Instância WhatsApp</label>
+                <select
+                  required
+                  value={novaConvForm.instanceId}
+                  onChange={e => setNovaConvForm(f => ({ ...f, instanceId: e.target.value }))}
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
+                >
+                  <option value="">Selecione...</option>
+                  {instancias.filter(i => i.status === 'conectado').map(i => (
+                    <option key={i.id} value={i.id}>{i.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex gap-2 pt-1">
+                <button type="submit" disabled={!novaConvForm.contactId || !novaConvForm.instanceId} className="flex-1 py-2 bg-green-600 hover:bg-green-500 disabled:opacity-40 rounded-lg text-sm font-medium">
+                  Iniciar conversa
+                </button>
+                <button type="button" onClick={() => setModalNovaConversa(false)} className="flex-1 py-2 border border-gray-700 hover:border-gray-500 rounded-lg text-sm text-gray-400">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
 

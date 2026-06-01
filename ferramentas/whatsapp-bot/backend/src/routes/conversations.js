@@ -33,6 +33,38 @@ export default async function conversationRoutes(app) {
     return { data, total, page: Number(page), limit: Number(limit), pages: Math.ceil(total / Number(limit)) }
   })
 
+  // Criar ou recuperar conversa ativa com um contato
+  app.post('/', async (req, reply) => {
+    const { contactId, instanceId } = req.body
+    if (!contactId || !instanceId) return reply.status(400).send({ error: 'contactId e instanceId são obrigatórios' })
+
+    const [contato, instancia] = await Promise.all([
+      prisma.contact.findFirst({ where: { id: contactId, tenantId: req.user.tenantId } }),
+      prisma.waInstance.findFirst({ where: { id: instanceId, tenantId: req.user.tenantId } }),
+    ])
+    if (!contato) return reply.status(404).send({ error: 'Contato não encontrado' })
+    if (!instancia) return reply.status(404).send({ error: 'Instância não encontrada' })
+
+    // Reutiliza conversa aberta/pendente ou cria nova
+    let conversa = await prisma.conversation.findFirst({
+      where: { tenantId: req.user.tenantId, contactId, status: { in: ['open', 'pending'] } },
+      include: { contact: true, instance: true, messages: { orderBy: { sentAt: 'asc' } } },
+    })
+    if (!conversa) {
+      conversa = await prisma.conversation.create({
+        data: {
+          tenantId: req.user.tenantId,
+          userId: req.user.id,
+          instanceId,
+          contactId,
+          status: 'open',
+        },
+        include: { contact: true, instance: true, messages: { orderBy: { sentAt: 'asc' } } },
+      })
+    }
+    return conversa
+  })
+
   app.get('/:id', async (req, reply) => {
     const conv = await prisma.conversation.findFirst({
       where: { id: req.params.id, tenantId: req.user.tenantId },
