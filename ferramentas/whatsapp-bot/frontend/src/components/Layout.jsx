@@ -11,6 +11,7 @@ const nav = [
   { to: '/contacts',   icon: '👥', label: 'Contatos'     },
   { to: '/instances',  icon: '📱', label: 'Conexões'     },
   { to: '/schedules',  icon: '📅', label: 'Agenda'       },
+  { to: '/calendar',  icon: '📆', label: 'Calendário'   },
   { to: '/dashboard',  icon: '📊', label: 'Dashboard'    },
   { to: '/academy',    icon: '🎓', label: 'Academy'      },
 ]

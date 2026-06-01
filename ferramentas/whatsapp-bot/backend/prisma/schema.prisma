@@ -37,11 +37,16 @@ model User {
   lastLogin    DateTime?
   createdAt    DateTime  @default(now())
 
-  instances       WaInstance[]
-  conversations   Conversation[]
-  schedules       Schedule[]
-  actionsLog      ActionsLog[]
-  academyProgress AcademyProgress[]
+  instances             WaInstance[]
+  conversations         Conversation[]
+  schedules             Schedule[]
+  actionsLog            ActionsLog[]
+  academyProgress       AcademyProgress[]
+  conversationSubscriptions ConversationSubscriber[]
+  responsibleInstances  UserInstance[]
+
+  // Horário de atendimento: {"start":"08:00","end":"18:00","days":[1,2,3,4,5]}
+  workHours    Json?
 }
 
 model WaInstance {
@@ -58,8 +63,9 @@ model WaInstance {
   webhookUrl  String?
   createdAt   DateTime @default(now())
 
-  conversations Conversation[]
-  schedules     Schedule[]
+  conversations        Conversation[]
+  schedules            Schedule[]
+  responsibleUsers     UserInstance[]
 }
 
 // Contatos salvos manualmente ou capturados automaticamente pelo webhook
@@ -95,6 +101,7 @@ model Conversation {
 
   messages    Message[]
   kanbanCards KanbanCard[]
+  subscribers ConversationSubscriber[]
 }
 
 model Message {
@@ -227,4 +234,25 @@ model AcademyProgress {
   watchedAt  DateTime      @default(now())
 
   @@unique([lessonId, userId])
+}
+
+model ConversationSubscriber {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@unique([conversationId, userId])
+}
+
+model UserInstance {
+  id         String     @id @default(uuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  instanceId String
+  instance   WaInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, instanceId])
 }

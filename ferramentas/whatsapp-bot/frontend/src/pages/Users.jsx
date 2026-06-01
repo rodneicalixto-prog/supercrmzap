@@ -4,27 +4,57 @@ import { useAuth } from '../contexts/AuthContext'
 
 const ROLES = ['user', 'admin', 'super_admin']
 
+const DIAS = [
+  { label: 'Dom', value: 0 },
+  { label: 'Seg', value: 1 },
+  { label: 'Ter', value: 2 },
+  { label: 'Qua', value: 3 },
+  { label: 'Qui', value: 4 },
+  { label: 'Sex', value: 5 },
+  { label: 'Sáb', value: 6 },
+]
+
+const DEFAULT_WORK_HOURS = { start: '08:00', end: '18:00', days: [1, 2, 3, 4, 5] }
+
+function initForm(u = null) {
+  return {
+    name: u?.name || '',
+    email: u?.email || '',
+    password: '',
+    role: u?.role || 'user',
+    instanceIds: u?.instanceIds || [],
+    workHours: u?.workHours
+      ? { ...DEFAULT_WORK_HOURS, ...u.workHours }
+      : { ...DEFAULT_WORK_HOURS },
+  }
+}
+
 export default function Users() {
   const { user: me } = useAuth()
   const [users, setUsers] = useState([])
+  const [instances, setInstances] = useState([])
   const [modal, setModal] = useState(null) // null | 'new' | user object
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' })
+  const [form, setForm] = useState(initForm())
   const [loading, setLoading] = useState(false)
 
   useEffect(() => { load() }, [])
 
   async function load() {
-    const r = await api.get('/users')
-    setUsers(r.data)
+    const [ru, ri] = await Promise.all([
+      api.get('/users'),
+      api.get('/instances').catch(() => ({ data: [] })),
+    ])
+    setUsers(ru.data)
+    setInstances(ri.data)
   }
 
   function openNew() {
-    setForm({ name: '', email: '', password: '', role: 'user' })
+    setForm(initForm())
     setModal('new')
   }
 
   function openEdit(u) {
-    setForm({ name: u.name, email: u.email, password: '', role: u.role })
+    setForm(initForm(u))
     setModal(u)
   }
 
@@ -53,6 +83,24 @@ export default function Users() {
     load()
   }
 
+  function toggleDia(d) {
+    setForm(f => {
+      const days = f.workHours.days.includes(d)
+        ? f.workHours.days.filter(x => x !== d)
+        : [...f.workHours.days, d].sort((a, b) => a - b)
+      return { ...f, workHours: { ...f.workHours, days } }
+    })
+  }
+
+  function toggleInstance(id) {
+    setForm(f => {
+      const ids = f.instanceIds.includes(id)
+        ? f.instanceIds.filter(x => x !== id)
+        : [...f.instanceIds, id]
+      return { ...f, instanceIds: ids }
+    })
+  }
+
   const roleColor = {
     super_admin: 'text-purple-400',
     admin: 'text-blue-400',
@@ -75,6 +123,8 @@ export default function Users() {
               <th className="px-4 py-3">Nome</th>
               <th className="px-4 py-3">E-mail</th>
               <th className="px-4 py-3">Perfil</th>
+              <th className="px-4 py-3">Instâncias</th>
+              <th className="px-4 py-3">Horário</th>
               <th className="px-4 py-3">Criado em</th>
               <th className="px-4 py-3"></th>
             </tr>
@@ -88,6 +138,18 @@ export default function Users() {
                 </td>
                 <td className="px-4 py-3 text-gray-400">{u.email}</td>
                 <td className={`px-4 py-3 font-medium capitalize ${roleColor[u.role] || 'text-gray-400'}`}>{u.role.replace('_', ' ')}</td>
+                <td className="px-4 py-3 text-gray-400 text-xs">
+                  {u.instanceIds?.length
+                    ? <span className="bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">{u.instanceIds.length} instância{u.instanceIds.length !== 1 ? 's' : ''}</span>
+                    : <span className="text-gray-600">—</span>
+                  }
+                </td>
+                <td className="px-4 py-3 text-gray-400 text-xs">
+                  {u.workHours
+                    ? <span className="text-gray-300">{u.workHours.start}–{u.workHours.end}</span>
+                    : <span className="text-gray-600">—</span>
+                  }
+                </td>
                 <td className="px-4 py-3 text-gray-500 text-xs">
                   {new Date(u.createdAt).toLocaleDateString('pt-BR')}
                 </td>
@@ -106,9 +168,10 @@ export default function Users() {
 
       {modal && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={e => e.target === e.currentTarget && setModal(null)}>
-          <div className="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-md p-6">
+          <div className="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="font-semibold text-white mb-4">{modal === 'new' ? 'Novo usuário' : 'Editar usuário'}</h3>
-            <form onSubmit={save} className="space-y-3">
+            <form onSubmit={save} className="space-y-4">
+              {/* Campos básicos */}
               {[
                 { key: 'name', label: 'Nome', required: true },
                 { key: 'email', label: 'E-mail', required: modal === 'new', type: 'email' },
@@ -125,6 +188,8 @@ export default function Users() {
                   />
                 </div>
               ))}
+
+              {/* Perfil */}
               <div>
                 <label className="block text-xs text-gray-400 mb-1">Perfil</label>
                 <select
@@ -137,6 +202,81 @@ export default function Users() {
                   ))}
                 </select>
               </div>
+
+              {/* Instâncias responsáveis */}
+              <div>
+                <label className="block text-xs text-gray-400 mb-2">Instâncias responsáveis</label>
+                {instances.length === 0 ? (
+                  <p className="text-xs text-gray-600">Nenhuma instância disponível</p>
+                ) : (
+                  <div className="space-y-1 max-h-36 overflow-y-auto bg-gray-800 border border-gray-700 rounded-lg p-2">
+                    {instances.map(inst => (
+                      <label key={inst.id} className="flex items-center gap-2 cursor-pointer hover:bg-gray-700 rounded px-2 py-1">
+                        <input
+                          type="checkbox"
+                          checked={form.instanceIds.includes(inst.id)}
+                          onChange={() => toggleInstance(inst.id)}
+                          className="accent-green-500"
+                        />
+                        <span className="text-sm text-white">{inst.name}</span>
+                        <span className={`text-xs ml-auto ${inst.status === 'conectado' ? 'text-green-400' : 'text-gray-500'}`}>
+                          {inst.status}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Horário de atendimento */}
+              <div>
+                <label className="block text-xs text-gray-400 mb-2">Horário de atendimento</label>
+                <div className="bg-gray-800 border border-gray-700 rounded-lg p-3 space-y-3">
+                  {/* Dias */}
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1.5">Dias da semana</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {DIAS.map(d => (
+                        <button
+                          key={d.value}
+                          type="button"
+                          onClick={() => toggleDia(d.value)}
+                          className={`px-2.5 py-1 rounded-md text-xs font-medium border transition-colors ${
+                            form.workHours.days.includes(d.value)
+                              ? 'bg-green-700 border-green-600 text-white'
+                              : 'border-gray-600 text-gray-400 hover:border-gray-400'
+                          }`}
+                        >
+                          {d.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Horas */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1">
+                      <label className="text-xs text-gray-500 block mb-1">Início</label>
+                      <input
+                        type="time"
+                        value={form.workHours.start}
+                        onChange={e => setForm(f => ({ ...f, workHours: { ...f.workHours, start: e.target.value } }))}
+                        className="w-full bg-gray-900 border border-gray-600 rounded-lg px-2 py-1.5 text-sm text-white focus:outline-none focus:border-green-500"
+                      />
+                    </div>
+                    <span className="text-gray-500 mt-4">–</span>
+                    <div className="flex-1">
+                      <label className="text-xs text-gray-500 block mb-1">Fim</label>
+                      <input
+                        type="time"
+                        value={form.workHours.end}
+                        onChange={e => setForm(f => ({ ...f, workHours: { ...f.workHours, end: e.target.value } }))}
+                        className="w-full bg-gray-900 border border-gray-600 rounded-lg px-2 py-1.5 text-sm text-white focus:outline-none focus:border-green-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex gap-2 pt-2">
                 <button type="button" onClick={() => setModal(null)} className="flex-1 py-2 border border-gray-700 rounded-lg text-sm text-gray-400 hover:text-white">Cancelar</button>
                 <button type="submit" disabled={loading} className="flex-1 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium disabled:opacity-50">

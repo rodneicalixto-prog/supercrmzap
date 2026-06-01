@@ -91,6 +91,18 @@ export default async function webhookRoutes(app) {
         data: { conversationId: conversa.id, mensagem: msg, contato },
       })
 
+      // Notificar assinantes da conversa (para filtragem no frontend)
+      const assinantes = await prisma.conversationSubscriber.findMany({
+        where: { conversationId: conversa.id },
+        select: { userId: true },
+      })
+      if (assinantes.length > 0) {
+        broadcast(tenantId, {
+          event: 'nova_mensagem_assinada',
+          data: { conversationId: conversa.id, mensagem: msg, contato, assinantes: assinantes.map(a => a.userId) },
+        })
+      }
+
       if (process.env.N8N_WEBHOOK_URL) {
         axios.post(process.env.N8N_WEBHOOK_URL, body).catch(() => {})
       }

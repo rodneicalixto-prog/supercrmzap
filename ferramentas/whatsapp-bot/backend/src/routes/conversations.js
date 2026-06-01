@@ -118,6 +118,29 @@ export default async function conversationRoutes(app) {
     return updated
   })
 
+  // Assinar / desassinar conversa
+  app.post('/:id/subscribe', async (req) => {
+    const existing = await prisma.conversationSubscriber.findUnique({
+      where: { conversationId_userId: { conversationId: req.params.id, userId: req.user.id } },
+    })
+    if (existing) {
+      await prisma.conversationSubscriber.delete({ where: { id: existing.id } })
+      return { assinado: false }
+    }
+    await prisma.conversationSubscriber.create({
+      data: { conversationId: req.params.id, userId: req.user.id },
+    })
+    return { assinado: true }
+  })
+
+  // Verificar se está assinando
+  app.get('/:id/subscribe', async (req) => {
+    const existing = await prisma.conversationSubscriber.findUnique({
+      where: { conversationId_userId: { conversationId: req.params.id, userId: req.user.id } },
+    })
+    return { assinado: !!existing }
+  })
+
   // Intervenção silenciosa — admin envia mensagem que só o agente vê
   app.post('/:id/silent', { preHandler: requireRole('admin', 'super_admin') }, async (req) => {
     const { content } = req.body

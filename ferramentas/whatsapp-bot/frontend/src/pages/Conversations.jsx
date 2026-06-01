@@ -18,6 +18,7 @@ export default function Conversations() {
   const [text, setText] = useState('')
   const [enviando, setEnviando] = useState(false)
   const [busca, setBusca] = useState('')
+  const [assinado, setAssinado] = useState(false)
 
   // Modais
   const [modalTransferir, setModalTransferir] = useState(false)
@@ -98,6 +99,22 @@ export default function Conversations() {
     setSelected(conv)
     const r = await api.get(`/conversations/${conv.id}`)
     setMessages(r.data.messages ?? [])
+    try {
+      const rs = await api.get(`/conversations/${conv.id}/subscribe`)
+      setAssinado(rs.data.assinado ?? false)
+    } catch {
+      setAssinado(false)
+    }
+  }
+
+  async function toggleAssinatura() {
+    if (!selected) return
+    try {
+      const r = await api.post(`/conversations/${selected.id}/subscribe`)
+      setAssinado(r.data.assinado ?? !assinado)
+    } catch {
+      setAssinado(a => !a)
+    }
   }
 
   async function enviarMensagem(e) {
@@ -298,6 +315,17 @@ export default function Conversations() {
               <p className="text-xs text-gray-500">{selected.contact?.phone}</p>
             </div>
             <div className="flex gap-2 flex-shrink-0 flex-wrap justify-end">
+              {/* Assinar/Desassinar */}
+              <button
+                onClick={toggleAssinatura}
+                className={`text-xs px-3 py-1.5 border rounded-lg ${
+                  assinado
+                    ? 'border-green-600 text-green-400 hover:border-green-500'
+                    : 'border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white'
+                }`}
+              >
+                {assinado ? '🔕 Assinando' : '🔔 Assinar'}
+              </button>
               {/* Editar contato */}
               <button
                 onClick={abrirEditarContato}
