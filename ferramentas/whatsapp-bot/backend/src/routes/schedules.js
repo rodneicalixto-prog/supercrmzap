@@ -22,6 +22,13 @@ export default async function scheduleRoutes(app) {
     if (!message && !mediaUrl) {
       return reply.status(400).send({ error: 'Informe uma mensagem ou anexo' })
     }
+    const dataAgendamento = new Date(scheduledAt)
+    if (isNaN(dataAgendamento.getTime())) {
+      return reply.status(400).send({ error: 'Data/hora inválida' })
+    }
+    if (dataAgendamento <= new Date()) {
+      return reply.status(400).send({ error: 'A data de agendamento deve ser no futuro' })
+    }
 
     const instancia = await prisma.waInstance.findFirst({
       where: { id: instanceId, tenantId: req.user.tenantId },
@@ -35,7 +42,7 @@ export default async function scheduleRoutes(app) {
         instanceId,
         phone,
         message: message || '',
-        scheduledAt: new Date(scheduledAt),
+        scheduledAt: dataAgendamento,
         status: 'pending',
         ...(mediaUrl && { mediaUrl, mediaType: mediaType || 'document' }),
       },

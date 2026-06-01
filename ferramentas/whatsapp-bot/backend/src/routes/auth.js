@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '../utils/db.js'
 import { sendMail } from '../utils/mail.js'
 
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'dev_refresh_secret'
+const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET
 
 function signTokens(app, user) {
   const payload = { id: user.id, tenantId: user.tenantId, role: user.role, name: user.name }

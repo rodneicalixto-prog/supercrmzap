@@ -119,6 +119,11 @@ export default async function conversationRoutes(app) {
       if (!naEquipe) return reply.status(403).send({ error: 'Você só pode transferir para membros da sua equipe' })
     }
 
+    const existing = await prisma.conversation.findFirst({
+      where: { id: req.params.id, tenantId: req.user.tenantId },
+    })
+    if (!existing) return reply.status(404).send({ error: 'Conversa não encontrada' })
+
     const conv = await prisma.conversation.update({
       where: { id: req.params.id },
       data: { assignedTo: userId, userId }
@@ -164,20 +169,18 @@ export default async function conversationRoutes(app) {
     return usuarios
   })
 
-  app.post('/:id/resolve', async (req) => {
-    const conv = await prisma.conversation.update({
-      where: { id: req.params.id },
-      data: { status: 'resolved' }
-    })
+  app.post('/:id/resolve', async (req, reply) => {
+    const existing = await prisma.conversation.findFirst({ where: { id: req.params.id, tenantId: req.user.tenantId } })
+    if (!existing) return reply.status(404).send({ error: 'Conversa não encontrada' })
+    const conv = await prisma.conversation.update({ where: { id: req.params.id }, data: { status: 'resolved' } })
     broadcast(req.user.tenantId, { event: 'conversa_resolvida', data: { conversationId: conv.id } })
     return conv
   })
 
-  app.post('/:id/reopen', async (req) => {
-    const conv = await prisma.conversation.update({
-      where: { id: req.params.id },
-      data: { status: 'open' }
-    })
+  app.post('/:id/reopen', async (req, reply) => {
+    const existing = await prisma.conversation.findFirst({ where: { id: req.params.id, tenantId: req.user.tenantId } })
+    if (!existing) return reply.status(404).send({ error: 'Conversa não encontrada' })
+    const conv = await prisma.conversation.update({ where: { id: req.params.id }, data: { status: 'open' } })
     return conv
   })
 
@@ -196,8 +199,10 @@ export default async function conversationRoutes(app) {
     return updated
   })
 
-  // Assinar / desassinar conversa
-  app.post('/:id/subscribe', async (req) => {
+  // Assinar / desassinar conversa — verifica ownership antes
+  app.post('/:id/subscribe', async (req, reply) => {
+    const conv = await prisma.conversation.findFirst({ where: { id: req.params.id, tenantId: req.user.tenantId } })
+    if (!conv) return reply.status(404).send({ error: 'Conversa não encontrada' })
     const existing = await prisma.conversationSubscriber.findUnique({
       where: { conversationId_userId: { conversationId: req.params.id, userId: req.user.id } },
     })
@@ -211,7 +216,9 @@ export default async function conversationRoutes(app) {
     return { assinado: true }
   })
 
-  app.get('/:id/subscribe', async (req) => {
+  app.get('/:id/subscribe', async (req, reply) => {
+    const conv = await prisma.conversation.findFirst({ where: { id: req.params.id, tenantId: req.user.tenantId } })
+    if (!conv) return reply.status(404).send({ error: 'Conversa não encontrada' })
     const existing = await prisma.conversationSubscriber.findUnique({
       where: { conversationId_userId: { conversationId: req.params.id, userId: req.user.id } },
     })
@@ -219,7 +226,9 @@ export default async function conversationRoutes(app) {
   })
 
   // Intervenção silenciosa — admin/supervisor
-  app.post('/:id/silent', { preHandler: requireRole('admin', 'super_admin', 'supervisor') }, async (req) => {
+  app.post('/:id/silent', { preHandler: requireRole('admin', 'super_admin', 'supervisor') }, async (req, reply) => {
+    const conv = await prisma.conversation.findFirst({ where: { id: req.params.id, tenantId: req.user.tenantId } })
+    if (!conv) return reply.status(404).send({ error: 'Conversa não encontrada' })
     const { content } = req.body
     const msg = await prisma.message.create({
       data: {

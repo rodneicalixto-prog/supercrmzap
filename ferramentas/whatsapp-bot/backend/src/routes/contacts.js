@@ -32,7 +32,17 @@ export default async function contactRoutes(app) {
       where: { id: req.params.id, tenantId: req.user.tenantId }
     })
     if (!contact) return reply.status(404).send({ error: 'Não encontrado' })
-    return prisma.contact.update({ where: { id: req.params.id }, data: req.body })
+    const { name, phone, email, tags, notes } = req.body
+    return prisma.contact.update({
+      where: { id: req.params.id },
+      data: {
+        ...(name !== undefined && { name }),
+        ...(phone !== undefined && { phone }),
+        ...(email !== undefined && { email }),
+        ...(tags !== undefined && { tags }),
+        ...(notes !== undefined && { notes }),
+      },
+    })
   })
 
   app.delete('/:id', async (req, reply) => {

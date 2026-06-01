@@ -53,18 +53,22 @@ export default async function kanbanRoutes(app) {
     })
   })
 
-  app.post('/cards/move', async (req) => {
+  app.post('/cards/move', async (req, reply) => {
     const { cardId, columnId, position } = req.body
-    const card = await prisma.kanbanCard.update({
-      where: { id: cardId },
-      data: { columnId, position },
+    // Verifica se o card pertence a um board do tenant
+    const card = await prisma.kanbanCard.findFirst({
+      where: { id: cardId, board: { tenantId: req.user.tenantId } },
     })
+    if (!card) return reply.status(404).send({ error: 'Card não encontrado' })
+    const updated = await prisma.kanbanCard.update({ where: { id: cardId }, data: { columnId, position } })
     broadcast(req.user.tenantId, { event: 'kanban_movido', data: { cardId, columnId, position } })
-    return card
+    return updated
   })
 
   app.delete('/cards/:id', async (req, reply) => {
-    const card = await prisma.kanbanCard.findUnique({ where: { id: req.params.id } })
+    const card = await prisma.kanbanCard.findFirst({
+      where: { id: req.params.id, board: { tenantId: req.user.tenantId } },
+    })
     if (!card) return reply.status(404).send({ error: 'Card não encontrado' })
     await prisma.kanbanCard.delete({ where: { id: req.params.id } })
     broadcast(req.user.tenantId, { event: 'kanban_card_removido', data: { cardId: req.params.id } })

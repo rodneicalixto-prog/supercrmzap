@@ -12,6 +12,12 @@ export default async function webhookRoutes(app) {
   // O nome da instância vem no body como `instance`
 
   async function handleEvolution(req, reply) {
+    // Verificação de secret — protege contra injeção de eventos externos
+    const secret = process.env.EVOLUTION_WEBHOOK_SECRET
+    if (secret && req.headers['apikey'] !== secret) {
+      return reply.status(401).send({ error: 'Unauthorized' })
+    }
+
     const body = req.body || {}
     const event = (body.event || '').toUpperCase().replace(/[.\-]/g, '_')
     const instanceName = body.instance // nomeInterno da Evolution API
@@ -35,39 +41,44 @@ export default async function webhookRoutes(app) {
 
       const { tenantId } = instancia
 
-      // Auto-salvar contato
-      let contato = await prisma.contact.findFirst({
-        where: { tenantId, phone: telefone },
+      // Auto-salvar contato — upsert atômico evita duplicatas em concorrência
+      let contato = await prisma.contact.upsert({
+        where: { tenantId_phone: { tenantId, phone: telefone } },
+        create: {
+          tenantId,
+          name: pushName || telefone,
+          phone: telefone,
+          autoSaved: true,
+          source: 'whatsapp',
+        },
+        update: {
+          ...(pushName ? { name: pushName } : {}),
+        },
       })
-      if (!contato) {
-        contato = await prisma.contact.create({
-          data: {
-            tenantId,
-            name: pushName || telefone,
-            phone: telefone,
-            autoSaved: true,
-            source: 'whatsapp',
-          },
-        })
-      } else if (pushName && contato.name === contato.phone) {
-        await prisma.contact.update({ where: { id: contato.id }, data: { name: pushName } })
-        contato.name = pushName
-      }
 
-      // Criar ou recuperar conversa ativa
+      // Criar ou recuperar conversa ativa — findFirst + create ainda necessário pois
+      // não há unique constraint em (tenantId, contactId, status)
       let conversa = await prisma.conversation.findFirst({
         where: { tenantId, contactId: contato.id, status: { in: ['open', 'pending'] } },
       })
       if (!conversa) {
-        conversa = await prisma.conversation.create({
-          data: {
-            tenantId,
-            userId: instancia.userId,
-            instanceId: instancia.id,
-            contactId: contato.id,
-            status: 'open',
-          },
-        })
+        try {
+          conversa = await prisma.conversation.create({
+            data: {
+              tenantId,
+              userId: instancia.userId,
+              instanceId: instancia.id,
+              contactId: contato.id,
+              status: 'open',
+            },
+          })
+        } catch {
+          // Corrida: outra req criou antes — busca novamente
+          conversa = await prisma.conversation.findFirst({
+            where: { tenantId, contactId: contato.id, status: { in: ['open', 'pending'] } },
+          })
+          if (!conversa) return { recebido: true }
+        }
       }
 
       // Salvar mensagem
@@ -124,7 +135,7 @@ export default async function webhookRoutes(app) {
 
       // n8n: atendente → instância → env global
       const n8nUrl = atendente?.n8nWebhookUrl || instancia.n8nWebhookUrl || process.env.N8N_WEBHOOK_URL
-      if (n8nUrl) axios.post(n8nUrl, body).catch(() => {})
+      if (n8nUrl) axios.post(n8nUrl, body).catch(err => console.error(`[webhook n8n] falha ao enviar para ${n8nUrl}: ${err.message}`))
 
       // OpenAI/custom: atendente → instância
       const openaiUrl = atendente?.openaiWebhook || instancia.openaiWebhook
@@ -133,7 +144,7 @@ export default async function webhookRoutes(app) {
         axios.post(openaiUrl, {
           ...payloadOpenAI,
           ...(openaiKey && { apiKey: openaiKey }),
-        }).catch(() => {})
+        }).catch(err => console.error(`[webhook openai] falha ao enviar para ${openaiUrl}: ${err.message}`))
       }
     }
 
@@ -203,7 +214,13 @@ export default async function webhookRoutes(app) {
   app.post('/evolution/send-message', handleEvolution)
 
   // ── Receiver do Asaas (Pagamentos) ───────────────────────────────────────
-  app.post('/asaas', async (req) => {
+  app.post('/asaas', async (req, reply) => {
+    // Verifica token de acesso do Asaas
+    const asaasToken = process.env.ASAAS_WEBHOOK_TOKEN
+    if (asaasToken && req.headers['asaas-access-token'] !== asaasToken) {
+      return reply.status(401).send({ error: 'Unauthorized' })
+    }
+
     const { event, payment } = req.body
 
     if (event === 'PAYMENT_RECEIVED' || event === 'SUBSCRIPTION_RENEWED') {

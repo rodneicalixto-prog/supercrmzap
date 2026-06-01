@@ -51,7 +51,11 @@ await app.register(rateLimit, {
   errorResponseBuilder: () => ({ error: 'Muitas requisições. Tente novamente em instantes.' }),
 })
 
-await app.register(jwt, { secret: process.env.JWT_SECRET || 'dev_secret' })
+if (!process.env.JWT_SECRET) {
+  console.error('[FATAL] JWT_SECRET não definido. Configure a variável de ambiente antes de iniciar.')
+  process.exit(1)
+}
+await app.register(jwt, { secret: process.env.JWT_SECRET })
 await app.register(websocket)
 await app.register(multipart, { limits: { fileSize: 50 * 1024 * 1024 } }) // 50MB
 
@@ -65,8 +69,13 @@ app.register(async function (f) {
   f.get('/ws', { websocket: true }, wsHandler)
 })
 
+// Rate limit restrito para endpoints de autenticação (anti brute-force)
+app.register(async function (f) {
+  await f.register(rateLimit, { max: 10, timeWindow: '1 minute', errorResponseBuilder: () => ({ error: 'Muitas tentativas. Tente novamente em 1 minuto.' }) })
+  f.register(authRoutes, { prefix: '/auth' })
+})
+
 // Rotas públicas
-app.register(authRoutes, { prefix: '/auth' })
 app.register(webhookRoutes, { prefix: '/webhook' })
 
 // Rotas protegidas por JWT
@@ -84,9 +93,24 @@ app.register(academyRoutes,      { prefix: '/academy' })
 
 // Upload de arquivo (retorna URL pública)
 import { authenticate } from './middlewares/auth.js'
+const ALLOWED_MIMETYPES = new Set([
+  'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+  'video/mp4', 'video/webm', 'video/ogg',
+  'audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/webm',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'text/plain', 'text/csv',
+])
+
 app.post('/upload', { preHandler: authenticate }, async (req, reply) => {
   const data = await req.file()
   if (!data) return reply.status(400).send({ error: 'Nenhum arquivo enviado' })
+  if (!ALLOWED_MIMETYPES.has(data.mimetype)) {
+    return reply.status(400).send({ error: `Tipo de arquivo não permitido: ${data.mimetype}` })
+  }
   const ext = extname(data.filename) || '.bin'
   const nome = `${randomUUID()}${ext}`
   const destino = join(uploadsDir, nome)
@@ -95,7 +119,7 @@ app.post('/upload', { preHandler: authenticate }, async (req, reply) => {
   return { url, filename: data.filename, mimetype: data.mimetype }
 })
 
-app.get('/health', () => ({ status: 'ok', ambiente: process.env.NODE_ENV, ts: new Date() }))
+app.get('/health', () => ({ status: 'ok' }))
 
 try {
   await app.listen({ port: Number(process.env.PORT) || 3000, host: '0.0.0.0' })

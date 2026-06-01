@@ -5,7 +5,8 @@ import { prisma } from '../utils/db.js'
 const USER_SELECT = {
   id: true, name: true, email: true, role: true, status: true,
   lastLogin: true, createdAt: true, workHours: true, supervisorId: true, department: true,
-  n8nWebhookUrl: true, openaiApiKey: true, openaiWebhook: true,
+  n8nWebhookUrl: true, openaiWebhook: true,
+  // openaiApiKey nunca retorna — mascarado abaixo após query
   responsibleInstances: { select: { instanceId: true } },
 }
 

@@ -65,7 +65,7 @@ model WaInstance {
   userId      String
   user        User     @relation(fields: [userId], references: [id])
   name        String
-  nomeInterno String?  // identificador único usado internamente na Evolution Go
+  nomeInterno String?  @unique // identificador único usado internamente na Evolution Go
   phone       String?
   status      String   @default("desconectado") // conectado | desconectado | aguardando_qr
   sessionData    Json?
@@ -95,6 +95,9 @@ model Contact {
   createdAt DateTime @default(now())
 
   conversations Conversation[]
+
+  @@unique([tenantId, phone])
+  @@index([tenantId, phone])
 }
 
 model Conversation {
@@ -114,6 +117,9 @@ model Conversation {
   messages    Message[]
   kanbanCards KanbanCard[]
   subscribers ConversationSubscriber[]
+
+  @@index([tenantId, status])
+  @@index([tenantId, contactId])
 }
 
 model Message {
@@ -128,6 +134,9 @@ model Message {
   externalId     String?      // ID da mensagem na Evolution Go (para deduplicação)
   sentAt         DateTime     @default(now())
   readAt         DateTime?
+
+  @@index([conversationId, sentAt])
+  @@index([externalId])
 }
 
 model KanbanBoard {
@@ -164,9 +173,11 @@ model Schedule {
   scheduledAt DateTime
   mediaUrl    String?
   mediaType   String?   // image | video | document | audio
-  status      String    @default("pending") // pending | sent | failed
+  status      String    @default("pending") // pending | processing | sent | failed
   sentAt      DateTime?
   createdAt   DateTime  @default(now())
+
+  @@index([status, scheduledAt])
 }
 
 model Subscription {

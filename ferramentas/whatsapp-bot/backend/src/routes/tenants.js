@@ -71,27 +71,33 @@ export default async function tenantRoutes(app) {
     const tenant = await prisma.tenant.findUnique({ where: { id: req.params.id } })
     if (!tenant) return reply.status(404).send({ error: 'Tenant não encontrado' })
 
-    // Remoção em cascata manual (sem ON DELETE CASCADE no schema)
-    const convs = await prisma.conversation.findMany({ where: { tenantId: req.params.id }, select: { id: true } })
+    const tid = req.params.id
+    const convs = await prisma.conversation.findMany({ where: { tenantId: tid }, select: { id: true } })
     const convIds = convs.map(c => c.id)
-    if (convIds.length) {
-      await prisma.kanbanCard.deleteMany({ where: { conversationId: { in: convIds } } })
-      await prisma.message.deleteMany({ where: { conversationId: { in: convIds } } })
-      await prisma.conversation.deleteMany({ where: { tenantId: req.params.id } })
-    }
-    const boards = await prisma.kanbanBoard.findMany({ where: { tenantId: req.params.id }, select: { id: true } })
-    if (boards.length) {
-      await prisma.kanbanCard.deleteMany({ where: { boardId: { in: boards.map(b => b.id) } } })
-      await prisma.kanbanBoard.deleteMany({ where: { tenantId: req.params.id } })
-    }
-    await prisma.schedule.deleteMany({ where: { tenantId: req.params.id } })
-    await prisma.contact.deleteMany({ where: { tenantId: req.params.id } })
-    await prisma.waInstance.deleteMany({ where: { tenantId: req.params.id } })
-    await prisma.subscription.deleteMany({ where: { tenantId: req.params.id } })
-    await prisma.webhook.deleteMany({ where: { tenantId: req.params.id } })
-    await prisma.actionsLog.deleteMany({ where: { tenantId: req.params.id } })
-    await prisma.user.deleteMany({ where: { tenantId: req.params.id } })
-    await prisma.tenant.delete({ where: { id: req.params.id } })
+    const boards = await prisma.kanbanBoard.findMany({ where: { tenantId: tid }, select: { id: true } })
+    const boardIds = boards.map(b => b.id)
+
+    // Tudo em transação — falha em qualquer etapa reverte tudo
+    await prisma.$transaction([
+      ...(convIds.length ? [
+        prisma.conversationSubscriber.deleteMany({ where: { conversationId: { in: convIds } } }),
+        prisma.kanbanCard.deleteMany({ where: { conversationId: { in: convIds } } }),
+        prisma.message.deleteMany({ where: { conversationId: { in: convIds } } }),
+        prisma.conversation.deleteMany({ where: { tenantId: tid } }),
+      ] : []),
+      ...(boardIds.length ? [
+        prisma.kanbanCard.deleteMany({ where: { boardId: { in: boardIds } } }),
+        prisma.kanbanBoard.deleteMany({ where: { tenantId: tid } }),
+      ] : []),
+      prisma.schedule.deleteMany({ where: { tenantId: tid } }),
+      prisma.contact.deleteMany({ where: { tenantId: tid } }),
+      prisma.waInstance.deleteMany({ where: { tenantId: tid } }),
+      prisma.subscription.deleteMany({ where: { tenantId: tid } }),
+      prisma.webhook.deleteMany({ where: { tenantId: tid } }),
+      prisma.actionsLog.deleteMany({ where: { tenantId: tid } }),
+      prisma.user.deleteMany({ where: { tenantId: tid } }),
+      prisma.tenant.delete({ where: { id: tid } }),
+    ])
     return { removido: true }
   })
 }

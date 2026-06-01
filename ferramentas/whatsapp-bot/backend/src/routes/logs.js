@@ -5,7 +5,7 @@ export default async function logsRoutes(app) {
   app.addHook('preHandler', authenticate)
 
   // Listar logs de auditoria (admin vê do próprio tenant, super_admin vê todos)
-  app.get('/', async (req) => {
+  app.get('/', { preHandler: requireRole('admin', 'super_admin') }, async (req) => {
     const { page = 1, limit = 50, action, userId } = req.query
     const skip = (Number(page) - 1) * Number(limit)
 

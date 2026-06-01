@@ -10,6 +10,7 @@ export function WSProvider({ children }) {
   const listeners = useRef({})
   const retryTimer = useRef(null)
   const unmounted = useRef(false)
+  const retryCount = useRef(0)
 
   useEffect(() => {
     unmounted.current = false
@@ -22,8 +23,10 @@ export function WSProvider({ children }) {
       ws.current = socket
 
       socket.onopen = () => {
-        socket.send(JSON.stringify({ type: 'auth', tenantId: user.tenantId }))
+        const token = localStorage.getItem('token')
+        socket.send(JSON.stringify({ type: 'auth', token }))
         setConnected(true)
+        retryCount.current = 0
         if (retryTimer.current) { clearTimeout(retryTimer.current); retryTimer.current = null }
       }
 
@@ -38,7 +41,11 @@ export function WSProvider({ children }) {
       socket.onclose = () => {
         setConnected(false)
         if (!unmounted.current) {
-          retryTimer.current = setTimeout(connect, 4000)
+          // Backoff exponencial com jitter: 2s, 4s, 8s, ... até 60s
+          const delay = Math.min(2000 * Math.pow(2, retryCount.current), 60000)
+          const jitter = Math.random() * 1000
+          retryCount.current++
+          retryTimer.current = setTimeout(connect, delay + jitter)
         }
       }
 
