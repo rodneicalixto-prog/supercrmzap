@@ -13,13 +13,12 @@ export default async function instanceRoutes(app) {
     })
   })
 
-  // Criar instância — salva no banco imediatamente, tenta Evolution API em segundo plano
+  // Criar instância
   app.post('/', async (req, reply) => {
-    const { name } = req.body
+    const { name, n8nWebhookUrl, openaiApiKey, openaiWebhook } = req.body
     if (!name?.trim()) return reply.status(400).send({ error: 'Nome da instância é obrigatório' })
 
     const nomeInterno = `t${req.user.tenantId.slice(0, 8)}_${name.trim().replace(/\s+/g, '_').toLowerCase()}`
-    // Evolution API v2 envia eventos como POST {webhookUrl}/messages-upsert etc
     const webhookUrl = `${process.env.API_URL}/webhook/evolution`
 
     const instance = await prisma.waInstance.create({
@@ -30,15 +29,31 @@ export default async function instanceRoutes(app) {
         nomeInterno,
         status: 'desconectado',
         webhookUrl,
+        ...(n8nWebhookUrl && { n8nWebhookUrl }),
+        ...(openaiApiKey && { openaiApiKey }),
+        ...(openaiWebhook && { openaiWebhook }),
       },
     })
 
-    // Tenta criar na Evolution API sem bloquear a resposta
     criarInstancia(nomeInterno, webhookUrl).catch(err => {
       console.error(`[instância ${nomeInterno}] Falha ao registrar na Evolution API: ${err.message}`)
     })
 
     return reply.status(201).send(instance)
+  })
+
+  // Atualizar configurações da instância
+  app.put('/:id', async (req, reply) => {
+    const instance = await prisma.waInstance.findFirst({
+      where: { id: req.params.id, tenantId: req.user.tenantId },
+    })
+    if (!instance) return reply.status(404).send({ error: 'Não encontrada' })
+    const { n8nWebhookUrl, openaiApiKey, openaiWebhook } = req.body
+    const data = {}
+    if (n8nWebhookUrl !== undefined) data.n8nWebhookUrl = n8nWebhookUrl || null
+    if (openaiApiKey !== undefined) data.openaiApiKey = openaiApiKey || null
+    if (openaiWebhook !== undefined) data.openaiWebhook = openaiWebhook || null
+    return prisma.waInstance.update({ where: { id: req.params.id }, data })
   })
 
   // Conectar — chama Evolution API e retorna QR

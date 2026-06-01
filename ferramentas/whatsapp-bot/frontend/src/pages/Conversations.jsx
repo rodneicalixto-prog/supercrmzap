@@ -18,6 +18,7 @@ export default function Conversations() {
   const [text, setText] = useState('')
   const [enviando, setEnviando] = useState(false)
   const [busca, setBusca] = useState('')
+  const [uploadingAnexo, setUploadingAnexo] = useState(false)
   const [assinado, setAssinado] = useState(false)
 
   // Modais
@@ -127,6 +128,34 @@ export default function Conversations() {
       setText('')
     } finally {
       setEnviando(false)
+    }
+  }
+
+  async function enviarAnexo(e) {
+    const file = e.target.files?.[0]
+    if (!file || !selected) return
+    setUploadingAnexo(true)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const up = await api.post('/upload', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+      const { url, mimetype } = up.data
+      const tipo = mimetype?.startsWith('image/') ? 'image'
+        : mimetype?.startsWith('video/') ? 'video'
+        : mimetype?.startsWith('audio/') ? 'audio'
+        : 'document'
+      const r = await api.post('/messages/midia', {
+        conversationId: selected.id,
+        mediaUrl: url,
+        tipo,
+        legenda: '',
+      })
+      setMessages(m => [...m, r.data])
+    } catch (err) {
+      alert(err.response?.data?.error || 'Erro ao enviar arquivo')
+    } finally {
+      setUploadingAnexo(false)
+      e.target.value = ''
     }
   }
 
@@ -383,6 +412,20 @@ export default function Conversations() {
                   {msg.isSilent && (
                     <p className="text-xs text-purple-400 mb-1 font-medium">Admin · intervenção silenciosa</p>
                   )}
+                  {msg.mediaUrl && msg.type === 'image' && (
+                    <img src={msg.mediaUrl} alt="imagem" className="rounded-lg max-w-full mb-1 max-h-48 object-cover" />
+                  )}
+                  {msg.mediaUrl && msg.type === 'video' && (
+                    <video src={msg.mediaUrl} controls className="rounded-lg max-w-full mb-1 max-h-48" />
+                  )}
+                  {msg.mediaUrl && msg.type === 'audio' && (
+                    <audio src={msg.mediaUrl} controls className="w-full mb-1" />
+                  )}
+                  {msg.mediaUrl && msg.type === 'document' && (
+                    <a href={msg.mediaUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-300 hover:underline text-xs mb-1">
+                      📄 {msg.mediaUrl.split('/').pop()}
+                    </a>
+                  )}
                   {msg.content || msg.body}
                   <p className="text-xs opacity-50 mt-1 text-right">
                     {new Date(msg.sentAt || msg.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
@@ -394,7 +437,20 @@ export default function Conversations() {
           </div>
 
           {/* Input */}
-          <form onSubmit={enviarMensagem} className="p-4 border-t border-gray-800 flex gap-2">
+          <form onSubmit={enviarMensagem} className="p-4 border-t border-gray-800 flex gap-2 items-center">
+            {/* Botão de anexo */}
+            {selected.status !== 'resolved' && (
+              <label className={`flex-shrink-0 cursor-pointer p-2 rounded-xl border border-gray-700 hover:border-green-600 transition-colors ${uploadingAnexo ? 'opacity-50 pointer-events-none' : ''}`} title="Anexar arquivo">
+                <span className="text-lg leading-none">{uploadingAnexo ? '⏳' : '📎'}</span>
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={enviarAnexo}
+                  disabled={uploadingAnexo}
+                  accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.txt"
+                />
+              </label>
+            )}
             <input
               value={text}
               onChange={e => setText(e.target.value)}
@@ -405,7 +461,7 @@ export default function Conversations() {
             <button
               type="submit"
               disabled={enviando || selected.status === 'resolved'}
-              className="px-4 py-2 bg-green-600 hover:bg-green-500 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-sm font-medium"
+              className="px-4 py-2 bg-green-600 hover:bg-green-500 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-sm font-medium flex-shrink-0"
             >
               {enviando ? '...' : 'Enviar'}
             </button>

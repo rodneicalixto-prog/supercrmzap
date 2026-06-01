@@ -20,3 +20,11 @@ ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "workHours" JSONB;
 
 -- Papel supervisor e supervisorId no usuário
 ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "supervisorId" TEXT REFERENCES "User"("id") ON DELETE SET NULL;
+
+-- Departamento no usuário
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "department" TEXT;
+
+-- Webhooks n8n e OpenAI por instância
+ALTER TABLE "WaInstance" ADD COLUMN IF NOT EXISTS "n8nWebhookUrl" TEXT;
+ALTER TABLE "WaInstance" ADD COLUMN IF NOT EXISTS "openaiApiKey"  TEXT;
+ALTER TABLE "WaInstance" ADD COLUMN IF NOT EXISTS "openaiWebhook" TEXT;

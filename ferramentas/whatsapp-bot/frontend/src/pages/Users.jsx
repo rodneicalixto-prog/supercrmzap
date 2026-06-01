@@ -28,6 +28,7 @@ function initForm(u = null) {
     password: '',
     role: u?.role || 'user',
     supervisorId: u?.supervisorId || '',
+    department: u?.department || '',
     instanceIds: u?.responsibleInstances?.map(r => r.instanceId) || [],
     workHours: u?.workHours
       ? { ...DEFAULT_WORK_HOURS, ...u.workHours }
@@ -145,6 +146,7 @@ export default function Users() {
                 <td className="px-4 py-3 text-white font-medium">
                   {u.name}
                   {u.id === me?.id && <span className="ml-2 text-xs text-gray-600">(você)</span>}
+                  {u.department && <p className="text-xs text-gray-500 font-normal">{u.department}</p>}
                 </td>
                 <td className="px-4 py-3 text-gray-400">{u.email}</td>
                 <td className={`px-4 py-3 font-medium ${roleColor[u.role] || 'text-gray-400'}`}>
@@ -242,6 +244,18 @@ export default function Users() {
                   </select>
                 </div>
               )}
+
+              {/* Departamento */}
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Departamento</label>
+                <input
+                  type="text"
+                  value={form.department}
+                  onChange={e => setForm(p => ({ ...p, department: e.target.value }))}
+                  placeholder="Ex: Vendas, Suporte, Financeiro"
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
+                />
+              </div>
 
               {/* Instâncias responsáveis */}
               <div>

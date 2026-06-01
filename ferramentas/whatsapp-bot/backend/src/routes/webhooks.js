@@ -103,8 +103,20 @@ export default async function webhookRoutes(app) {
         })
       }
 
-      if (process.env.N8N_WEBHOOK_URL) {
-        axios.post(process.env.N8N_WEBHOOK_URL, body).catch(() => {})
+      // n8n global ou por instância
+      const n8nUrl = instancia.n8nWebhookUrl || process.env.N8N_WEBHOOK_URL
+      if (n8nUrl) axios.post(n8nUrl, body).catch(() => {})
+
+      // Webhook OpenAI/custom por instância
+      if (instancia.openaiWebhook) {
+        axios.post(instancia.openaiWebhook, {
+          phone: telefone,
+          name: contato.name,
+          message: conteudo,
+          conversationId: conversa.id,
+          instanceName: instanceName,
+          ...(instancia.openaiApiKey && { apiKey: instancia.openaiApiKey }),
+        }).catch(() => {})
       }
     }
 
