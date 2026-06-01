@@ -103,6 +103,18 @@ export default function Conversations() {
     }
   }
 
+  async function mudarStatusDireto(convId, novoStatus) {
+    const endpoint = novoStatus === 'resolved' ? 'resolve' : novoStatus === 'open' ? 'reopen' : null
+    if (endpoint) {
+      await api.post(`/conversations/${convId}/${endpoint}`)
+    } else {
+      await api.patch(`/conversations/${convId}`, { status: novoStatus })
+    }
+    setConversations(c => c.filter(cv => cv.id !== convId))
+    if (selected?.id === convId) setSelected(s => ({ ...s, status: novoStatus }))
+    carregarContadores()
+  }
+
   async function mudarStatus(novoStatus) {
     const endpoint = novoStatus === 'resolved' ? 'resolve' : novoStatus === 'open' ? 'reopen' : null
     if (endpoint) {
@@ -183,9 +195,19 @@ export default function Conversations() {
               <p className="text-xs text-gray-500 truncate">
                 {conv.messages?.[0]?.content || conv.messages?.[0]?.body || '—'}
               </p>
-              {conv.instance?.name && (
-                <p className="text-xs text-gray-700 mt-0.5 truncate">via {conv.instance.name}</p>
-              )}
+              <div className="flex items-center justify-between mt-1.5">
+                {conv.instance?.name && (
+                  <p className="text-xs text-gray-700 truncate">via {conv.instance.name}</p>
+                )}
+                {conv.status !== 'resolved' && (
+                  <button
+                    onClick={e => { e.stopPropagation(); mudarStatusDireto(conv.id, 'resolved') }}
+                    className="ml-auto text-xs px-2 py-0.5 bg-green-800 hover:bg-green-700 text-green-200 rounded-md flex-shrink-0"
+                  >
+                    Finalizar
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
