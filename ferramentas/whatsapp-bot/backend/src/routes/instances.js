@@ -73,6 +73,24 @@ export default async function instanceRoutes(app) {
       }
     }
 
+    // Verifica se já está conectado
+    try {
+      const { data: statusData } = await statusInstancia(nome)
+      const estado = statusData?.instance?.state
+      console.log(`[connect] estado atual de ${nome}:`, estado)
+      if (estado === 'open') {
+        await prisma.waInstance.update({
+          where: { id: instance.id },
+          data: { status: 'conectado', webhookUrl },
+        })
+        broadcast(req.user.tenantId, {
+          event: 'status_instancia',
+          data: { instanceId: instance.id, status: 'conectado', qr_code: null },
+        })
+        return { conectado: true, _qr: null }
+      }
+    } catch {}
+
     // Obtém QR Code
     try {
       const { data } = await obterQrCode(nome)
@@ -85,12 +103,14 @@ export default async function instanceRoutes(app) {
 
       await prisma.waInstance.update({
         where: { id: instance.id },
-        data: { status: 'aguardando_qr', webhookUrl },
+        data: { status: qrBase64 ? 'aguardando_qr' : instance.status, webhookUrl },
       })
-      broadcast(req.user.tenantId, {
-        event: 'status_instancia',
-        data: { instanceId: instance.id, status: 'aguardando_qr', qr_code: qrBase64 ? `data:image/png;base64,${qrBase64}` : null },
-      })
+      if (qrBase64) {
+        broadcast(req.user.tenantId, {
+          event: 'status_instancia',
+          data: { instanceId: instance.id, status: 'aguardando_qr', qr_code: `data:image/png;base64,${qrBase64}` },
+        })
+      }
       return { _qr: qrBase64 ? `data:image/png;base64,${qrBase64}` : null }
     } catch (err) {
       console.error(`[connect QR] erro para ${nome}:`, err.response?.data || err.message)
