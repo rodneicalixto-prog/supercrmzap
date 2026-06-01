@@ -191,9 +191,12 @@ export default function Conversations() {
 
   async function iniciarConversa(e) {
     e.preventDefault()
-    if (!novaConvForm.contactId || !novaConvForm.instanceId) return
+    if (!novaConvForm.contactId) return
+    // Usa automaticamente a primeira instância conectada
+    const conectada = instancias.find(i => i.status === 'conectado' || i.status === 'connected')
+    if (!conectada) return alert('Nenhuma instância conectada. Vá em Conexões e conecte um número.')
     try {
-      const r = await api.post('/conversations', novaConvForm)
+      const r = await api.post('/conversations', { contactId: novaConvForm.contactId, instanceId: conectada.id })
       const conv = r.data
       setModalNovaConversa(false)
       setAba(conv.status === 'open' ? 'open' : conv.status === 'pending' ? 'pending' : 'open')
@@ -506,22 +509,17 @@ export default function Conversations() {
                   </div>
                 )}
               </div>
-              <div>
-                <label className="text-xs text-gray-400 mb-1 block">Instância WhatsApp</label>
-                <select
-                  required
-                  value={novaConvForm.instanceId}
-                  onChange={e => setNovaConvForm(f => ({ ...f, instanceId: e.target.value }))}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
-                >
-                  <option value="">Selecione...</option>
-                  {instancias.filter(i => i.status === 'conectado').map(i => (
-                    <option key={i.id} value={i.id}>{i.name}</option>
-                  ))}
-                </select>
-              </div>
+              {/* Instância resolvida automaticamente — mostra qual será usada */}
+              {(() => {
+                const c = instancias.find(i => i.status === 'conectado' || i.status === 'connected')
+                return c ? (
+                  <p className="text-xs text-gray-500">Via conexão: <span className="text-green-400">{c.name}</span></p>
+                ) : (
+                  <p className="text-xs text-red-400">⚠ Nenhuma instância conectada</p>
+                )
+              })()}
               <div className="flex gap-2 pt-1">
-                <button type="submit" disabled={!novaConvForm.contactId || !novaConvForm.instanceId} className="flex-1 py-2 bg-green-600 hover:bg-green-500 disabled:opacity-40 rounded-lg text-sm font-medium">
+                <button type="submit" disabled={!novaConvForm.contactId} className="flex-1 py-2 bg-green-600 hover:bg-green-500 disabled:opacity-40 rounded-lg text-sm font-medium">
                   Iniciar conversa
                 </button>
                 <button type="button" onClick={() => setModalNovaConversa(false)} className="flex-1 py-2 border border-gray-700 hover:border-gray-500 rounded-lg text-sm text-gray-400">
