@@ -1,26 +1,62 @@
 import { authenticate } from '../middlewares/auth.js'
 import { prisma } from '../utils/db.js'
+import { enviarTexto } from '../utils/evolution.js'
 
 export default async function scheduleRoutes(app) {
   app.addHook('preHandler', authenticate)
 
+  // Listar agendamentos
   app.get('/', async (req) => {
     return prisma.schedule.findMany({
-      where: { userId: req.user.id },
-      include: { contact: true },
-      orderBy: { datetime: 'asc' }
+      where: { tenantId: req.user.tenantId, userId: req.user.id },
+      orderBy: { scheduledAt: 'asc' },
     })
   })
 
-  app.post('/', async (req) => {
-    const { contactId, title, datetime } = req.body
+  // Criar agendamento de mensagem
+  app.post('/', async (req, reply) => {
+    const { instanceId, phone, message, scheduledAt, mediaUrl, mediaType } = req.body
+    if (!phone || !scheduledAt) {
+      return reply.status(400).send({ error: 'Telefone e data/hora são obrigatórios' })
+    }
+    if (!message && !mediaUrl) {
+      return reply.status(400).send({ error: 'Informe uma mensagem ou anexo' })
+    }
+    const dataAgendamento = new Date(scheduledAt)
+    if (isNaN(dataAgendamento.getTime())) {
+      return reply.status(400).send({ error: 'Data/hora inválida' })
+    }
+    if (dataAgendamento <= new Date()) {
+      return reply.status(400).send({ error: 'A data de agendamento deve ser no futuro' })
+    }
+
+    const instancia = await prisma.waInstance.findFirst({
+      where: { id: instanceId, tenantId: req.user.tenantId },
+    })
+    if (!instancia) return reply.status(404).send({ error: 'Instância não encontrada' })
+
     return prisma.schedule.create({
-      data: { tenantId: req.user.tenantId, userId: req.user.id, contactId, title, datetime: new Date(datetime) }
+      data: {
+        tenantId: req.user.tenantId,
+        userId: req.user.id,
+        instanceId,
+        phone,
+        message: message || '',
+        scheduledAt: dataAgendamento,
+        status: 'pending',
+        ...(mediaUrl && { mediaUrl, mediaType: mediaType || 'document' }),
+      },
     })
   })
 
-  app.delete('/:id', async (req) => {
+  // Cancelar agendamento
+  app.delete('/:id', async (req, reply) => {
+    const schedule = await prisma.schedule.findFirst({
+      where: { id: req.params.id, userId: req.user.id },
+    })
+    if (!schedule) return reply.status(404).send({ error: 'Agendamento não encontrado' })
+    if (schedule.status === 'sent') return reply.status(409).send({ error: 'Mensagem já enviada, não é possível cancelar' })
     await prisma.schedule.delete({ where: { id: req.params.id } })
-    return { deleted: true }
+    return { cancelado: true }
   })
 }

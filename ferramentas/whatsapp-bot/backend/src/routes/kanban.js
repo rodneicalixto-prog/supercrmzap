@@ -8,35 +8,70 @@ export default async function kanbanRoutes(app) {
   app.get('/boards', async (req) => {
     return prisma.kanbanBoard.findMany({
       where: { tenantId: req.user.tenantId },
-      include: { cards: { orderBy: { position: 'asc' } } }
+      include: { cards: { orderBy: { position: 'asc' } } },
+      orderBy: { createdAt: 'asc' },
     })
   })
 
   app.post('/boards', async (req) => {
     const { workflowName, columns } = req.body
     return prisma.kanbanBoard.create({
-      data: { tenantId: req.user.tenantId, workflowName, columns }
+      data: { tenantId: req.user.tenantId, workflowName, columns: columns || [] },
+      include: { cards: true },
     })
   })
 
-  app.post('/cards/move', async (req) => {
-    const { cardId, columnId, position } = req.body
-    const card = await prisma.kanbanCard.update({
-      where: { id: cardId },
-      data: { columnId, position }
+  app.put('/boards/:id', async (req, reply) => {
+    const board = await prisma.kanbanBoard.findFirst({
+      where: { id: req.params.id, tenantId: req.user.tenantId },
     })
-    broadcast(req.user.tenantId, {
-      event: 'kanban_moved',
-      data: { cardId, columnId, position }
+    if (!board) return reply.status(404).send({ error: 'Board não encontrado' })
+    const { workflowName, columns } = req.body
+    return prisma.kanbanBoard.update({
+      where: { id: req.params.id },
+      data: { ...(workflowName && { workflowName }), ...(columns && { columns }) },
+      include: { cards: { orderBy: { position: 'asc' } } },
     })
-    return card
+  })
+
+  app.delete('/boards/:id', async (req, reply) => {
+    const board = await prisma.kanbanBoard.findFirst({
+      where: { id: req.params.id, tenantId: req.user.tenantId },
+    })
+    if (!board) return reply.status(404).send({ error: 'Board não encontrado' })
+    // Remove cards primeiro (FK)
+    await prisma.kanbanCard.deleteMany({ where: { boardId: req.params.id } })
+    await prisma.kanbanBoard.delete({ where: { id: req.params.id } })
+    return { removido: true }
   })
 
   app.post('/cards', async (req) => {
     const { boardId, columnId, conversationId, metadata } = req.body
     const count = await prisma.kanbanCard.count({ where: { boardId, columnId } })
     return prisma.kanbanCard.create({
-      data: { boardId, columnId, conversationId, position: count, metadata }
+      data: { boardId, columnId, conversationId, position: count, metadata },
     })
+  })
+
+  app.post('/cards/move', async (req, reply) => {
+    const { cardId, columnId, position } = req.body
+    // Verifica se o card pertence a um board do tenant
+    const card = await prisma.kanbanCard.findFirst({
+      where: { id: cardId, board: { tenantId: req.user.tenantId } },
+    })
+    if (!card) return reply.status(404).send({ error: 'Card não encontrado' })
+    const updated = await prisma.kanbanCard.update({ where: { id: cardId }, data: { columnId, position } })
+    broadcast(req.user.tenantId, { event: 'kanban_movido', data: { cardId, columnId, position } })
+    return updated
+  })
+
+  app.delete('/cards/:id', async (req, reply) => {
+    const card = await prisma.kanbanCard.findFirst({
+      where: { id: req.params.id, board: { tenantId: req.user.tenantId } },
+    })
+    if (!card) return reply.status(404).send({ error: 'Card não encontrado' })
+    await prisma.kanbanCard.delete({ where: { id: req.params.id } })
+    broadcast(req.user.tenantId, { event: 'kanban_card_removido', data: { cardId: req.params.id } })
+    return { removido: true }
   })
 }
