@@ -142,7 +142,7 @@ export default function Layout({ children }) {
           {/* Ferramentas externas */}
           <div className="pt-3 pb-1 px-3 text-xs text-gray-600 uppercase tracking-wider">Ferramentas</div>
           <a
-            href="https://rodneicalixto-prog.github.io/supercrmzap/ferramentas/whatsapp-mkt/"
+            href="https://github.com/rodneicalixto-prog/supercrmzap/tree/main/ferramentas/whatsapp-mkt"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
@@ -152,7 +152,7 @@ export default function Layout({ children }) {
             <span className="ml-auto text-xs text-gray-600">↗</span>
           </a>
           <a
-            href="https://rodneicalixto-prog.github.io/supercrmzap/"
+            href="https://github.com/rodneicalixto-prog/supercrmzap"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
