@@ -17,6 +17,7 @@ export default function Conversations() {
   const [messages, setMessages] = useState([])
   const [text, setText] = useState('')
   const [enviando, setEnviando] = useState(false)
+  const [busca, setBusca] = useState('')
   const { on } = useWS()
   const location = useLocation()
   const msgEndRef = useRef(null)
@@ -63,8 +64,10 @@ export default function Conversations() {
     })
   }, [on, selected])
 
-  async function carregarAba(status) {
-    const r = await api.get('/conversations', { params: { status, limit: 100 } })
+  async function carregarAba(status, q = '') {
+    const params = { status, limit: 100 }
+    if (q) params.search = q
+    const r = await api.get('/conversations', { params })
     setConversations(r.data.data ?? r.data)
   }
 
@@ -137,6 +140,16 @@ export default function Conversations() {
               )}
             </button>
           ))}
+        </div>
+
+        {/* Busca */}
+        <div className="px-3 py-2 border-b border-gray-800">
+          <input
+            value={busca}
+            onChange={e => { setBusca(e.target.value); carregarAba(aba, e.target.value) }}
+            placeholder="Buscar contato..."
+            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-green-500"
+          />
         </div>
 
         {/* Lista */}

@@ -6,12 +6,20 @@ export default async function conversationRoutes(app) {
   app.addHook('preHandler', authenticate)
 
   app.get('/', async (req) => {
-    const { status, assigned, page = 1, limit = 30 } = req.query
+    const { status, assigned, page = 1, limit = 30, search } = req.query
     const skip = (Number(page) - 1) * Number(limit)
     const where = { tenantId: req.user.tenantId }
     if (req.user.role === 'user') where.userId = req.user.id
     if (status) where.status = status
     if (assigned) where.assignedTo = assigned
+    if (search) {
+      where.contact = {
+        OR: [
+          { name: { contains: search, mode: 'insensitive' } },
+          { phone: { contains: search } },
+        ],
+      }
+    }
     const [data, total] = await Promise.all([
       prisma.conversation.findMany({
         where,
