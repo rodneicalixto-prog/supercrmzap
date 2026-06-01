@@ -5,6 +5,7 @@ import { prisma } from '../utils/db.js'
 const USER_SELECT = {
   id: true, name: true, email: true, role: true, status: true,
   lastLogin: true, createdAt: true, workHours: true, supervisorId: true, department: true,
+  n8nWebhookUrl: true, openaiApiKey: true, openaiWebhook: true,
   responsibleInstances: { select: { instanceId: true } },
 }
 
@@ -31,7 +32,7 @@ export default async function userRoutes(app) {
 
   // Criar usuário — admin+
   app.post('/', { preHandler: requireRole('admin', 'super_admin') }, async (req, reply) => {
-    const { name, email, password, role, workHours, instanceIds, supervisorId, department } = req.body
+    const { name, email, password, role, workHours, instanceIds, supervisorId, department, n8nWebhookUrl, openaiApiKey, openaiWebhook } = req.body
     if (!name || !email || !password) return reply.status(400).send({ error: 'Nome, e-mail e senha são obrigatórios' })
 
     if (req.user.role === 'admin' && role === 'super_admin') {
@@ -51,6 +52,9 @@ export default async function userRoutes(app) {
         ...(workHours && { workHours }),
         ...(supervisorId && { supervisorId }),
         ...(department && { department }),
+        ...(n8nWebhookUrl && { n8nWebhookUrl }),
+        ...(openaiApiKey && { openaiApiKey }),
+        ...(openaiWebhook && { openaiWebhook }),
       },
       select: USER_SELECT,
     })
@@ -65,7 +69,7 @@ export default async function userRoutes(app) {
   })
 
   app.put('/:id', { preHandler: requireRole('admin', 'super_admin') }, async (req, reply) => {
-    const { name, email, password, role, workHours, instanceIds, supervisorId, department } = req.body
+    const { name, email, password, role, workHours, instanceIds, supervisorId, department, n8nWebhookUrl, openaiApiKey, openaiWebhook } = req.body
     const user = await prisma.user.findFirst({
       where: { id: req.params.id, tenantId: req.user.tenantId },
     })
@@ -83,6 +87,9 @@ export default async function userRoutes(app) {
     if (workHours !== undefined) data.workHours = workHours
     if (supervisorId !== undefined) data.supervisorId = supervisorId || null
     if (department !== undefined) data.department = department || null
+    if (n8nWebhookUrl !== undefined) data.n8nWebhookUrl = n8nWebhookUrl || null
+    if (openaiApiKey !== undefined) data.openaiApiKey = openaiApiKey || null
+    if (openaiWebhook !== undefined) data.openaiWebhook = openaiWebhook || null
 
     const updated = await prisma.user.update({
       where: { id: req.params.id },

@@ -51,6 +51,11 @@ model User {
   // Horário de atendimento: {"start":"08:00","end":"18:00","days":[1,2,3,4,5]}
   workHours    Json?
   department   String?
+
+  // Webhooks por atendente (ramal) — sobrescreve o webhook da instância quando a conversa está atribuída
+  n8nWebhookUrl  String?
+  openaiApiKey   String?
+  openaiWebhook  String?
 }
 
 model WaInstance {

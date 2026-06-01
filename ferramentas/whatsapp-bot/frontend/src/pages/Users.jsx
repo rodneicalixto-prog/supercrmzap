@@ -33,6 +33,9 @@ function initForm(u = null) {
     workHours: u?.workHours
       ? { ...DEFAULT_WORK_HOURS, ...u.workHours }
       : { ...DEFAULT_WORK_HOURS },
+    n8nWebhookUrl: u?.n8nWebhookUrl || '',
+    openaiApiKey: u?.openaiApiKey || '',
+    openaiWebhook: u?.openaiWebhook || '',
   }
 }
 
@@ -144,8 +147,12 @@ export default function Users() {
             {users.map(u => (
               <tr key={u.id} className="hover:bg-gray-900 transition-colors">
                 <td className="px-4 py-3 text-white font-medium">
-                  {u.name}
-                  {u.id === me?.id && <span className="ml-2 text-xs text-gray-600">(você)</span>}
+                  <div className="flex items-center gap-2">
+                    {u.name}
+                    {u.id === me?.id && <span className="text-xs text-gray-600">(você)</span>}
+                    {u.n8nWebhookUrl && <span className="text-xs bg-orange-900 text-orange-300 px-1.5 py-0.5 rounded">n8n</span>}
+                    {u.openaiWebhook && <span className="text-xs bg-blue-900 text-blue-300 px-1.5 py-0.5 rounded">IA</span>}
+                  </div>
                   {u.department && <p className="text-xs text-gray-500 font-normal">{u.department}</p>}
                 </td>
                 <td className="px-4 py-3 text-gray-400">{u.email}</td>
@@ -328,6 +335,45 @@ export default function Users() {
                       />
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Webhooks do atendente (ramal) */}
+              <div className="border border-gray-700 rounded-xl p-3 space-y-3">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Webhooks do ramal</p>
+                <p className="text-xs text-gray-600 -mt-1">Sobrescreve o webhook da conexão quando uma conversa estiver atribuída a este atendente.</p>
+
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">🔶 Webhook n8n</label>
+                  <input
+                    type="url"
+                    value={form.n8nWebhookUrl}
+                    onChange={e => setForm(p => ({ ...p, n8nWebhookUrl: e.target.value }))}
+                    placeholder="https://seu-n8n.com/webhook/..."
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">🤖 Webhook OpenAI / Agente IA</label>
+                  <input
+                    type="url"
+                    value={form.openaiWebhook}
+                    onChange={e => setForm(p => ({ ...p, openaiWebhook: e.target.value }))}
+                    placeholder="https://seu-agente.com/webhook"
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">🔑 Chave OpenAI (opcional)</label>
+                  <input
+                    type="password"
+                    value={form.openaiApiKey}
+                    onChange={e => setForm(p => ({ ...p, openaiApiKey: e.target.value }))}
+                    placeholder="sk-..."
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                  />
                 </div>
               </div>
 

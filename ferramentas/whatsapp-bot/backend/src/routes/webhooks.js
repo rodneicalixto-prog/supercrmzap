@@ -103,19 +103,36 @@ export default async function webhookRoutes(app) {
         })
       }
 
-      // n8n global ou por instância
-      const n8nUrl = instancia.n8nWebhookUrl || process.env.N8N_WEBHOOK_URL
+      // ── Dispatch webhooks: prioridade usuário atribuído > instância > global ──
+      // Carrega webhooks do atendente responsável pela conversa (se houver)
+      let atendente = null
+      if (conversa.userId) {
+        atendente = await prisma.user.findUnique({
+          where: { id: conversa.userId },
+          select: { n8nWebhookUrl: true, openaiApiKey: true, openaiWebhook: true },
+        })
+      }
+
+      const payloadOpenAI = {
+        phone: telefone,
+        name: contato.name,
+        message: conteudo,
+        conversationId: conversa.id,
+        instanceName,
+        attendantId: conversa.userId || null,
+      }
+
+      // n8n: atendente → instância → env global
+      const n8nUrl = atendente?.n8nWebhookUrl || instancia.n8nWebhookUrl || process.env.N8N_WEBHOOK_URL
       if (n8nUrl) axios.post(n8nUrl, body).catch(() => {})
 
-      // Webhook OpenAI/custom por instância
-      if (instancia.openaiWebhook) {
-        axios.post(instancia.openaiWebhook, {
-          phone: telefone,
-          name: contato.name,
-          message: conteudo,
-          conversationId: conversa.id,
-          instanceName: instanceName,
-          ...(instancia.openaiApiKey && { apiKey: instancia.openaiApiKey }),
+      // OpenAI/custom: atendente → instância
+      const openaiUrl = atendente?.openaiWebhook || instancia.openaiWebhook
+      const openaiKey = atendente?.openaiApiKey || instancia.openaiApiKey
+      if (openaiUrl) {
+        axios.post(openaiUrl, {
+          ...payloadOpenAI,
+          ...(openaiKey && { apiKey: openaiKey }),
         }).catch(() => {})
       }
     }
