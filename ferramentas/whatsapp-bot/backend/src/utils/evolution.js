@@ -24,6 +24,7 @@ export async function criarInstancia(nomeInstancia, webhookUrl) {
     integration: 'WHATSAPP-BAILEYS',
     qrcode: true,
     webhook: {
+      enabled: true,
       url: webhookUrl,
       byEvents: true,
       base64: true,
