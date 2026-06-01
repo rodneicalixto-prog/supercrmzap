@@ -11,7 +11,7 @@ export default async function queuesRoutes(app) {
 
     const where = {
       tenantId: req.user.tenantId,
-      status: 'aberta',
+      status: 'open',
       userId: null,   // sem agente atribuído = na fila
     }
     if (instanceId) where.instanceId = instanceId
@@ -25,7 +25,7 @@ export default async function queuesRoutes(app) {
         include: {
           contact: { select: { id: true, name: true, phone: true } },
           instance: { select: { id: true, name: true } },
-          messages: { orderBy: { createdAt: 'desc' }, take: 1, select: { body: true, createdAt: true } },
+          messages: { orderBy: { sentAt: 'desc' }, take: 1, select: { content: true, sentAt: true } },
         },
       }),
       prisma.conversation.count({ where }),
@@ -87,9 +87,9 @@ export default async function queuesRoutes(app) {
     const tenantId = req.user.tenantId
 
     const [naFila, emAtendimento, encerradas] = await Promise.all([
-      prisma.conversation.count({ where: { tenantId, status: 'aberta', userId: null } }),
-      prisma.conversation.count({ where: { tenantId, status: 'aberta', userId: { not: null } } }),
-      prisma.conversation.count({ where: { tenantId, status: 'encerrada' } }),
+      prisma.conversation.count({ where: { tenantId, status: 'open', userId: null } }),
+      prisma.conversation.count({ where: { tenantId, status: 'open', userId: { not: null } } }),
+      prisma.conversation.count({ where: { tenantId, status: 'closed' } }),
     ])
 
     return { naFila, emAtendimento, encerradas }
