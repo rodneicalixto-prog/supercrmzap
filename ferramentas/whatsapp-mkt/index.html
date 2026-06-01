@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp MKT — MassWhatsAppSender · SOS Super MKT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{--bg:#0c0c0e;--surface:#141418;--card:#1a1a20;--border:rgba(255,255,255,0.07);--border-hover:rgba(255,255,255,0.15);--text:#f0f0f4;--muted:rgba(240,240,244,0.5);--faint:rgba(240,240,244,0.2);--accent:#1D9E75;--accent-glow:rgba(29,158,117,0.15);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+
+.topbar{display:flex;align-items:center;gap:12px;padding:1rem 2rem;border-bottom:0.5px solid var(--border);background:var(--surface);}
+.topbar-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);transition:color 0.15s;}
+.topbar-back:hover{color:var(--accent);}
+.topbar-sep{color:var(--faint);}
+.topbar-cur{font-size:13px;font-weight:500;color:var(--text);}
+
+.hero{padding:3rem 2rem 2rem;max-width:860px;margin:0 auto;position:relative;}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse at center top,rgba(29,158,117,0.1) 0%,transparent 70%);pointer-events:none;}
+.hero-head{display:flex;align-items:center;gap:1.25rem;margin-bottom:1.5rem;}
+.hero-icon{width:64px;height:64px;border-radius:18px;background:rgba(29,158,117,0.12);color:#5DCAA5;display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0;}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;color:#fff;line-height:1.1;}
+.hero-sub{font-size:13px;color:var(--muted);margin-top:4px;font-style:italic;}
+.hero-desc{font-size:15px;color:var(--muted);line-height:1.75;font-weight:300;max-width:680px;}
+
+.section{max-width:860px;margin:0 auto;padding:0 2rem 2rem;}
+.sec-title{font-size:10.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--faint);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.sec-title::after{content:'';flex:1;height:0.5px;background:var(--border);}
+
+.dl-table{width:100%;border-collapse:collapse;background:var(--card);border:0.5px solid var(--border);border-radius:14px;overflow:hidden;}
+.dl-table th{text-align:left;padding:10px 14px;font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint);border-bottom:0.5px solid var(--border);background:rgba(255,255,255,0.02);}
+.dl-table td{padding:11px 14px;font-size:13px;border-bottom:0.5px solid var(--border);}
+.dl-table tr:last-child td{border-bottom:none;}
+.dl-table tr:hover td{background:rgba(255,255,255,0.02);}
+.dl-table .fname{color:#fff;font-weight:500;font-family:monospace;font-size:12.5px;}
+.dl-table .fdesc{color:var(--muted);}
+.dl-table .fsize{color:var(--faint);white-space:nowrap;}
+.dl-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;background:rgba(29,158,117,0.12);color:#5DCAA5;font-size:11.5px;font-weight:500;border:0.5px solid rgba(29,158,117,0.2);transition:background 0.15s;white-space:nowrap;}
+.dl-btn:hover{background:rgba(29,158,117,0.22);}
+.dl-req{display:inline-block;font-size:10px;padding:2px 7px;border-radius:5px;font-weight:600;letter-spacing:0.04em;}
+.req-obrig{background:rgba(239,68,68,0.12);color:#F87171;border:0.5px solid rgba(239,68,68,0.2);}
+.req-opt{background:rgba(255,255,255,0.05);color:var(--faint);border:0.5px solid var(--border);}
+
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:1rem;position:relative;padding-bottom:1.5rem;}
+.step:last-child{padding-bottom:0;}
+.step:not(:last-child)::before{content:'';position:absolute;left:17px;top:36px;bottom:0;width:1px;background:var(--border);}
+.step-num{width:36px;height:36px;border-radius:10px;background:rgba(29,158,117,0.12);color:#5DCAA5;border:0.5px solid rgba(29,158,117,0.2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;flex-shrink:0;}
+.step-body{padding-top:6px;}
+.step-title{font-weight:600;color:#fff;font-size:14px;margin-bottom:4px;}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+.step-code{display:inline-block;background:rgba(255,255,255,0.06);border:0.5px solid var(--border);border-radius:6px;padding:2px 8px;font-family:monospace;font-size:12px;color:#ccc;margin-top:4px;}
+
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
+.feat-item{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;align-items:flex-start;gap:8px;}
+.feat-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px;}
+.feat-text{font-size:12.5px;color:var(--muted);line-height:1.5;}
+
+.req-box{background:rgba(239,159,39,0.06);border:0.5px solid rgba(239,159,39,0.2);border-radius:12px;padding:1rem 1.25rem;display:flex;gap:10px;align-items:flex-start;}
+.req-box i{color:#FAC775;font-size:20px;flex-shrink:0;margin-top:1px;}
+.req-box p{font-size:13px;color:rgba(240,240,244,0.65);line-height:1.65;}
+.req-box strong{color:#FAC775;}
+
+.footer{text-align:center;padding:2rem;color:var(--faint);font-size:12px;border-top:0.5px solid var(--border);margin-top:1rem;}
+.footer a{color:var(--accent);}
+
+@media(max-width:600px){
+  .hero{padding:2rem 1rem 1rem;}
+  .section{padding:0 1rem 1.5rem;}
+  .topbar{padding:0.75rem 1rem;}
+  .dl-table .fsize,.dl-table .fdesc{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="../../index.html" class="topbar-back"><i class="ti ti-arrow-left"></i> Painel</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-cur">WhatsApp MKT</span>
+</div>
+
+<div class="hero">
+  <div class="hero-head">
+    <div class="hero-icon"><i class="ti ti-brand-whatsapp"></i></div>
+    <div>
+      <div class="hero-title">WhatsApp MKT</div>
+      <div class="hero-sub">MassWhatsAppSender v11 &middot; .NET 4.6 + Selenium + ChromeDriver &middot; Windows</div>
+    </div>
+  </div>
+  <p class="hero-desc">
+    Disparador em massa de WhatsApp via automa&ccedil;&atilde;o do WhatsApp Web com Selenium + ChromeDriver.
+    Gerencia m&uacute;ltiplas contas, filtra n&uacute;meros com WA ativo, extrai contatos de grupos e envia
+    mensagens, imagens, v&iacute;deos e documentos com personaliza&ccedil;&atilde;o por vari&aacute;veis.
+  </p>
+</div>
+
+<div class="section" style="margin-bottom:0.5rem;">
+  <div class="sec-title">Requisito de sistema</div>
+  <div class="req-box">
+    <i class="ti ti-alert-triangle"></i>
+    <p>
+      <strong>Windows 10 ou 11 &middot; 64 bits.</strong> Requer
+      <strong>.NET Framework 4.6</strong> (j&aacute; incluso no Windows 10+) e
+      <strong>Google Chrome</strong> instalado. O ChromeDriver inclu&iacute;do na pasta &eacute; compat&iacute;vel com
+      Chrome 114. Se seu Chrome for mais novo, baixe o
+      <a href="https://googlechromelabs.github.io/chrome-for-testing/" target="_blank" style="color:var(--accent);">ChromeDriver correspondente</a>
+      e substitua o arquivo.
+    </p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-title">Download &mdash; todos os arquivos necess&aacute;rios</div>
+
+  <table class="dl-table">
+    <thead>
+      <tr>
+        <th>Arquivo</th>
+        <th>Descri&ccedil;&atilde;o</th>
+        <th>Tamanho</th>
+        <th style="text-align:right;">Baixar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="fname">MassWhatsAppSender.exe</span> &nbsp;<span class="dl-req req-obrig">obrigat&oacute;rio</span></td>
+        <td class="fdesc">Execut&aacute;vel principal da ferramenta</td>
+        <td class="fsize">~2 MB</td>
+        <td style="text-align:right;">
+          <a class="dl-btn" href="MassWhatsAppSender.exe" download><i class="ti ti-download"></i>Baixar</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">chromedriver.exe</span> &nbsp;<span class="dl-req req-obrig">obrigat&oacute;rio</span></td>
+        <td class="fdesc">Driver Selenium para Chrome 114</td>
+        <td class="fsize">~8 MB</td>
+        <td style="text-align:right;">
+          <a class="dl-btn" href="chromedriver.exe" download><i class="ti ti-download"></i>Baixar</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">Newtonsoft.Json.dll</span> &nbsp;<span class="dl-req req-obrig">obrigat&oacute;rio</span></td>
+        <td class="fdesc">Biblioteca JSON para .NET</td>
+        <td class="fsize">~680 KB</td>
+        <td style="text-align:right;">
+          <a class="dl-btn" href="Newtonsoft.Json.dll" download><i class="ti ti-download"></i>Baixar</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">WebDriver.dll</span> &nbsp;<span class="dl-req req-obrig">obrigat&oacute;rio</span></td>
+        <td class="fdesc">Biblioteca Selenium WebDriver</td>
+        <td class="fsize">~340 KB</td>
+        <td style="text-align:right;">
+          <a class="dl-btn" href="WebDriver.dll" download><i class="ti ti-download"></i>Baixar</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">Lang/portugu&ecirc;s.xml</span> &nbsp;<span class="dl-req req-opt">idioma</span></td>
+        <td class="fdesc">Tradu&ccedil;&atilde;o PT-BR da interface</td>
+        <td class="fsize">~8 KB</td>
+        <td style="text-align:right;">
+          <a class="dl-btn" href="Lang/portugu%C3%AAs.xml" download><i class="ti ti-download"></i>Baixar</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">Lang/English.xml</span> &nbsp;<span class="dl-req req-opt">idioma</span></td>
+        <td class="fdesc">Interface em ingl&ecirc;s</td>
+        <td class="fsize">~7 KB</td>
+        <td style="text-align:right;">
+          <a class="dl-btn" href="Lang/English.xml" download><i class="ti ti-download"></i>Baixar</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">Lang/Espa&ntilde;ola.xml</span> &nbsp;<span class="dl-req req-opt">idioma</span></td>
+        <td class="fdesc">Interface em espanhol</td>
+        <td class="fsize">~7 KB</td>
+        <td style="text-align:right;">
+          <a class="dl-btn" href="Lang/Espa%C3%B1ola.xml" download><i class="ti ti-download"></i>Baixar</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="sec-title">Como instalar e usar</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Criar pasta de instala&ccedil;&atilde;o</div>
+        <div class="step-desc">
+          Crie uma pasta no seu computador, por exemplo
+          <span class="step-code">C:\MassWhatsApp\</span> e salve
+          <strong>todos os arquivos obrigat&oacute;rios</strong> nela, na mesma pasta.
+          A estrutura deve ser:<br><br>
+          <span class="step-code">MassWhatsApp\</span><br>
+          <span class="step-code">&nbsp;&nbsp;MassWhatsAppSender.exe</span><br>
+          <span class="step-code">&nbsp;&nbsp;chromedriver.exe</span><br>
+          <span class="step-code">&nbsp;&nbsp;Newtonsoft.Json.dll</span><br>
+          <span class="step-code">&nbsp;&nbsp;WebDriver.dll</span><br>
+          <span class="step-code">&nbsp;&nbsp;Lang\ (pasta com os .xml)</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Verificar vers&atilde;o do Chrome</div>
+        <div class="step-desc">
+          Abra o Chrome &rarr; <strong>&vellip; Menu &rarr; Ajuda &rarr; Sobre o Google Chrome</strong>.
+          O ChromeDriver inclu&iacute;do &eacute; compat&iacute;vel com <strong>Chrome 114</strong>.
+          Se a vers&atilde;o for diferente, baixe o ChromeDriver correto em
+          <a href="https://googlechromelabs.github.io/chrome-for-testing/" target="_blank" style="color:var(--accent);">googlechromelabs.github.io</a>
+          e substitua o <span class="step-code">chromedriver.exe</span>.
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Executar a ferramenta</div>
+        <div class="step-desc">
+          D&ecirc; duplo clique em <span class="step-code">MassWhatsAppSender.exe</span>.
+          Na primeira abertura, selecione o idioma <strong>Portugu&ecirc;s</strong> no menu de idiomas.
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Conectar conta WhatsApp</div>
+        <div class="step-desc">
+          Clique em <strong>&quot;Adicionar conta&quot;</strong> &rarr; a ferramenta abre o WhatsApp Web automaticamente no Chrome.
+          Escaneie o QR Code com seu celular. A sess&atilde;o fica salva para uso futuro.
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Importar lista e disparar</div>
+        <div class="step-desc">
+          Importe uma lista de n&uacute;meros (<span class="step-code">.txt</span> &mdash; um n&uacute;mero por linha, com DDI).
+          Use o <strong>Filtro WA</strong> para verificar quais n&uacute;meros t&ecirc;m WhatsApp ativo antes de disparar.
+          Configure mensagem, anexo opcional e delay entre envios.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-title">Funcionalidades (12)</div>
+  <div class="feat-grid">
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Disparo em massa (multi-conta)</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Modo Turbo (sem arquivo de lista)</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Filtro de n&uacute;meros WA v&aacute;lidos</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Groups Grabber via link do grupo</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Import .txt / gerador num&eacute;rico</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Remo&ccedil;&atilde;o autom&aacute;tica de duplicatas</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Vari&aacute;veis: {nome} {sobrenome} {tag}</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Emoji + imagens + v&iacute;deos + docs</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Log de envios + progresso ao vivo</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Delay configur&aacute;vel (anti-ban)</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">Retomar disparo pausado</div></div>
+    <div class="feat-item"><div class="feat-dot"></div><div class="feat-text">5 idiomas: PT &middot; EN &middot; ES &middot; FR &middot; AR</div></div>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="../../index.html">&larr; Voltar ao painel</a> &nbsp;&middot;&nbsp;
+  SOS Super MKT &mdash; Central de Ferramentas de Marketing Digital
+</div>
+
+</body>
+</html>
