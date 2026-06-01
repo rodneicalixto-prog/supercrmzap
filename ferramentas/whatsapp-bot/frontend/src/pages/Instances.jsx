@@ -68,8 +68,17 @@ export default function Instances() {
     }
   }
 
+  async function disconnect(id) {
+    try {
+      await api.post(`/instances/${id}/disconnect`)
+      setInstances(list => list.map(i => i.id === id ? { ...i, status: 'desconectado' } : i))
+    } catch (err) {
+      alert(err.response?.data?.error || 'Erro ao desconectar')
+    }
+  }
+
   async function remove(id) {
-    if (!confirm('Desconectar e remover instância?')) return
+    if (!confirm('Remover instância e todos os dados?')) return
     await api.delete(`/instances/${id}`)
     setInstances(list => list.filter(i => i.id !== id))
   }
@@ -104,10 +113,17 @@ export default function Instances() {
                 {inst.phone && <p className="text-xs text-gray-600 mt-0.5">{inst.phone}</p>}
               </div>
               <div className="flex gap-2">
-                {inst.status !== 'conectado' && inst.status !== 'connected' && (
+                {(inst.status === 'conectado' || inst.status === 'connected') ? (
+                  <button
+                    onClick={() => disconnect(inst.id)}
+                    className="text-xs px-3 py-1.5 bg-yellow-700 hover:bg-yellow-600 rounded-lg text-white"
+                  >
+                    Desconectar
+                  </button>
+                ) : (
                   <button
                     onClick={() => connect(inst.id)}
-                    className="text-xs px-3 py-1.5 bg-green-700 hover:bg-green-600 rounded-lg"
+                    className="text-xs px-3 py-1.5 bg-green-700 hover:bg-green-600 rounded-lg text-white"
                   >
                     Conectar
                   </button>

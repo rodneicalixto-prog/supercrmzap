@@ -1,6 +1,6 @@
 import { authenticate } from '../middlewares/auth.js'
 import { prisma } from '../utils/db.js'
-import { criarInstancia, obterQrCode, deletarInstancia, statusInstancia } from '../utils/evolution.js'
+import { criarInstancia, obterQrCode, deletarInstancia, statusInstancia, evolutionApi } from '../utils/evolution.js'
 import { broadcast } from '../websocket/handler.js'
 
 export default async function instanceRoutes(app) {
@@ -19,7 +19,8 @@ export default async function instanceRoutes(app) {
     if (!name?.trim()) return reply.status(400).send({ error: 'Nome da instância é obrigatório' })
 
     const nomeInterno = `t${req.user.tenantId.slice(0, 8)}_${name.trim().replace(/\s+/g, '_').toLowerCase()}`
-    const webhookUrl = `${process.env.API_URL}/webhook/evolution/${req.user.id}`
+    // Evolution API v2 envia eventos como POST {webhookUrl}/messages-upsert etc
+    const webhookUrl = `${process.env.API_URL}/webhook/evolution`
 
     const instance = await prisma.waInstance.create({
       data: {
@@ -48,22 +49,35 @@ export default async function instanceRoutes(app) {
     if (!instance) return reply.status(404).send({ error: 'Instância não encontrada' })
 
     const nome = instance.nomeInterno || instance.name
+    const webhookUrl = `${process.env.API_URL}/webhook/evolution`
 
-    // Garante que a instância existe na Evolution API
+    // Atualiza webhook se necessário
     try {
-      await criarInstancia(nome, instance.webhookUrl)
+      await evolutionApi.post(`/webhook/set/${nome}`, {
+        webhook: {
+          enabled: true,
+          url: webhookUrl,
+          byEvents: true,
+          base64: true,
+          events: ['MESSAGES_UPSERT', 'CONNECTION_UPDATE', 'QRCODE_UPDATED', 'MESSAGES_UPDATE'],
+        },
+      })
+    } catch {}
+
+    // Tenta criar a instância (ignora se já existe)
+    try {
+      await criarInstancia(nome, webhookUrl)
     } catch (err) {
-      // Pode já existir — ignora erro 409 ou similar
-      if (!err.response || err.response.status !== 409) {
-        console.warn(`[connect] Aviso ao criar na Evolution: ${err.message}`)
+      if (err.response?.status !== 409 && err.response?.status !== 403) {
+        console.warn(`[connect] criar instância: ${err.message}`)
       }
     }
 
+    // Obtém QR Code
     try {
       const { data } = await obterQrCode(nome)
-      console.log(`[connect QR] resposta Evolution API para ${nome}:`, JSON.stringify(data))
+      console.log(`[connect QR] resposta para ${nome}:`, JSON.stringify(data).slice(0, 200))
 
-      // Extrai base64 em todos os formatos retornados pela Evolution API v2
       const qrBase64 = data?.base64
         || data?.qrcode?.base64
         || data?.code
@@ -71,17 +85,41 @@ export default async function instanceRoutes(app) {
 
       await prisma.waInstance.update({
         where: { id: instance.id },
-        data: { status: 'aguardando_qr' },
+        data: { status: 'aguardando_qr', webhookUrl },
       })
       broadcast(req.user.tenantId, {
         event: 'status_instancia',
-        data: { instanceId: instance.id, status: 'aguardando_qr', qr_code: qrBase64 },
+        data: { instanceId: instance.id, status: 'aguardando_qr', qr_code: qrBase64 ? `data:image/png;base64,${qrBase64}` : null },
       })
-      return { ...data, _qr: qrBase64 }
+      return { _qr: qrBase64 ? `data:image/png;base64,${qrBase64}` : null }
     } catch (err) {
       console.error(`[connect QR] erro para ${nome}:`, err.response?.data || err.message)
-      return reply.status(502).send({ error: 'Não foi possível obter o QR Code. Evolution API inacessível.', detalhe: err.response?.data?.message || err.message })
+      return reply.status(502).send({ error: 'Não foi possível obter o QR Code.', detalhe: err.response?.data?.message || err.message })
     }
+  })
+
+  // Desconectar instância (logout do WhatsApp)
+  app.post('/:id/disconnect', async (req, reply) => {
+    const instance = await prisma.waInstance.findFirst({
+      where: { id: req.params.id, tenantId: req.user.tenantId },
+    })
+    if (!instance) return reply.status(404).send({ error: 'Instância não encontrada' })
+
+    try {
+      await evolutionApi.delete(`/instance/logout/${instance.nomeInterno || instance.name}`)
+    } catch (err) {
+      console.warn(`[disconnect] Evolution API: ${err.message}`)
+    }
+
+    await prisma.waInstance.update({
+      where: { id: instance.id },
+      data: { status: 'desconectado' },
+    })
+    broadcast(req.user.tenantId, {
+      event: 'status_instancia',
+      data: { instanceId: instance.id, status: 'desconectado', qr_code: null },
+    })
+    return { desconectado: true }
   })
 
   // QR Code (alias legado)
