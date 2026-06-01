@@ -1,6 +1,7 @@
 import { prisma } from '../utils/db.js'
 import { broadcast } from '../websocket/handler.js'
 import axios from 'axios'
+import QRCode from 'qrcode'
 
 export default async function webhookRoutes(app) {
 
@@ -100,8 +101,22 @@ export default async function webhookRoutes(app) {
       const data = body.data || {}
       console.log(`[webhook ${event}] data:`, JSON.stringify(data).slice(0, 300))
       const estado = data.state || data.connection
-      const qrRaw = data.qr || data.qrcode?.base64 || data.qrcode
-      const qr = typeof qrRaw === 'string' && qrRaw.startsWith('data:') ? qrRaw.split(',')[1] : qrRaw
+
+      // Evolution API v2 envia QR como código bruto em data.qrcode.code
+      // Precisamos gerar o PNG a partir deste código
+      const qrCode = data.qrcode?.code || data.qr
+      let qr = data.qrcode?.base64 // base64 PNG pronto (se vier)
+      if (!qr && qrCode && typeof qrCode === 'string') {
+        try {
+          // Gera PNG base64 a partir do código bruto do QR
+          const pngDataUrl = await QRCode.toDataURL(qrCode, { width: 300, margin: 2 })
+          qr = pngDataUrl.split(',')[1] // remove prefixo "data:image/png;base64,"
+        } catch (e) {
+          console.error('[webhook QR] erro ao gerar QR PNG:', e.message)
+        }
+      } else if (qr && qr.startsWith('data:')) {
+        qr = qr.split(',')[1]
+      }
 
       const instancia = await prisma.waInstance.findFirst({
         where: { nomeInterno: instanceName },
