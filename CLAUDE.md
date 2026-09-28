@@ -1,5 +1,8 @@
 # SOS Super MKT — supercrmzap
 
+> Para "onde estamos agora" (branch certo pra trabalhar, histórico do
+> arquivamento equivocado de 18/09, URLs de produção), ver `STATUS.md`.
+
 ## O que é este projeto
 
 Repositório central de ferramentas de marketing digital do SOS Super MKT.

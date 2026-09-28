@@ -1,15 +1,7 @@
-> ⚠️ **ARQUIVADO — Consolidação WhatsApp/CRM (18/09/2026)**
->
-> Este repositório foi **descontinuado** na consolidação dos hubs WhatsApp do ecossistema.
->
-> - **Hub SaaS canônico:** SmartZap (WhatsApp + IA multi-provider, mem0, multi-tenant).
-> - **Canal WhatsApp único:** Evolution API.
-> - **Motivo do arquivamento:** SOS Super MKT — bundle majoritariamente de binários; SaaS WhatsApp em estado placeholder.
->
-> Histórico preservado apenas para referência — nenhuma feature nova neste repositório.
+# SOS Super MKT — supercrmzap
 
----
-
-# supercrmzap
-
-Repositório arquivado. Ver nota de consolidação acima.
+Repositório central de ferramentas de marketing digital: 5 ferramentas
+empacotadas (binários/extensões) + 1 SaaS real (`whatsapp-bot`,
+Fastify + Prisma + React, multi-tenant). Ver `CLAUDE.md` para a estrutura
+completa e `STATUS.md` para o estado atual e o histórico do arquivamento
+equivocado de 18/09/2026.
