@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
 }
 
 datasource db {
@@ -21,6 +22,7 @@ model Tenant {
   subscriptions Subscription[]
   actionsLog    ActionsLog[]
   webhooks      Webhook[]
+  academyCourses AcademyCourse[]
 }
 
 model User {
@@ -30,15 +32,30 @@ model User {
   name         String
   email        String    @unique
   passwordHash String
-  role         String    @default("user") // super_admin | admin | user
+  role         String    @default("user") // super_admin | admin | supervisor | user
   status       String    @default("active")
   lastLogin    DateTime?
   createdAt    DateTime  @default(now())
+  supervisorId String?
+  supervisor   User?     @relation("UserSupervisor", fields: [supervisorId], references: [id])
+  subordinates User[]    @relation("UserSupervisor")
 
-  instances     WaInstance[]
-  conversations Conversation[]
-  schedules     Schedule[]
-  actionsLog    ActionsLog[]
+  instances             WaInstance[]
+  conversations         Conversation[]
+  schedules             Schedule[]
+  actionsLog            ActionsLog[]
+  academyProgress       AcademyProgress[]
+  conversationSubscriptions ConversationSubscriber[]
+  responsibleInstances  UserInstance[]
+
+  // Horário de atendimento: {"start":"08:00","end":"18:00","days":[1,2,3,4,5]}
+  workHours    Json?
+  department   String?
+
+  // Webhooks por atendente (ramal) — sobrescreve o webhook da instância quando a conversa está atribuída
+  n8nWebhookUrl  String?
+  openaiApiKey   String?
+  openaiWebhook  String?
 }
 
 model WaInstance {
@@ -48,15 +65,22 @@ model WaInstance {
   userId      String
   user        User     @relation(fields: [userId], references: [id])
   name        String
+  nomeInterno String?  @unique // identificador único usado internamente na Evolution Go
   phone       String?
-  status      String   @default("disconnected") // connected | disconnected | qr
-  sessionData Json?
-  webhookUrl  String?
-  createdAt   DateTime @default(now())
+  status      String   @default("desconectado") // conectado | desconectado | aguardando_qr
+  sessionData    Json?
+  webhookUrl     String?
+  n8nWebhookUrl  String?   // webhook n8n por instância
+  openaiApiKey   String?   // chave OpenAI por instância
+  openaiWebhook  String?   // webhook OpenAI/custom por instância
+  createdAt      DateTime  @default(now())
 
-  conversations Conversation[]
+  conversations        Conversation[]
+  schedules            Schedule[]
+  responsibleUsers     UserInstance[]
 }
 
+// Contatos salvos manualmente ou capturados automaticamente pelo webhook
 model Contact {
   id        String   @id @default(uuid())
   tenantId  String
@@ -71,7 +95,9 @@ model Contact {
   createdAt DateTime @default(now())
 
   conversations Conversation[]
-  schedules     Schedule[]
+
+  @@unique([tenantId, phone])
+  @@index([tenantId, phone])
 }
 
 model Conversation {
@@ -90,6 +116,10 @@ model Conversation {
 
   messages    Message[]
   kanbanCards KanbanCard[]
+  subscribers ConversationSubscriber[]
+
+  @@index([tenantId, status])
+  @@index([tenantId, contactId])
 }
 
 model Message {
@@ -101,8 +131,12 @@ model Message {
   content        String?
   mediaUrl       String?
   isSilent       Boolean      @default(false)
+  externalId     String?      // ID da mensagem na Evolution Go (para deduplicação)
   sentAt         DateTime     @default(now())
   readAt         DateTime?
+
+  @@index([conversationId, sentAt])
+  @@index([externalId])
 }
 
 model KanbanBoard {
@@ -128,16 +162,22 @@ model KanbanCard {
 }
 
 model Schedule {
-  id               String   @id @default(uuid())
-  tenantId         String
-  userId           String
-  user             User     @relation(fields: [userId], references: [id])
-  contactId        String?
-  contact          Contact? @relation(fields: [contactId], references: [id])
-  title            String
-  datetime         DateTime
-  notificationSent Boolean  @default(false)
-  createdAt        DateTime @default(now())
+  id          String    @id @default(uuid())
+  tenantId    String
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  instanceId  String?
+  instance    WaInstance? @relation(fields: [instanceId], references: [id])
+  phone       String
+  message     String
+  scheduledAt DateTime
+  mediaUrl    String?
+  mediaType   String?   // image | video | document | audio
+  status      String    @default("pending") // pending | processing | sent | failed
+  sentAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([status, scheduledAt])
 }
 
 model Subscription {
@@ -177,4 +217,65 @@ model ActionsLog {
   details   Json?
   ip        String?
   createdAt DateTime @default(now())
+}
+
+model AcademyCourse {
+  id          String          @id @default(uuid())
+  tenantId    String
+  tenant      Tenant          @relation(fields: [tenantId], references: [id])
+  title       String
+  description String?
+  thumbnail   String?
+  category    String?
+  order       Int             @default(0)
+  published   Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+  lessons     AcademyLesson[]
+}
+
+model AcademyLesson {
+  id          String        @id @default(uuid())
+  courseId    String
+  course      AcademyCourse @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  videoUrl    String?
+  duration    Int?          // segundos
+  order       Int           @default(0)
+  published   Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  progress    AcademyProgress[]
+}
+
+model AcademyProgress {
+  id         String        @id @default(uuid())
+  lessonId   String
+  lesson     AcademyLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  completed  Boolean       @default(false)
+  watchedAt  DateTime      @default(now())
+
+  @@unique([lessonId, userId])
+}
+
+model ConversationSubscriber {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@unique([conversationId, userId])
+}
+
+model UserInstance {
+  id         String     @id @default(uuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  instanceId String
+  instance   WaInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, instanceId])
 }
